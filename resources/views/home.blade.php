@@ -15,8 +15,7 @@
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-  <!-- JQVMap -->
-  <link rel="stylesheet" href="{{ asset('/adminlte/plugins/jqvmap/jqvmap.min.css') }}">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('/adminlte/dist/css/adminlte.min.css') }}">
   <!-- overlayScrollbars -->
@@ -25,13 +24,15 @@
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('/adminlte/plugins/summernote/summernote-bs4.min.css') }}">
+  @yield('css')
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="{{ asset('/adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTELogo" height="60" width="60">
+    <img class="animation__shake" src="{{ asset('/adminlte/dist/img/icdLogo.png') }}" alt="AdminLTELogo" height="120" width="180">
   </div>
 
   <!-- Navbar -->
@@ -209,7 +210,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="/dashboard" class="nav-link {{ ($active == "dashboard")?"active":"" }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -218,7 +219,7 @@
           </li>
         
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link {{ ($active == "list_post" ||$active == "new_post")?"active":"" }}">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Posts
@@ -227,43 +228,46 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="post/list" class="nav-link">
+                <a href="/post/list" class="nav-link {{ ($active == "list_post")?"active":"" }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List Posts</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="post/new" class="nav-link">
+                <a href="/post/new" class="nav-link {{ ($active == "new_post")?"active":"" }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>New Post</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/category" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Category</p>
-                </a>
-              </li>
+             
               
             </ul>
           </li>
+         
           <li class="nav-item ">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-envelope"></i>
               <p>
-                About Company
+                Contact
               </p>
             </a>
           </li>
           <li class="nav-item ">
             <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-book"></i>
               <p>
                 Page Top
               </p>
             </a>
           </li>
-         
+          <li class="nav-item ">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-info-circle"></i>
+              <p>
+                About Company
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -273,6 +277,22 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>@yield('content-title')</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">@yield('content-title')</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
     @yield('content')
   </div>
   <!-- /.content-wrapper -->
@@ -306,9 +326,7 @@
 <script src="{{ asset('/adminlte/plugins/chart.js/Chart.min.js') }}"></script>
 <!-- Sparkline -->
 <script src="{{ asset('/adminlte/plugins/sparklines/sparkline.js') }}"></script>
-<!-- JQVMap -->
-<script src="{{ asset('/adminlte/plugins/jqvmap/jquery.vmap.min.js') }}"></script>
-<script src="{{ asset('/adminlte/plugins/jqvmap/maps/jquery.vmap.usa.js') }}"></script>
+
 <!-- jQuery Knob Chart -->
 <script src="{{ asset('/adminlte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
 <!-- daterangepicker -->
@@ -324,7 +342,7 @@
 <script src="{{ asset('/adminlte/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('/adminlte/dist/js/demo.js') }}"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{ asset('/adminlte/dist/js/pages/dashboard.js') }}"></script>
+
+@yield('javascript')
 </body>
 </html>

@@ -23,6 +23,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('layouts/dashboard');
+        return view('layouts/dashboard',['active'=>'dashboard']);
     }
 }

@@ -23,6 +23,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('layouts/dashboard');
+        return view('layouts/posts/list',['active'=>'list_post']);
+    }
+    public function new()
+    {
+        return view('layouts/posts/new',['active'=>'new_post']);
     }
 }

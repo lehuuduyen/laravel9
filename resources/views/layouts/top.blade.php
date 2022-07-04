@@ -1,7 +1,7 @@
 @extends('home')
 
-@section('title', 'Dashboard')
-@section('content-title', 'Dashboard')
+@section('title', 'Top')
+@section('content-title', 'Top')
 
 @section('css')
     <!-- JQVMap -->
