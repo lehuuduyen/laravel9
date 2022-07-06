@@ -219,7 +219,7 @@
           </li>
         
           <li class="nav-item">
-            <a href="#" class="nav-link {{ ($active == "list_post" ||$active == "new_post")?"active":"" }}">
+            <a href="#" class="nav-link {{ ($active == "category" || $active == "list_post" || $active == "new_post" )?"active":"" }}">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Posts
@@ -239,9 +239,14 @@
                   <p>New Post</p>
                 </a>
               </li>
-             
+              <li class="nav-item">
+                <a href="/category" class="nav-link {{ ($active == "category")?"active":"" }}">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Category</p>
+                </a>
+              </li>
               
-            </ul>
+            </ul> 
           </li>
          
           <li class="nav-item ">

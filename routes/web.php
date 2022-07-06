@@ -21,6 +21,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+Route::get('/category', [App\Http\Controllers\CategoryController::class, 'index'])->name('category');
 Route::get('/post/list', [App\Http\Controllers\PostController::class, 'index'])->name('listpost');
 Route::get('/post/new', [App\Http\Controllers\PostController::class, 'new'])->name('newpost');
 Route::get('/post/edit', [App\Http\Controllers\PostController::class, 'edit'])->name('editpost');
