@@ -23,6 +23,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('layouts/category',['active'=>'category']);
+        return view('layouts/category/list',['active'=>'category']);
+    }
+    public function new()
+    {
+        return view('layouts/category/new',['active'=>'category']);
     }
 }

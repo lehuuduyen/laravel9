@@ -250,14 +250,14 @@
           </li>
          
           <li class="nav-item ">
-            <a href="#" class="nav-link ">
+            <a href="/config" class="nav-link {{ ($active == "config")?"active":"" }}"">
               <i class="nav-icon fas fa-envelope"></i>
               <p>
-                Contact
+                Config Post
               </p>
             </a>
           </li>
-          <li class="nav-item ">
+          {{-- <li class="nav-item ">
             <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-book"></i>
               <p>
@@ -272,7 +272,7 @@
                 About Company
               </p>
             </a>
-          </li>
+          </li> --}}
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

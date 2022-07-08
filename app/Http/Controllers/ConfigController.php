@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CompanyController extends Controller
+class ConfigController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,6 +23,10 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view('layouts/dashboard');
+        return view('layouts/config/list',['active'=>'config']);
+    }
+    public function new()
+    {
+        return view('layouts/config/new',['active'=>'config']);
     }
 }

@@ -25,4 +25,8 @@ class TopController extends Controller
     {
         return view('layouts/dashboard');
     }
+    public function top()
+    {
+        return view('layouts/dashboard');
+    }
 }

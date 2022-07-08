@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/post/new"> Create New Post</a>
+                            <a class="btn btn-success" href="/category/new"> Create New Category</a>
                         </div>
                         
                         <!-- /.card-header -->
@@ -30,24 +30,18 @@
                                 <thead>
                                     <tr>
                                         <th>Category</th>
-                                        <th>Title</th>
                                         <th>Updated at</th>
-                                        <th>Viewer</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php  
                                         $list['category'] = ["News","Recruit","Service","Works"];
-                                        $list['title'] = ["Internet Explorer 4.0","Firefox 3.0","Camino 1.0","Internet Explorer 5.0","Firefox 1.0","Firefox 1.5","AOL browser (AOL desktop)"];
                                         for($i=1;$i<50;$i++){
                                         ?>
                                         <tr>
                                             <td>{{ $list['category'][rand(0,3)] }}</td>
-                                            <td style="text-align: left;">{{ $list['title'][rand(0,6)] }}
-                                            </td>
                                             <td>2022/08/04 {{ rand(1,24)  }}:00</td>
-                                            <td>{{ rand(20,100)  }}</td>
                                             <td >
                                                 <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                                                             </button>
@@ -65,9 +59,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>Category</th>
-                                        <th>Title</th>
                                         <th>Updated at</th>
-                                        <th>Viewer</th>
                                         <th>Action</th>
 
                                     </tr>
