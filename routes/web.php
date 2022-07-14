@@ -27,5 +27,5 @@ Route::get('/post/list', [App\Http\Controllers\PostController::class, 'index'])-
 Route::get('/post/new', [App\Http\Controllers\PostController::class, 'new'])->name('newpost');
 Route::get('/post/edit', [App\Http\Controllers\PostController::class, 'edit'])->name('editpost');
 Route::get('/top', [App\Http\Controllers\TopController::class, 'top'])->name('top');
-Route::get('/config', [App\Http\Controllers\ConfigController::class, 'index'])->name('config');
-Route::get('/config/new', [App\Http\Controllers\ConfigController::class, 'new'])->name('newconfig');
+Route::get('/config', [App\Http\Controllers\ConfigFieldController::class, 'index'])->name('config');
+Route::get('/config/new', [App\Http\Controllers\ConfigFieldController::class, 'new'])->name('newconfig');
