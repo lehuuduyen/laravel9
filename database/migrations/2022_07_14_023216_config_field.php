@@ -15,7 +15,7 @@ class ConfigField extends Migration
     {
         Schema::create('config_field', function (Blueprint $table) {
             $table->bigIncrements("id");
-            $table->string('title')->unique();
+            $table->string('title');
             $table->string('key')->unique();
             $table->timestamps();
         });

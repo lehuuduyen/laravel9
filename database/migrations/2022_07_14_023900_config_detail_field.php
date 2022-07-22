@@ -18,7 +18,6 @@ class ConfigDetailField extends Migration
             $table->unsignedBigInteger('config_field_id');
               $table->foreign('config_field_id')
               ->references('id')->on('config_field')->onDelete('cascade');
-
             $table->string('title');
             $table->string('key');
             $table->tinyInteger('type');

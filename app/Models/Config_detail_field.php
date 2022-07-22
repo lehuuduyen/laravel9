@@ -9,6 +9,8 @@ class Config_detail_field extends Model
 {
     use HasFactory;
     protected $table = 'config_detail_field';
+    protected $fillable = ['title','key','type','config_field_id'];
+
     public static function typeText (){
         return 1;
     }

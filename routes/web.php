@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,3 +30,4 @@ Route::get('/post/edit', [App\Http\Controllers\PostController::class, 'edit'])->
 Route::get('/top', [App\Http\Controllers\TopController::class, 'top'])->name('top');
 Route::get('/config', [App\Http\Controllers\ConfigFieldController::class, 'index'])->name('config');
 Route::get('/config/new', [App\Http\Controllers\ConfigFieldController::class, 'new'])->name('newconfig');
+Route::post('/config/insert', [App\Http\Controllers\ConfigFieldController::class, 'insert'])->name('insertconfig');

@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>@yield('title',"Dashboard")</title>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -251,7 +253,7 @@
          
           <li class="nav-item ">
             <a href="/config" class="nav-link {{ ($active == "config")?"active":"" }}"">
-              <i class="nav-icon fas fa-envelope"></i>
+              <i class="nav-icon fas fa-cog"></i>
               <p>
                 Config Post
               </p>
@@ -347,7 +349,13 @@
 <script src="{{ asset('/adminlte/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('/adminlte/dist/js/demo.js') }}"></script>
-
+<script>
+  $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
 @yield('javascript')
 </body>
 </html>
