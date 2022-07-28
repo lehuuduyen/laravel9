@@ -10,14 +10,14 @@ use Dflydev\DotAccessData\Data;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
 
-class ConfigFieldController extends Controller
+class ConfigFieldController extends BaseController
 {
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct() 
     {
         $this->middleware('auth');
     }
@@ -47,12 +47,12 @@ class ConfigFieldController extends Controller
             $configField[$key]['count_textarea'] = $countTextArea;
             $configField[$key]['count_img'] = $countImg;
         }
-        return view('layouts/config/list', ['active' => 'config', 'configField' => $configField]);
+        return $this->renderView('layouts/config/list', ['active' => 'config', 'configField' => $configField]);
     }
     public function new()
     {
 
-        return view('layouts/config/new', ['active' => 'config']);
+        return $this->renderView('layouts/config/new', ['active' => 'config']);
     }
     public function insert(Request  $request)
     {
@@ -64,8 +64,7 @@ class ConfigFieldController extends Controller
         try {
             // insert config
             $configField = Config_field::create(
-                ['title' => $data['title']],
-                ['key' => $data['key']]
+                ['title' => $data['title']]
             );
             
             $listConfigDettail = json_decode($data['json']);
@@ -79,11 +78,7 @@ class ConfigFieldController extends Controller
          
             // Commit the queries!
             DB::commit();
-        } catch (ValidationException $e) {
-            // Rollback and then redirect
-            // back to form with errors
-            DB::rollback();
-        } catch (\Exception $e) {
+        }  catch (\Exception $e) {
             DB::rollback();
             throw $e;
         }

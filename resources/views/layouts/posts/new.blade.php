@@ -28,23 +28,9 @@
                                 <input type="email" class="form-control" id="exampleInputEmail1"
                                     placeholder="Enter email">
                             </div>
-                            <div class="form-group select2-purple">
-                                <label for="exampleInputPassword1">Category</label>
-                                <select class="select2" multiple="multiple" data-placeholder="Select a State"
-                                    data-dropdown-css-class="select2-purple" style="width: 100%;">
-                                    <option>News</option>
-                                    <option>Recruit</option>
-                                    <option>Service</option>
-                                    <option>Works</option>
-                                </select>
-                            </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Description</label>
-
                                 <textarea id="summernote">
-
-
-
                                 </textarea>
                             </div>
                             {{-- image --}}

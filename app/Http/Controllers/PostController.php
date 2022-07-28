@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Post;
+use Illuminate\Http\Request as FormRequest;
+use Illuminate\Support\Facades\Request;
 
-class PostController extends Controller
+class PostController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -23,10 +26,22 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('layouts/posts/list',['active'=>'list_post']);
+        $slug = Request::path();
+        $getCategory =Category::where('slug', $slug)->first();
+        $post = Post::where('category_id', $getCategory->id)->get();
+       
+        
+        return $this->renderView('layouts/posts/list',[
+            'active'=>'list_post',
+            'post'=>$post,
+            'getCategory' => $getCategory
+        ]);
     }
     public function new()
     {
-        return view('layouts/posts/new',['active'=>'new_post']);
+        $slug = Request::path();
+        $getCategory =Category::where('slug', $slug)->first();
+        return $this->renderView('layouts/posts/new',['active'=>'list_post',
+        'getCategory' => $getCategory]);
     }
 }

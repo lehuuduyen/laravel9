@@ -18,9 +18,7 @@ class Post extends Migration
             $table->unsignedBigInteger('category_id');
               $table->foreign('category_id')
               ->references('id')->on('category')->onDelete('cascade');
-            $table->string('title');
-            $table->longText('description');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1); 
             $table->timestamps();
         });
     }

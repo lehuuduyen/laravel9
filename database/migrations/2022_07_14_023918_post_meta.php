@@ -16,8 +16,11 @@ class PostMeta extends Migration
         Schema::create('post_meta', function (Blueprint $table) {
             $table->bigIncrements("id");
             $table->unsignedBigInteger('post_id');
-              $table->foreign('post_id')
-              ->references('id')->on('post')->onDelete('cascade');
+            $table->unsignedBigInteger('language_id');
+            $table->foreign('post_id')
+                ->references('id')->on('post')->onDelete('cascade');
+            $table->foreign('language_id')
+                ->references('id')->on('languages');
             $table->string('meta_key');
             $table->longText('meta_value');
             $table->timestamps();

@@ -26,22 +26,25 @@
                         
                         <!-- /.card-header -->
                         <div class="card-body table-responsive">
+                           
                             <table id="example1" class=" table table-striped  " style="text-align: center;">
                                 <thead>
                                     <tr>
                                         <th>Category</th>
+                                        <th>Slug</th>
+                                        <th>Short Description</th>
                                         <th>Updated at</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  
-                                        $list['category'] = ["News","Recruit","Service","Works"];
-                                        for($i=1;$i<50;$i++){
+                                    <?php foreach ($category as $key => $value) {
                                         ?>
                                         <tr>
-                                            <td>{{ $list['category'][rand(0,3)] }}</td>
-                                            <td>2022/08/04 {{ rand(1,24)  }}:00</td>
+                                            <td>{{ $value->title }}</td>
+                                            <td>{{ $value->slug }}</td>
+                                            <td>{{ $value->description }}</td>
+                                            <td>{{ $value->updated_at }}</td>
                                             <td >
                                                 <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                                                             </button>
@@ -50,15 +53,16 @@
                                             </td>
 
                                         </tr>
-                                    <?php
-                                        }
-
-                                        ?>
+                                        <?php
+                                    }?>
+                                  
                                     
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <th>Category</th>
+                                        <th>Slug</th>
+                                        <th>Description</th>
                                         <th>Updated at</th>
                                         <th>Action</th>
 

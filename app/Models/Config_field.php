@@ -10,7 +10,7 @@ class Config_field extends Model
 {
     use HasFactory;
     protected $table = 'config_field';
-    protected $fillable = ['title','key'];
+    protected $fillable = ['title'];
 
     public function config_detail_field()
     {

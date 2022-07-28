@@ -1,7 +1,7 @@
 @extends('home')
 
-@section('title', 'List posts')
-@section('content-title', 'List posts')
+@section('title', $getCategory->title)
+@section('content-title', 'List '.$getCategory->title)
 @section('css')
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/post/new"> Create New Post</a>
+                            <a class="btn btn-success" href="/{{ $getCategory->slug }}/new"> Create New {{ $getCategory->title }}</a>
                         </div>
                         
                         <!-- /.card-header -->
@@ -29,7 +29,6 @@
                             <table id="example1" class=" table table-striped  " style="text-align: center;">
                                 <thead>
                                     <tr>
-                                        <th>Category</th>
                                         <th>Title</th>
                                         <th>Updated at</th>
                                         <th>Viewer</th>
@@ -38,15 +37,13 @@
                                 </thead>
                                 <tbody>
                                     <?php  
-                                        $list['category'] = ["News","Recruit","Service","Works"];
                                         $list['title'] = ["Internet Explorer 4.0","Firefox 3.0","Camino 1.0","Internet Explorer 5.0","Firefox 1.0","Firefox 1.5","AOL browser (AOL desktop)"];
-                                        for($i=1;$i<50;$i++){
+                                        foreach($post as $value){
                                         ?>
                                         <tr>
-                                            <td>{{ $list['category'][rand(0,3)] }}</td>
-                                            <td style="text-align: left;">{{ $list['title'][rand(0,6)] }}
-                                            </td>
-                                            <td>2022/08/04 {{ rand(1,24)  }}:00</td>
+                                            <td>{{ $value->title }}</td>
+                                            
+                                            <td>{{ $value->updated_at }}</td>
                                             <td>{{ rand(20,100)  }}</td>
                                             <td >
                                                 <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
@@ -64,7 +61,6 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Category</th>
                                         <th>Title</th>
                                         <th>Updated at</th>
                                         <th>Viewer</th>

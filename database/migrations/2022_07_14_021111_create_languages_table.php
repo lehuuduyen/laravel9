@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class ConfigField extends Migration
+class CreateLanguagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class ConfigField extends Migration
      */
     public function up()
     {
-        Schema::create('config_field', function (Blueprint $table) {
-            $table->bigIncrements("id");
-            $table->string('title');
+        Schema::create('languages', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class ConfigField extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('config_field');
+        Schema::dropIfExists('languages');
     }
 }

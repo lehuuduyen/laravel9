@@ -20,7 +20,7 @@
             <div class="col-md-12">
                 <form action="/config/insert" method="post">
                     @csrf
-                    <!-- {{ csrf_field() }} -->
+                    {{-- <!-- {{ csrf_field() }} --> --}}
 
                     <div class="card card-primary">
 
@@ -28,21 +28,15 @@
                         <!-- form start -->
                         <div class="card-body">
                             <div style="display:flex">
-                                <div class="col-md-6 p-0 pr-1">
+                                <div class="col-md-12 p-0 pr-1">
                                     <div class="form-group">
                                         <label for="exampleInputtext1">Title</label>
-                                        <input type="text" class="form-control" id="title"
+                                        <input type="text" style="border: 1px solid #20c997!important;" class="form-control" id="title"
                                             placeholder="Enter Title... ">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 p-0 pl-1">
-                                    <div class="form-group">
-                                        <label for="exampleInputtext1">Key</label>
-                                        <input type="text" class="form-control" id="key"
-                                            placeholder="Enter Key...">
-                                    </div>
-                                </div>
+                                
                             </div>
 
                             <div class="form-group">
@@ -171,9 +165,8 @@
 
             })
             let titleConfig = $("#title").val()
-            let keyConfig = $("#key").val()
-            if (titleConfig == "" || keyConfig == "") {
-                alert("Giá trị title và key config không được để rổng ")
+            if (titleConfig == "") {
+                alert("Giá trị title config không được để rổng ")
                 array = []
             } else {
                 $.ajax({
@@ -181,11 +174,10 @@
                     url: "/config/insert",
                     data: {
                         title: titleConfig,
-                        key: keyConfig,
                         json: JSON.stringify(array),
                     },
                     success: function(msg) {
-                        console.log("Data: " + msg);
+                        alert("Thêm thành công")
                     }
                 });
             }
