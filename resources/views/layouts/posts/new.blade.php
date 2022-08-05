@@ -1,7 +1,7 @@
 @extends('home')
 
-@section('title', 'New post')
-@section('content-title', 'New posts')
+@section('title', $getCategory->name)
+@section('content-title', 'List ' . $getCategory->name)
 
 @section('css')
     <!-- Select2 -->
@@ -14,157 +14,175 @@
 @section('content')
     <!-- Main content -->
     <section class="content">
-        <div class="row">
-            <div class="col-md-12">
+        <form action="/{{ $getCategory->slug }}/insert" enctype="multipart/form-data" id="form" method="post">
+            {{ csrf_field() }}
+            <div class="row">
 
-                <div class="card card-primary">
+                <div class="col-md-8">
 
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Title</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                    placeholder="Enter email">
+                    <input type="hidden" name="category_id" value="{{ $getCategory->id }}">
+
+
+
+                    @if (\Session::has('error'))
+                        <div class="alert alert-danger">
+                            <ul>
+                                <li>{!! \Session::get('error') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+                    @if (\Session::has('success'))
+                        <div class="alert alert-success">
+                            <ul>
+                                <li>{!! \Session::get('success') !!}</li>
+                            </ul>
+                        </div>
+                    @endif
+
+
+                    <div class="col-md-12">
+
+                        <div class="card card-primary card-outline card-outline-tabs">
+                            <div class="card-header p-0 border-bottom-0">
+                                <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
+                                    <?php 
+                                    foreach($allLanguage as $key => $language){
+                                     ?>
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $key == 0 ? 'active' : '' }}"
+                                            id="custom-tabs-five-overlay-tab" data-toggle="pill"
+                                            href="#custom-tabs{{ $key }}" role="tab"
+                                            aria-controls="custom-tabs-five-overlay"
+                                            aria-selected="true">{{ $language->name }}</a>
+                                    </li>
+                                    <?php
+                                    }    
+                                     ?>
+
+
+                                </ul>
                             </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Description</label>
-                                <textarea id="summernote">
-                                </textarea>
-                            </div>
-                            {{-- image --}}
-                            <div class="card card-default">
-                                <div class="card-header">
-                                    <h3 class="card-title font-weight-bold">Image</h3>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-five-tabContent">
+                                    <?php 
+                                    foreach($allLanguage as $key => $language){
+                                     ?>
+                                    <div class="tab-pane fade {{ $key == 0 ? 'active show' : '' }}""
+                                        id="custom-tabs{{ $key }}" role="tabpanel"
+                                        aria-labelledby="custom-tabs-five-overlay-tab">
+                                        <div class="overlay-wrapper">
+                                            {{-- <div class="overlay"><i class="fas fa-3x fa-sync-alt fa-spin"></i>
+                                            <div class="text-bold pt-2">Loading...</div>
+                                            </div> --}}
+                                            <?php 
+                                                foreach($listDetailFieldLanguage as $value ){
+                                                    if($value['type'] ==1){
+                                                        ?>
+                                            {{-- text --}}
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">{{ $value['title'] }}</label>
+                                                <input type=" text" class="form-control"
+                                                    name="languages[{{ $key }}][{{ $value['key'] }}]"
+                                                    placeholder="Enter {{ $value['title'] }}">
+                                            </div>
+                                            <?php
+                                                                            }
+                                                                            if($value['type'] == 2){
+                                                                                ?>
+                                            {{-- textarea --}}
 
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body" style="display: block;">
-                                    <div class="row">
-                                        <div class="card-body">
-                                            <div id="actions" class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="btn-group w-100">
-                                                        <span class="btn btn-success col fileinput-button">
-                                                            <i class="fas fa-plus"></i>
-                                                            <span>Add files</span>
-                                                        </span>
-                                                        <button type="submit" class="btn btn-primary col start">
-                                                            <i class="fas fa-upload"></i>
-                                                            <span>Start upload</span>
-                                                        </button>
-                                                        <button type="reset" class="btn btn-warning col cancel">
-                                                            <i class="fas fa-times-circle"></i>
-                                                            <span>Cancel upload</span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 d-flex align-items-center">
-                                                    <div class="fileupload-process w-100">
-                                                        <div id="total-progress" class="progress progress-striped active"
-                                                            role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                                            aria-valuenow="0">
-                                                            <div class="progress-bar progress-bar-success" style="width:0%;"
-                                                                data-dz-uploadprogress></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">{{ $value['title'] }}</label>
+                                                <textarea class="summernote" name="languages[{{ $key }}][{{ $value['key'] }}]">
+                                                                                </textarea>
                                             </div>
-                                            <div class="table table-striped files" id="previews">
-                                                <div id="template" class="row mt-2">
-                                                    <div class="col-auto">
-                                                        <span class="preview"><img src="data:," alt=""
-                                                                data-dz-thumbnail /></span>
-                                                    </div>
-                                                    <div class="col d-flex align-items-center">
-                                                        <p class="mb-0">
-                                                            <span class="lead" data-dz-name></span>
-                                                            (<span data-dz-size></span>)
-                                                        </p>
-                                                        <strong class="error text-danger" data-dz-errormessage></strong>
-                                                    </div>
-                                                    <div class="col-4 d-flex align-items-center">
-                                                        <div class="progress progress-striped active w-100"
-                                                            role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                                            aria-valuenow="0">
-                                                            <div class="progress-bar progress-bar-success" style="width:0%;"
-                                                                data-dz-uploadprogress></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-auto d-flex align-items-center">
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-primary start">
-                                                                <i class="fas fa-upload"></i>
-                                                                <span>Start</span>
-                                                            </button>
-                                                            <button data-dz-remove class="btn btn-warning cancel">
-                                                                <i class="fas fa-times-circle"></i>
-                                                                <span>Cancel</span>
-                                                            </button>
-                                                            <button data-dz-remove class="btn btn-danger delete">
-                                                                <i class="fas fa-trash"></i>
-                                                                <span>Delete</span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <?php
+                                                                }
+                                                
+                                                    
+                                                }    
+                                                
+                                            ?>
+                                            <input type="hidden" name="languages[{{ $key }}][languge_id]"
+                                                value="{{ $language->id }}" />
+
                                         </div>
                                     </div>
+                                    <?php
+                                    }    
+                                     ?>
 
-                                    <!-- /.row -->
+
+
                                 </div>
                             </div>
-                            {{-- for workers --}}
-                            <div class="card card-default">
-                                <div class="card-header">
-                                    <h3 class="card-title font-weight-bold">Services</h3>
-
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body" style="display: block;">
-                                    <div class="row">
-                                        
-                                    </div>
-
-                                    <!-- /.row -->
-                                </div>
+                            <!-- /.card -->
+                            <!-- /.card-footer -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
-
-
-
-
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
 
-                    </form>
-                    <!-- /.card -->
+                    </div>
+
+
+
+
+
+
 
 
                 </div>
+                <div class="col-md-4">
+                    <?php 
+                        foreach($listDetailFieldNotLanguage as $value){
+                            if($value['type'] == 3){
+                                        ?>
+                    {{-- image --}}
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="file-upload">
+                            <div class="field-image">
+                                <div class="image-upload-wrap">
+                                    <input class="file-upload-input" name="{{ $value['key'] }}" type='file'
+                                        onchange="readURL(this);" accept="image/*" />
+                                    <div class="drag-text">
+                                        <h3>Drag and drop a file or select add Image</h3>
+                                    </div>
+                                </div>
+                                <div class="file-upload-content">
+                                    <img class="file-upload-image" src="#" alt="your image" />
+                                    <div class="image-title-wrap">
+                                        <button type="button" onclick="removeUpload(this)" class="remove-image">Remove
+                                            <span class="image-title">Uploaded Image</span></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <?php
+                                    }
+                        }    
+                        
+                        
+                    ?>
+                </div>
             </div>
-            <!-- /.col-->
-        </div>
+
+        </form>
     </section>
 @endsection
 
@@ -174,60 +192,42 @@
     <!-- dropzonejs -->
     <script src="{{ asset('/adminlte/plugins/dropzone/min/dropzone.min.js') }}"></script>
     <script>
-        $('#summernote').summernote({
+        $('.summernote').summernote({
             height: 200
         })
         $('.select2').select2()
-        // DropzoneJS Demo Code Start
-        Dropzone.autoDiscover = false
-        // Get the template HTML and remove it from the doumenthe template HTML and remove it from the doument
-        var previewNode = document.querySelector("#template")
-        previewNode.id = ""
-        var previewTemplate = previewNode.parentNode.innerHTML
-        previewNode.parentNode.removeChild(previewNode)
-        var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
-            url: "/target-url", // Set the url
-            thumbnailWidth: 80,
-            thumbnailHeight: 80,
-            parallelUploads: 20,
-            previewTemplate: previewTemplate,
-            autoQueue: false, // Make sure the files aren't queued until manually added
-            previewsContainer: "#previews", // Define the container to display the previews
-            clickable: ".fileinput-button" // Define the element that should be used as click trigger to select files.
-        })
 
-        myDropzone.on("addedfile", function(file) {
-            // Hookup the start button
-            file.previewElement.querySelector(".start").onclick = function() {
-                myDropzone.enqueueFile(file)
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $(input).closest('.field-image').find('.image-upload-wrap').hide();
+
+                    $(input).closest('.field-image').find('.file-upload-image').attr('src', e.target.result);
+                    $(input).closest('.field-image').find('.file-upload-content').show();
+
+                    $(input).closest('.field-image').find('.image-title').html(input.files[0].name);
+                };
+                console.log(input.files[0])
+                reader.readAsDataURL(input.files[0]);
+
+            } else {
+                removeUpload();
             }
-        })
-
-        // Update the total progress bar
-        myDropzone.on("totaluploadprogress", function(progress) {
-            document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
-        })
-
-        myDropzone.on("sending", function(file) {
-            // Show the total progress bar when upload starts
-            document.querySelector("#total-progress").style.opacity = "1"
-            // And disable the start button
-            file.previewElement.querySelector(".start").setAttribute("disabled", "disabled")
-        })
-
-        // Hide the total progress bar when nothing's uploading anymore
-        myDropzone.on("queuecomplete", function(progress) {
-            document.querySelector("#total-progress").style.opacity = "0"
-        })
-
-        // Setup the buttons for all transfers
-        // The "add files" button doesn't need to be setup because the config
-        // `clickable` has already been specified.
-        document.querySelector("#actions .start").onclick = function() {
-            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED))
         }
-        document.querySelector("#actions .cancel").onclick = function() {
-            myDropzone.removeAllFiles(true)
+
+        function removeUpload(input) {
+            $(input).closest('.field-image').find('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $(input).closest('.field-image').find('.file-upload-content').hide();
+            $(input).closest('.field-image').find('.image-upload-wrap').show();
         }
+        $('.image-upload-wrap').bind('dragover', function() {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function() {
+            $('.image-upload-wrap').removeClass('image-dropping');
+        });
     </script>
 @endsection

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Config_detail_field;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

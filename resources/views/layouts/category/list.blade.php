@@ -32,7 +32,7 @@
                                     <tr>
                                         <th>Category</th>
                                         <th>Slug</th>
-                                        <th>Short Description</th>
+                                        <th>Title</th>
                                         <th>Updated at</th>
                                         <th>Action</th>
                                     </tr>
@@ -41,9 +41,9 @@
                                     <?php foreach ($category as $key => $value) {
                                         ?>
                                         <tr>
-                                            <td>{{ $value->title }}</td>
+                                            <td>{{ $value->name }}</td>
                                             <td>{{ $value->slug }}</td>
-                                            <td>{{ $value->description }}</td>
+                                            <td>{{ $value->title }}</td>
                                             <td>{{ $value->updated_at }}</td>
                                             <td >
                                                 <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>

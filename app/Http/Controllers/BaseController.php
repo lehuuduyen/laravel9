@@ -3,23 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Language;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 
 class BaseController extends Controller
 {
+    public $_ENGLISH = 0;
     public function renderView($file, $param)
     {
         $listSlugCategory = [];
-        $category = Category::all();
+        $category = Category::with('category_transiation')->get();
+        
+        
+        
         $param['category'] = $category;
-        foreach ($category as $val) {
+        foreach ($param['category'] as $key => $val) {
+            $param['category'][$key]['title'] = $val['category_transiation'][$this->_ENGLISH]->title; 
+            $param['category'][$key]['sub_title'] = $val['category_transiation'][$this->_ENGLISH]->sub_title; 
+            $param['category'][$key]['excerpt'] = $val['category_transiation'][$this->_ENGLISH]->excerpt; 
             $listSlugCategory[] = $val->slug;
         }
         if (in_array(Request::path(), $listSlugCategory)) {
             $param['active'] = Request::path();
             $param['activeCategory'] = true;
         }
+
+        //list language
+        $allLanguage = Language::get();
+        $param['allLanguage'] = $allLanguage;
         return view($file, $param);
+    }
+    public function storeImage($request) {
+        $path = $request->storeAs('public/profile',"abc.png");
+        return substr($path, strlen('public/'));
+    }
+    public function getCategory(){
+        $slug = explode("/", Request::path())[0];
+        $getCategory = Category::where('slug', $slug)->first();
+        if($getCategory){
+            return $getCategory;
+        }
+        return $this->error("Empty","Category not exists");
+    }
+
+    public function error($title,$content)
+    {
+        # code...
+        $data['title'] = $title;
+        $data['name'] = $content;
+        return response()->view('errors.404',$data,404);
     }
 }

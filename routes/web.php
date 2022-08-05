@@ -3,6 +3,7 @@
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileManagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-   
+
 Auth::routes();
 
 
+Route::get('/laravel-filemanager/demo', [Unisharp\Laravelfilemanager\controllers\DemoController::class, 'index'])->name('home');
 
+Route::group(['prefix' => 'laravel-filemanager','middleware' => 'auth'], function () {
+    Route::get('/', 'Unisharp\Laravelfilemanager\controllers\LfmController@show');
+    Route::post('/laravel-filemanager/upload', '\UniSharp\LaravelFilemanager\controllers\UploadController@upload');
+    // list all lfm routes here...
+});
 Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 

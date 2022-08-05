@@ -15,6 +15,7 @@ class Category extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->bigIncrements("id");
+            $table->string('name')->unique();
             $table->string('img_sp');
             $table->string('img_pc');
             $table->string('slug')->unique();
