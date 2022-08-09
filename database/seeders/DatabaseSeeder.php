@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         $this->call(LanguageSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(ConfigFieldSeeder::class);
+        $this->call(ConfigDetailFieldSeeder::class);
         Model::reguard();
     }
 }

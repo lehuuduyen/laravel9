@@ -42,9 +42,10 @@ Route::get('/post/new', [App\Http\Controllers\PostController::class, 'new'])->na
 Route::get('/post/edit', [App\Http\Controllers\PostController::class, 'edit'])->name('editpost');
 Route::get('/top', [App\Http\Controllers\TopController::class, 'top'])->name('top');
 
-Route::get('/config', [App\Http\Controllers\ConfigFieldController::class, 'index'])->name('config');
-Route::get('/config/new', [App\Http\Controllers\ConfigFieldController::class, 'new'])->name('newconfig');
-Route::post('/config/insert', [App\Http\Controllers\ConfigFieldController::class, 'insert'])->name('insertconfig');
+
+Route::resources([
+    'config' => App\Http\Controllers\ConfigFieldController::class,
+]);
 
 
 $listCategory = Category::all();

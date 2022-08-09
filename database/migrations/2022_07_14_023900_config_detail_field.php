@@ -16,8 +16,12 @@ class ConfigDetailField extends Migration
         Schema::create('config_detail_field', function (Blueprint $table) {
             $table->bigIncrements("id");
             $table->unsignedBigInteger('config_field_id');
-              $table->foreign('config_field_id')
-              ->references('id')->on('config_field')->onDelete('cascade');
+            $table->foreign('config_field_id')
+                ->references('id')->on('config_field')->onDelete('cascade');
+            $table->unsignedBigInteger('language_id');
+            $table->foreign('language_id')
+                ->references('id')->on('languages')->onDelete('cascade');
+
             $table->string('title');
             $table->string('key');
             $table->tinyInteger('type');

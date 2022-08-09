@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Language;
+use App\Models\Config_field;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class LanguageSeeder extends Seeder
+class ConfigFieldSeeder extends Seeder
 {
 
 
@@ -18,17 +18,12 @@ class LanguageSeeder extends Seeder
      */
     public function run()
     {
-        $language = [[
+        $Config_field = [[
             'id' => 1,
-            'name' => "English",
-            'slug' => "eng",
-        ],
-        [
-            'id' => 2,
-            'name' => "Japan",
-            'slug' => "jp",
-        ]];
-        Language::insert($language);
+            'title' => "Default",
+        ]
+        ];
+        Config_field::insert($Config_field);
         // \App\Models\Language::factory()->count(30)->create();
 
     }

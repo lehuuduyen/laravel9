@@ -49,12 +49,46 @@ class ConfigFieldController extends BaseController
         }
         return $this->renderView('layouts/config/list', ['active' => 'config', 'configField' => $configField]);
     }
-    public function new()
+    public function create()
     {
-
         return $this->renderView('layouts/config/new', ['active' => 'config']);
     }
-    public function insert(Request  $request)
+    public function edit($id)
+    {
+        $configFieldDetail = Config_field::with('Config_detail_field')->where('id',$id)->first();
+        return $this->renderView('layouts/config/new', ['active' => 'config','configFieldDetail'=>$configFieldDetail]);
+    }
+    
+    public function store(Request  $request)
+    {
+        $data = $request->all();
+     
+        // // Start transaction!
+        DB::beginTransaction();
+
+        try {
+            // insert config
+            $configField = Config_field::create(
+                ['title' => $data['title']]
+            );
+            
+            $listConfigDettail = json_decode($data['json']);
+            foreach($listConfigDettail as $configDetail){
+                
+                
+                Config_detail_field::create(
+                    ['title' => $configDetail->title ,'config_field_id' => $configField->id,'key' => $configDetail->key,'type' => $configDetail->type],
+                );
+            }
+         
+            // Commit the queries!
+            DB::commit();
+        }  catch (\Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
+    public function update(Request  $request)
     {
         $data = $request->all();
      

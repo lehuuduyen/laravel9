@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/config/new"> Create New Config filed Post</a>
+                            <a class="btn btn-success" href="/config/create"> Create New Config filed Post</a>
                         </div>
 
                         <!-- /.card-header -->
@@ -56,8 +56,12 @@
                                         </td>
                                         
                                         <td>
-                                            <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                                            </button>
+                                            <a href="/config/{{ $value->id }}/edit">
+                                                <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                                                </button>
+                                            </a>
+
+                                           
                                             <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>
                                             </button>
                                         </td>
