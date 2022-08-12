@@ -22,9 +22,9 @@ class CreateCategoryTransiationsTable extends Migration
             $table->foreign('language_id')
                 ->references('id')->on('languages')->onDelete('cascade');
 
-            $table->string('title');
-            $table->string('sub_title');
-            $table->string('excerpt');
+            $table->string('title')->nullable();
+            $table->string('sub_title')->nullable();
+            $table->string('excerpt')->nullable();
             $table->timestamps();
         });
     }

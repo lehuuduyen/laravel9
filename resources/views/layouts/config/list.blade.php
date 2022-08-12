@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/config/create"> Create New Config filed Post</a>
+                            <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
                         </div>
 
                         <!-- /.card-header -->
@@ -34,52 +34,21 @@
                                         <th style="text-align: center">Updated at</th>
                                         <th style="text-align: center">Post Used</th>
 
-                                        <th style="text-align: left">Action</th>
+                                        <th style="text-align: center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  
-                                        foreach($configField as $value){
-                                        ?>
-                                    <tr>
-                                        <td> {{ $value->title }}</td>
-                                        <td style="text-align: left;padding-left:5%">
-                                            <div>{{ $value->count_text }}: text</div>
-                                            <div>{{ $value->count_textarea }}: textarea</div>
-                                            <div>{{ $value->count_img }}: img</div>
-                                        </td>
-                                        <td>{{ $value->updated_at }}</td>
-                                        <td >
-                                            <a href="">http://localhost:8080/post/edit/{{ rand(1, 100) }}</a>
-                                            {{-- <a href="">http://localhost:8080/post/edit/{{ rand(1, 100) }}</a> --}}
-                                            {{-- <a href="">http://localhost:8080/post/edit/{{ rand(1, 100) }}</a> --}}
-                                        </td>
-                                        
-                                        <td>
-                                            <a href="/config/{{ $value->id }}/edit">
-                                                <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                                                </button>
-                                            </a>
 
-                                           
-                                            <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
-                                        </td>
-
-                                    </tr>
-                                    <?php
-                                        }
-
-                                        ?>
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Category</th>
-                                        <th>Title</th>
-                                        <th>Updated at</th>
-                                        <th>Viewer</th>
-                                        <th>Action</th>
+                                        <th style="text-align: center">Title</th>
+                                        <th style="text-align: center">Summary</th>
+                                        <th style="text-align: center">Updated at</th>
+                                        <th style="text-align: center">Post Used</th>
+
+                                        <th style="text-align: center">Action</th>
 
                                     </tr>
                                 </tfoot>
@@ -113,31 +82,101 @@
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
-        $(function() {
-            $("#example1").DataTable({
-                initComplete: function() {
-                    this.api().columns().every(function() {
-                        var column = this;
-                        var select = $('<select><option value=""></option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
-
-                                column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                            });
-
-                        column.data().unique().sort().each(function(d, j) {
-                            select.append('<option value="' + d + '">' + d +
-                                '</option>')
-                        });
-                    });
+        var table = $('#example1').DataTable({
+            "processing": true,
+            "ajax": {
+                "url": "/api/config",
+                "type": "GET"
+            },
+            "columns": [{
+                    "data": "title"
+                },
+                {
+                    "data": "id"
+                },
+                {
+                    "data": "update_at"
+                },
+                {
+                    "data": "id"
+                },
+                {
+                    "data": "id"
                 }
-            });
+            ],
+            "aoColumnDefs": [{
+                    "mRender": function(data, type, row) {
+                        return `<div> ${row.count_text}: text</div>
+                        <div> ${row.count_textarea}: textarea</div>
+                        <div> ${row.count_img}: img</div>`;
+                    },
+                    "aTargets": [1]
+                },
+                {
+                    "mRender": function(data, type, row) {
+                        console.log(row.list_post);
+                        
+                        html = '';
+                        $.each(row.list_post, function(key,val){
+                            html+= `<a href = "/post/${val}/edit" > ${val} </a> </br>`
+                        })
+                       
+                        return html;
+                    },
+                    "aTargets": [-2]
+                },
+                {
+                    "mRender": function(data, type, row) {
+                        
+                        html = `
+                        <a href="/config/${row.id}/edit">
+                            <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </a>
+                        `
+                        if(row.list_post.length ==0){
+                            html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
+                                    class="fa fa-trash" aria-hidden="true"></i>
+                            </button>`
+                        }
+                        
+                       
+                        return html;
+                    },
+                    "aTargets": [-1]
+                },
 
+            ],
+            
         });
+
+        function deleteRow(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'delete',
+                        url: `/config/${id}`,
+
+                        success: function(msg) {
+                            table.ajax.reload();
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    });
+
+                }
+            })
+        }
     </script>
 @endsection

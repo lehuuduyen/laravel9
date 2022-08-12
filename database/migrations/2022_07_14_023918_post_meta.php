@@ -22,7 +22,7 @@ class PostMeta extends Migration
             $table->foreign('language_id')
                 ->references('id')->on('languages');
             $table->string('meta_key');
-            $table->longText('meta_value');
+            $table->longText('meta_value')->nullable();
             $table->timestamps();
         });
     }

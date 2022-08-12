@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Category_config_field;
 use App\Models\Language;
+use App\Models\Post;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -54,4 +56,14 @@ class BaseController extends Controller
         $data['name'] = $content;
         return response()->view('errors.404',$data,404);
     }
+
+    public function getPostByConfig($id)
+    {
+        # code...
+        $listCategory = Category_config_field::where('config_field_id',$id)->pluck('category_id');
+        $listPost = Post::whereIn('category_id',$listCategory)->pluck('id');
+        return $listPost;
+
+    }
+
 }

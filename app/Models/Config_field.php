@@ -13,7 +13,7 @@ class Config_field extends Model
 
     public function config_detail_field()
     {
-        return $this->hasMany(Config_detail_field::class)->select("title","key","type");
+        return $this->hasMany(Config_detail_field::class)->with('language');
     }
-
+    
 }

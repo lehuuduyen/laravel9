@@ -9,7 +9,7 @@ class Config_detail_field extends Model
 {
     use HasFactory;
     protected $table = 'config_detail_field';
-    protected $fillable = ['title','key','type','config_field_id'];
+    protected $fillable = ['title','key','type','config_field_id','language_id'];
 
     public static function typeText (){
         return 1;
@@ -20,6 +20,9 @@ class Config_detail_field extends Model
     public static function typeImg (){
         return 3;
     } 
-    
+    public function language()
+    {
+        return $this->hasOne(Language::class,'id','language_id');
+    }
 
 }

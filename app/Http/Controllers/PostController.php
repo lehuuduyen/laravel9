@@ -45,15 +45,14 @@ class PostController extends BaseController
     {
         $getCategory = $this->getCategory();
         $listField = Category_config_field::where('category_id', $getCategory->id)->pluck('config_field_id')->toArray();
-        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type',[1,2])->get();
-        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type',3)->get();
+        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type',[1,2])->where('language_id',1)->get();
+        $listDetailFieldImage = Config_detail_field::whereIn('config_field_id', $listField)->where('type',3)->where('language_id',1)->get();
 
         return $this->renderView('layouts/posts/new', [
             'active' => 'list_post',
             'getCategory' => $getCategory,
-            'listDetailFieldLanguage' => $listDetailFieldLanguage,
-            'listDetailFieldNotLanguage' => $listDetailFieldNotLanguage
-
+            'listDetailFieldLanguage' => $listDetailField,
+            'listDetailFieldNotLanguage' => $listDetailFieldImage
         ]);
     }
     public function insert(Request  $request)
@@ -62,7 +61,6 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-            
             
             $post = Post::create(
                 ['category_id' => $data['category_id']]

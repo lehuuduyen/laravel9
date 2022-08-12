@@ -6,6 +6,7 @@ use App\Http\Requests\FormConfigValidate;
 use App\Models\Config_detail_field;
 use Illuminate\Http\Request;
 use App\Models\Config_field;
+use App\Models\Language;
 use Dflydev\DotAccessData\Data;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Support\Facades\DB;
@@ -29,25 +30,8 @@ class ConfigFieldController extends BaseController
      */
     public function index()
     {
-        $configField = Config_field::with('Config_detail_field')->get();
-        foreach ($configField as $key => $value) {
-            $countText = 0;
-            $countTextArea = 0;
-            $countImg = 0;
-            foreach ($value->config_detail_field as $configDetailField) {
-                if ($configDetailField['type'] == Config_detail_field::typeText()) {
-                    $countText++;
-                } else if ($configDetailField['type'] == Config_detail_field::typeTextArea()) {
-                    $countTextArea++;
-                } else if ($configDetailField['type'] == Config_detail_field::typeImg()) {
-                    $countImg++;
-                }
-            }
-            $configField[$key]['count_text'] = $countText;
-            $configField[$key]['count_textarea'] = $countTextArea;
-            $configField[$key]['count_img'] = $countImg;
-        }
-        return $this->renderView('layouts/config/list', ['active' => 'config', 'configField' => $configField]);
+        
+        return $this->renderView('layouts/config/list', ['active' => 'config']);
     }
     public function create()
     {
@@ -56,7 +40,30 @@ class ConfigFieldController extends BaseController
     public function edit($id)
     {
         $configFieldDetail = Config_field::with('Config_detail_field')->where('id',$id)->first();
-        return $this->renderView('layouts/config/new', ['active' => 'config','configFieldDetail'=>$configFieldDetail]);
+
+        $temp = [];
+        $array = [];
+        foreach($configFieldDetail->config_detail_field as $key => $value){
+            $temp[$value->key]['type'] = $value->type;
+            $temp[$value->key]['key'] = $value->key;
+            $temp[$value->key]['language'][$value->language['id']] = [
+                'id'=> $value->id,
+                'language_id'=> $value->language['id'],
+                'title' =>$value->title,
+                'slug_language' =>$value->language['slug'],
+            ] ;
+        }
+     
+        
+        $array = array_values($temp);
+
+        $configFieldDetail->config_detail_field = $array;
+        
+        $getPostByConfig = $this->getPostByConfig($id);
+        
+        
+        
+        return $this->renderView('layouts/config/new', ['active' => 'config','configFieldDetail'=>$configFieldDetail,'listPost'=>$getPostByConfig]);
     }
     
     public function store(Request  $request)
@@ -74,10 +81,9 @@ class ConfigFieldController extends BaseController
             
             $listConfigDettail = json_decode($data['json']);
             foreach($listConfigDettail as $configDetail){
-                
-                
+                              
                 Config_detail_field::create(
-                    ['title' => $configDetail->title ,'config_field_id' => $configField->id,'key' => $configDetail->key,'type' => $configDetail->type],
+                    ['language_id' => $configDetail->language_id ,'title' => $configDetail->title ,'config_field_id' => $configField->id,'key' => $configDetail->key,'type' => $configDetail->type],
                 );
             }
          
@@ -88,26 +94,38 @@ class ConfigFieldController extends BaseController
             throw $e;
         }
     }
-    public function update(Request  $request)
+    public function update(Request  $request,$id)
     {
         $data = $request->all();
-     
+       
+        
         // // Start transaction!
         DB::beginTransaction();
 
         try {
             // insert config
-            $configField = Config_field::create(
+            $configField = Config_field::where('id',$id)->update(
                 ['title' => $data['title']]
             );
-            
+            //update config
             $listConfigDettail = json_decode($data['json']);
             foreach($listConfigDettail as $configDetail){
-                
-                
-                Config_detail_field::create(
-                    ['title' => $configDetail->title ,'config_field_id' => $configField->id,'key' => $configDetail->key,'type' => $configDetail->type],
-                );
+                $find = DB::table('config_detail_field')->where([
+                    'key'=>$configDetail->key,
+                    'type'=>$configDetail->type,
+                    'config_field_id'=>$id,
+                    'language_id' => $configDetail->language_id,
+                ])->first();
+                if($find){
+                    Config_detail_field::where('id',$find->id)->update(
+                        ['title' => $configDetail->title ]
+                    );
+                }else{
+                    Config_detail_field::create(
+                        ['language_id' => $configDetail->language_id ,'title' => $configDetail->title ,'config_field_id' =>$id,'key' => $configDetail->key,'type' => $configDetail->type],
+                    );
+                }
+               
             }
          
             // Commit the queries!
@@ -116,5 +134,9 @@ class ConfigFieldController extends BaseController
             DB::rollback();
             throw $e;
         }
+    }
+    public function destroy($id){
+       return Config_field::destroy($id);
+
     }
 }

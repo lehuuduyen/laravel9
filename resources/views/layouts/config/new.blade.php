@@ -20,9 +20,12 @@
             <div class="col-md-12">
                 <input type="hidden" id="allLanguage" value="{{ json_encode($allLanguage) }}">
                 @if (isset($configFieldDetail))
-                    <form action="/config/update/{{ $configFieldDetail->id }}" method="post">
+                    <div class="pull-right" style="text-align: right;margin: 10px 0px ">
+                        <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
+                    </div>
+                    <form action="/config/{{ $configFieldDetail->id }}" id="form" method="put">
                     @else
-                        <form action="/config" method="post">
+                        <form action="/config" id="form" method="post">
                 @endif
                 @csrf
                 {{-- <!-- {{ csrf_field() }} --> --}}
@@ -42,28 +45,32 @@
                                 </div>
                             </div>
                         </div>
+                        @if (!isset($configFieldDetail))
+                            <div class="form-group">
+                                <button type="button" onclick="addHtml(1)" class="btn btn-block btn-outline-info btn-lg">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add Text</span>
+                                </button>
+                                <button type="button" onclick="addHtml(2)"
+                                    class="btn btn-block btn-outline-warning btn-lg">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add Textarea</span>
+                                </button>
+                                <button type="button" onclick="addHtml(3)"
+                                    class="btn btn-block btn-outline-secondary  btn-lg">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add Image</span>
+                                </button>
+                            </div>
+                        @endif
 
-                        <div class="form-group">
-                            <button type="button" onclick="addHtml(1)" class="btn btn-block btn-outline-info btn-lg">
-                                <i class="fas fa-plus"></i>
-                                <span>Add Text</span>
-                            </button>
-                            <button type="button" onclick="addHtml(2)" class="btn btn-block btn-outline-warning btn-lg">
-                                <i class="fas fa-plus"></i>
-                                <span>Add Textarea</span>
-                            </button>
-                            <button type="button" onclick="addHtml(3)" class="btn btn-block btn-outline-secondary  btn-lg">
-                                <i class="fas fa-plus"></i>
-                                <span>Add Image</span>
-                            </button>
-                        </div>
                         <div id="addhtml">
                             @isset($configFieldDetail)
                                 <input type="hidden" name="config_id" value="{{ $configFieldDetail->id }}">
 
                                 @foreach ($configFieldDetail->config_detail_field as $configDetailField)
                                     @php
-                                        $type = $configDetailField->type;
+                                        $type = $configDetailField['type'];
                                         $classType = 'btn-outline-secondary';
                                         $textType = 'Image';
                                         if ($type == 1) {
@@ -75,6 +82,7 @@
                                             $classType = 'btn-outline-warning';
                                             $textType = 'Textarea';
                                         }
+                                        $disabled = count($listPost) > 0 ? 'disabled' : '';
                                     @endphp
                                     <div class="card card-default json-html">
                                         <div class="card-header">
@@ -94,19 +102,24 @@
                                         <div class="card-body" style="display: block;">
                                             <div style="display:flex">
                                                 <div class="col-md-6 p-0 pr-1">
-                                                    <div class="form-group">
-                                                        <label for="exampleInputtext1">Title</label>
-                                                        <input type="text" class="form-control" name="title"
-                                                            placeholder="Enter Title... "
-                                                            value="{{ $configDetailField->title }}">
-                                                    </div>
+                                                    @foreach ($allLanguage as $language)
+                                                        <div class="form-group">
+                                                            <label for="exampleInputtext1">Title
+                                                                {{ $language['slug'] }}</label>
+                                                            <input type="text" class="form-control"
+                                                                name="title"
+                                                                placeholder="Enter Title... "  data-language_id ="{{ $language->id }}" value="{{ (isset($configDetailField['language'][$language->id]))?$configDetailField['language'][$language->id]['title']:"" }}">
+                                                        </div>
+                                                    @endforeach
+
                                                 </div>
 
                                                 <div class="col-md-6 p-0 pl-1">
                                                     <div class="form-group">
                                                         <label for="exampleInputtext1">Key</label>
                                                         <input type="text" class="form-control" name="key"
-                                                            placeholder="Enter Key..." value="{{ $configDetailField->key }}"">
+                                                            placeholder="Enter Key..." {{ $disabled }}
+                                                            value="{{ $configDetailField['key'] }}"">
                                                     </div>
                                                 </div>
                                                 <input type="hidden" name="type" value="{{ $type }}">
@@ -171,13 +184,13 @@
                                     <div style="display:flex">
                                         <div class="col-md-6 p-0 pr-1">
                                 `;
-                               $.each(language,function(key,val){
-                                htmlImg +=` <div class="form-group">
+            $.each(language, function(key, val) {
+                htmlImg += ` <div class="form-group">
                                                 <label for="exampleInputtext1">Title ${val.slug}</label>
                                                 <input type="text" class="form-control title" data-language_id="${val.id}" name="title" placeholder="Enter Title... ">
                                             </div>`
-                               })                
-                            htmlImg +=`</div>
+            })
+            htmlImg += `</div>
                             
                                         <div class="col-md-6 p-0 pl-1">
                                             <div class="form-group">
@@ -204,24 +217,15 @@
                 if ($(element).attr('style')) {
                     return;
                 }
-                let json = {};
-                var elementTitles = $(element).find("input[name='title']");
-                $.each(elementTitles,function(key,elementTitle){
-                    alert(1)
-
-                     return false
-                     alert(2)
-    
-                    })
-
 
                 var key = $(element).find("input[name='key']").val();
                 var type = $(element).find("input[name='type']").val();
-                if (key == "" || type == "") {
-                    alert("Giá trị title và key không được để rổng ")
+                if (key == "") {
+                    alert("Giá trị key không được để rổng ")
                     array = []
                     return false;
                 }
+
                 if (arrayCheckKey.includes(key)) {
                     alert("Key không được trùng")
                     array = []
@@ -230,20 +234,27 @@
                     arrayCheckKey.push(key)
                 }
 
-                json.title = title
-                json.key = key
-                json.type = type
-                array.push(json)
+                var elementTitles = $(element).find("input[name='title']");
+                $.each(elementTitles, function(stt, elementTitle) {
+                    let json = {};
+                    json.title = $(elementTitle).val()
+                    json.key = key
+                    json.type = type
+                    json.language_id = $(elementTitle).attr('data-language_id')
+                    array.push(json)
+                })
+                console.log(array)
 
             })
+            console.log(array.length)
             let titleConfig = $("#title").val()
             if (titleConfig == "") {
                 alert("Giá trị title config không được để rổng ")
-                array = []
-            } else {
+
+            } else if (array.length > 0 && titleConfig != "") {
                 $.ajax({
-                    type: "POST",
-                    url: "/config",
+                    type: $("#form").attr('method'),
+                    url: $("#form").attr('action'),
                     data: {
                         title: titleConfig,
                         json: JSON.stringify(array),
@@ -253,11 +264,6 @@
                     }
                 });
             }
-
-
-
-
-            $("#addhtml").attr('data-id', JSON.stringify(data))
         }
     </script>
 @endsection

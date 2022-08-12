@@ -43,7 +43,9 @@ class CategoryController extends BaseController
         // // Start transaction!
         DB::beginTransaction();
         try {
-            $data = $request->all();      
+            $data = $request->all();
+           
+                  
             $fileNameSp = "";
             $fileNamePc = "";
             if ($request->hasFile('imgsp')) {
