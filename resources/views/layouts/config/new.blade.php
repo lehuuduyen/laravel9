@@ -106,9 +106,10 @@
                                                         <div class="form-group">
                                                             <label for="exampleInputtext1">Title
                                                                 {{ $language['slug'] }}</label>
-                                                            <input type="text" class="form-control"
-                                                                name="title"
-                                                                placeholder="Enter Title... "  data-language_id ="{{ $language->id }}" value="{{ (isset($configDetailField['language'][$language->id]))?$configDetailField['language'][$language->id]['title']:"" }}">
+                                                            <input type="text" class="form-control" name="title"
+                                                                placeholder="Enter Title... "
+                                                                data-language_id="{{ $language->id }}"
+                                                                value="{{ isset($configDetailField['language'][$language->id]) ? $configDetailField['language'][$language->id]['title'] : '' }}">
                                                         </div>
                                                     @endforeach
 
@@ -208,62 +209,62 @@
             $("#addhtml").append(htmlImg)
         }
 
+
         function updateJson() {
-            let el = $('.json-html');
-            let array = [];
-            let arrayCheckKey = [];
-            let data = {};
-            $.each(el, function(k, element) {
-                if ($(element).attr('style')) {
-                    return;
+
+
+
+            Swal.fire({
+                title: 'Do you want to create?',
+                showCancelButton: true,
+                confirmButtonText: 'Create',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    let message = []
+                    let el = $('.json-html');
+                    let array = [];
+                    let arrayCheckKey = [];
+                    let data = {};
+                    $.each(el, function(k, element) {
+                        if ($(element).attr('style')) {
+                            return;
+                        }
+
+                        var key = $(element).find("input[name='key']").val();
+                        var type = $(element).find("input[name='type']").val();
+                        arrayCheckKey.push(key)
+
+
+                        var elementTitles = $(element).find("input[name='title']");
+                        $.each(elementTitles, function(stt, elementTitle) {
+                            let json = {};
+                            json.title = $(elementTitle).val()
+                            json.key = key
+                            json.type = type
+                            json.language_id = $(elementTitle).attr('data-language_id')
+                            array.push(json)
+                        })
+
+                    })
+                    let titleConfig = $("#title").val()
+                    $.ajax({
+                        type: $("#form").attr('method'),
+                        url: $("#form").attr('action'),
+                        data: {
+                            title: titleConfig,
+                            json: JSON.stringify(array),
+                        },
+                        success: function(msg) {
+                            alertSuccess(msg.message)
+                        },
+                        error: function(msg) {
+                            alertError(msg.responseJSON.message)
+                        }
+                    });
                 }
-
-                var key = $(element).find("input[name='key']").val();
-                var type = $(element).find("input[name='type']").val();
-                if (key == "") {
-                    alert("Giá trị key không được để rổng ")
-                    array = []
-                    return false;
-                }
-
-                if (arrayCheckKey.includes(key)) {
-                    alert("Key không được trùng")
-                    array = []
-                    return false;
-                } else {
-                    arrayCheckKey.push(key)
-                }
-
-                var elementTitles = $(element).find("input[name='title']");
-                $.each(elementTitles, function(stt, elementTitle) {
-                    let json = {};
-                    json.title = $(elementTitle).val()
-                    json.key = key
-                    json.type = type
-                    json.language_id = $(elementTitle).attr('data-language_id')
-                    array.push(json)
-                })
-                console.log(array)
-
             })
-            console.log(array.length)
-            let titleConfig = $("#title").val()
-            if (titleConfig == "") {
-                alert("Giá trị title config không được để rổng ")
 
-            } else if (array.length > 0 && titleConfig != "") {
-                $.ajax({
-                    type: $("#form").attr('method'),
-                    url: $("#form").attr('action'),
-                    data: {
-                        title: titleConfig,
-                        json: JSON.stringify(array),
-                    },
-                    success: function(msg) {
-                        alert("Thêm thành công")
-                    }
-                });
-            }
         }
     </script>
 @endsection

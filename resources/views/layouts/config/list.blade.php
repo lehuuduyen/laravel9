@@ -169,7 +169,7 @@
                             table.ajax.reload();
                             Swal.fire(
                                 'Deleted!',
-                                'Your file has been deleted.',
+                                msg.message,
                                 'success'
                             )
                         }

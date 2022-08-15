@@ -216,17 +216,13 @@
 
             Swal.fire({
                 title: 'Do you want to create?',
-                showDenyButton: true,
                 showCancelButton: true,
                 confirmButtonText: 'Create',
-                denyButtonText: `Don't Create`,
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
                     $("#form").submit()
                     // Swal.fire('Saved!', '', 'success')
-                } else if (result.isDenied) {
-                    Swal.fire('Changes are not created', '', 'info')
                 }
             })
         }

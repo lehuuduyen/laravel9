@@ -141,7 +141,7 @@
         .remove-image:active {
             border: 0;
             transition: all .2s ease;
-        } 
+        }
     </style>
     @yield('css')
 
@@ -494,6 +494,26 @@
     <script src="{{ asset('/adminlte/dist/js/demo.js') }}"></script>
     <script src="{{ asset('/js/sweetalert2.min.js') }}"></script>
     <script>
+        function alertError(message = "") {
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Ops...Error',
+                html: message,
+                // timer: 3000,
+                timerProgressBar: true
+            })
+        }
+
+        function alertSuccess(message = "Saved!!!!") {
+            Swal.fire({
+                icon: 'success',
+                title: 'success',
+                html: message,
+                // timer: 3000,
+                timerProgressBar: true
+            })
+        }
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

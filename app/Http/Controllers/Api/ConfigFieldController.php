@@ -18,7 +18,7 @@ class ConfigFieldController extends BaseController
     public function index()
     {
         $configField = Config_field::with('Config_detail_field')->get();
-
+       
 
         foreach ($configField as $key => $value) {
 
@@ -48,8 +48,7 @@ class ConfigFieldController extends BaseController
 
             $configField[$key]['list_post'] = $this->getPostByConfig($value->id);
         }
-      
-        return response()->json(['data'=>$configField], Response::HTTP_OK);
+        return $this->returnJson($configField,'Data found');
     }
 
     /**

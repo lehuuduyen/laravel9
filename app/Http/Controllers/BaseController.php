@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Category_config_field;
 use App\Models\Language;
 use App\Models\Post;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -63,7 +64,21 @@ class BaseController extends Controller
         $listCategory = Category_config_field::where('config_field_id',$id)->pluck('category_id');
         $listPost = Post::whereIn('category_id',$listCategory)->pluck('id');
         return $listPost;
-
+    }
+    public function getPostByCategory($id)
+    {
+        # code...
+        $listPost = Post::where('category_id',$id)->pluck('id');
+        return $listPost;
+    }
+    public function returnJson($data,$message ='',$status=true,$code=Response::HTTP_OK)
+    {
+          return response()->json(
+            [
+                'success'=>$status,
+                'data'=>$data,
+                'message'=>$message
+            ], $code);
     }
 
 }
