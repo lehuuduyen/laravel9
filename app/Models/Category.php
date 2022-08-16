@@ -15,5 +15,9 @@ class Category extends Model
     {
         return $this->hasMany(Category_transiation::class,'category_id','id');
     }
-
+    public function category_config_field()
+    {
+        return $this->hasMany(Category_config_field::class,'category_id','id');
+    }
+   
 }
