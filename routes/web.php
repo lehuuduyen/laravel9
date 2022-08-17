@@ -31,10 +31,11 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 Route::resources([
     'category'  => App\Http\Controllers\CategoryController::class,
     'config'    => App\Http\Controllers\ConfigFieldController::class,
+    'post'    => App\Http\Controllers\PostController::class,
 ]);
 
 
-$listCategory = Category::all();
-foreach ($listCategory as $category) {
-    // Route::resources("/$category->slug", [App\Http\Controllers\PostController::class, 'index']);
-}
+// $listCategory = Category::all();
+// foreach ($listCategory as $category) {
+//     // Route::resources("/$category->slug", [App\Http\Controllers\PostController::class, 'index']);
+// }

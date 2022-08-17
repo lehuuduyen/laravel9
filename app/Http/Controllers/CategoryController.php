@@ -46,7 +46,7 @@ class CategoryController extends BaseController
         $getCategory = Category::with('category_config_field')->with('category_transiation')->find($id)->first();
         $categoryFiled = [];
         foreach ($getCategory['category_config_field'] as $value) {
-            $categoryFiled[] = $value['id'];
+            $categoryFiled[] = $value['config_field_id'];
         }
 
         return $this->renderView('layouts/category/new', ['active' => 'category', 'configField' => $configField, 'getCategory' => $getCategory, 'categoryFiled' => $categoryFiled]);
@@ -60,6 +60,10 @@ class CategoryController extends BaseController
             if ($data['name'] == null) {
                 throw new Exception("Name cannot be empty");
             }
+            if ($data['slug'] == null) {
+                throw new Exception("Slug cannot be empty");
+            }
+
 
             $fileNameSp = "";
             $fileNamePc = "";
@@ -109,29 +113,45 @@ class CategoryController extends BaseController
 
             return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
         }
-        return Redirect::back()->with('success', 'Thêm thành công');
+        return Redirect::back()->with('success', 'Create success');
     }
     public function update(Request  $request, $id)
     {
         // // Start transaction!
         DB::beginTransaction();
         try {
+            $category = Category::find($id);
+
             $data = $request->all();
             if ($data['name'] == null) {
                 throw new Exception("Name cannot be empty");
             }
-            echo '<pre>';
-            print_r($data);
-            die;
-            
+            $selectListField = $data['select_list_field'];
 
-            $fileNameSp = "";
-            $fileNamePc = "";
+            $getPostByCategory = $this->getPostByCategory($id);
+            if (count($getPostByCategory) > 0) {
+                $categoryField = Category::with('category_config_field')->find($id)->first();
+                foreach ($categoryField['category_config_field'] as $value) {
+                    if (!in_array($value['config_field_id'], $selectListField)) {
+                        throw new Exception("Filed is used in post ");
+                    }
+                }
+            }
+
+            //image
+
+            $fileNameSp = $category->img_sp;
+            $fileNamePc = $category->img_pc;
             if ($request->hasFile('imgsp')) {
                 $file = $request->imgsp;
 
-                $fileNameSp = time() . "_" . $file->getClientOriginalName();
+                $fileNameSp = time() . "_" . $this->generateRandomString(3). "_" .$file->getClientOriginalName();
                 Storage::putFileAs('public', $file, $fileNameSp);
+
+               
+                
+                //delete file old
+                Storage::delete('public/'.$category['img_sp']);
                 // $file->move('app/public/', $file->getClientOriginalName());
                 // //Lấy Tên files $file->getClientOriginalName()
                 // //Lấy Đuôi File $file->getClientOriginalExtension()
@@ -140,29 +160,41 @@ class CategoryController extends BaseController
                 // //Lấy kiểu file $file->getMimeType()
 
             }
+
             if ($request->hasFile('imgpc')) {
                 $file = $request->imgpc;
-                $fileNamePc = time() . "_" . $file->getClientOriginalName();
+                $fileNamePc = time() . "_". $this->generateRandomString(3). "_"  . $file->getClientOriginalName();
                 Storage::putFileAs('public', $file, $fileNamePc);
+                //delete file old
+                Storage::delete($category['img_pc']);
             }
 
-            $category = Category::create(
-                ['name' => $data['name'], 'slug' => $data['slug'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
+            $category->update(
+                ['name' => $data['name'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
             );
+
+            //xóa Category_transiation
+            Category_transiation::where('category_id', $id)->delete();
+            //add Category_transiation
+
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
                     "language_id" => $language['languge_id'],
-                    "category_id" => $category->id,
+                    "category_id" => $id,
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
                     "languge_id" => $language['languge_id']
                 ]);
             }
+
+            //xóa Category_transiation
+            Category_config_field::where('category_id', $id)->delete();
+            //add Category_transiation
             if (isset($data['select_list_field'])) {
                 foreach ($data['select_list_field'] as $fieldId) {
                     Category_config_field::create(
-                        ['category_id' => $category->id, 'config_field_id' => $fieldId],
+                        ['category_id' => $id, 'config_field_id' => $fieldId],
                     );
                 }
             }
@@ -173,7 +205,7 @@ class CategoryController extends BaseController
 
             return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
         }
-        return Redirect::back()->with('success', 'Thêm thành công');
+        return Redirect::back()->with('success', 'Update Success');
     }
     public function destroy($id)
     {

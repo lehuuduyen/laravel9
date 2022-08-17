@@ -59,21 +59,21 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Slug</label>
-                            <input type="text" class="form-control" name="slug"
+                            <input type="text" class="form-control" name="slug" {{ isset($getCategory->slug)?"disabled":"" }}
                                 value="{{ isset($getCategory->slug) ? $getCategory->slug : '' }}" placeholder="Enter slug">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Image pc</label>
                             <input accept="image/*" type='file' name="imgpc" id="imgpc" />
                             <img id="blah_imgpc"
-                                src="{{ isset($getCategory->img_pc) ? '/storage/' . $getCategory->img_pc : asset('/adminlte/dist/img/empty.jpg') }}"
+                                src="{{ (isset($getCategory->img_pc) && $getCategory->img_pc !="" ) ? '/storage/' . $getCategory->img_pc : asset('/adminlte/dist/img/empty.jpg') }}"
                                 style="    width: 60%;
                                 height: 200px;" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Image sp</label>
                             <input accept="image/*" type='file' name="imgsp" id="imgsp" />
-                            <img id="blah_imgsp"src="{{ isset($getCategory->img_sp) ? '/storage/' . $getCategory->img_sp : asset('/adminlte/dist/img/empty.jpg') }}"
+                            <img id="blah_imgsp"src="{{ (isset($getCategory->img_sp) && $getCategory->img_sp !="" ) ? '/storage/' . $getCategory->img_sp : asset('/adminlte/dist/img/empty.jpg') }}"
                                 style="    width: 60%;
                                 height: 200px;" />
                         </div>
