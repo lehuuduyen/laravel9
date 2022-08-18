@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
     protected $table = 'category';
-    protected $fillable = ['name','slug','img_sp','img_pc'];
+    protected $fillable = ['name','slug','img_sp','img_pc','status'];
 
     public function category_transiation()
     {

@@ -18,10 +18,15 @@ class ConfigFieldSeeder extends Seeder
      */
     public function run()
     {
-        $Config_field = [[
+        $Config_field = [
+            [
             'id' => 1,
             'title' => "Default",
-        ]
+            ],
+            [
+                'id' => 2,
+                'title' => "Field news",
+                ],
         ];
         Config_field::insert($Config_field);
         // \App\Models\Language::factory()->count(30)->create();

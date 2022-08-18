@@ -43,7 +43,8 @@ class CategoryController extends BaseController
     public function edit($id)
     {
         $configField = Config_field::all();
-        $getCategory = Category::with('category_config_field')->with('category_transiation')->find($id)->first();
+        $getCategory = Category::with('category_config_field')->with('category_transiation')->where('id',$id)->first();
+       
         $categoryFiled = [];
         foreach ($getCategory['category_config_field'] as $value) {
             $categoryFiled[] = $value['config_field_id'];
@@ -87,7 +88,7 @@ class CategoryController extends BaseController
             }
 
             $category = Category::create(
-                ['name' => $data['name'], 'slug' => $data['slug'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
+                ['name' => $data['name'],'status' => $data['status'], 'slug' => $data['slug'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
             );
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
@@ -126,11 +127,14 @@ class CategoryController extends BaseController
             if ($data['name'] == null) {
                 throw new Exception("Name cannot be empty");
             }
+            if(!isset($data['select_list_field'])){
+                $data['select_list_field'] =[];
+            }
             $selectListField = $data['select_list_field'];
 
             $getPostByCategory = $this->getPostByCategory($id);
             if (count($getPostByCategory) > 0) {
-                $categoryField = Category::with('category_config_field')->find($id)->first();
+                $categoryField = Category::with('category_config_field')->where('id',$id)->first();
                 foreach ($categoryField['category_config_field'] as $value) {
                     if (!in_array($value['config_field_id'], $selectListField)) {
                         throw new Exception("Filed is used in post ");
@@ -170,7 +174,7 @@ class CategoryController extends BaseController
             }
 
             $category->update(
-                ['name' => $data['name'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
+                ['name' => $data['name'],'status' => $data['status'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
             );
 
             //xóa Category_transiation

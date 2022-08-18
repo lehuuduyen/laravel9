@@ -53,6 +53,14 @@
 
                     <div class="card-body">
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Show on menu</label>
+                            <select class="form-control" name="status">
+                                <option {{ (isset($getCategory->status) && $getCategory->status == 1) ? 'selected' : '' }} value="1">Active</option>
+                                <option {{ (isset($getCategory->status) && $getCategory->status == 2) ? 'selected' : '' }} value="2">Unactive</option>
+                            </select>
+                           
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
                             <input type="text" class="form-control" name="name"
                                 value="{{ isset($getCategory->name) ? $getCategory->name : '' }}" placeholder="Enter name">

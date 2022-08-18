@@ -24,6 +24,8 @@ class CategorySeeder extends Seeder
             'slug' => "banner_top",
             'img_pc' => "1660706561_Xbf_imagename.png",
             'img_sp' => "1660706561_Xbf_imagename.png",
+            'status' => 2,
+
         ],
         [
             'id' => 2,
@@ -31,6 +33,8 @@ class CategorySeeder extends Seeder
             'slug' => "about",
             'img_pc' => "",
             'img_sp' => "",
+            'status' => 2,
+
         ],
         [
             'id' => 3,
@@ -38,6 +42,8 @@ class CategorySeeder extends Seeder
             'slug' => "services",
             'img_pc' => "",
             'img_sp' => "",
+            'status' => 1,
+
         ],
         [
             'id' => 4,
@@ -45,6 +51,8 @@ class CategorySeeder extends Seeder
             'slug' => "strengths",
             'img_pc' => "",
             'img_sp' => "",
+            'status' => 2,
+
         ],
         [
             'id' => 5,
@@ -52,6 +60,8 @@ class CategorySeeder extends Seeder
             'slug' => "works",
             'img_pc' => "",
             'img_sp' => "",
+            'status' => 1,
+
         ],
         [
             'id' => 6,
@@ -59,6 +69,8 @@ class CategorySeeder extends Seeder
             'slug' => "news",
             'img_pc' => "",
             'img_sp' => "",
+            'status' => 1,
+
         ],
     ];
         Category::insert($category);

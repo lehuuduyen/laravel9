@@ -16,9 +16,7 @@ class BaseController extends Controller
     public function renderView($file, $param)
     {
         $listSlugCategory = [];
-        $category = Category::with('category_transiation')->get();
-        
-        
+        $category = Category::with('category_transiation')->where('status',1)->get();
         
         $param['category'] = $category;
         foreach ($param['category'] as $key => $val) {
@@ -42,12 +40,15 @@ class BaseController extends Controller
         return substr($path, strlen('public/'));
     }
     public function getCategory(){
-        $slug = explode("/", Request::path())[0];
-        $getCategory = Category::where('slug', $slug)->first();
-        if($getCategory){
-            return $getCategory;
+        if(isset($_GET['post_type'])){
+            $slug = $_GET['post_type'];
+            $getCategory = Category::where('slug', $slug)->where('status',1)->first();
+            if($getCategory){
+                return $getCategory;
+            }
         }
         return $this->error("Empty","Category not exists");
+        
     }
 
     public function error($title,$content)
@@ -55,7 +56,7 @@ class BaseController extends Controller
         # code...
         $data['title'] = $title;
         $data['name'] = $content;
-        return response()->view('errors.404',$data,404);
+        abort(404);
     }
 
     public function getPostByConfig($id)

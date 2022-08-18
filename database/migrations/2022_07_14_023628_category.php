@@ -18,6 +18,7 @@ class Category extends Migration
             $table->string('name')->unique();
             $table->string('img_sp');
             $table->string('img_pc');
+            $table->tinyInteger('status')->default(2);
             $table->string('slug')->unique();
             $table->timestamps();
         });

@@ -100,6 +100,38 @@ class ConfigDetailFieldSeeder extends Seeder
                 'key' => "img_sp",
                 'type' => 3,
             ],
+            [
+                'id' => 11,
+                'config_field_id' => 2,
+                'language_id' => 1,
+                'title' => "Title",
+                'key' => "title",
+                'type' => 1,
+            ],
+            [
+                'id' => 12,
+                'config_field_id' => 2,
+                'language_id' => 2,
+                'title' => "Title",
+                'key' => "title",
+                'type' => 1,
+            ],
+            [
+                'id' => 13,
+                'config_field_id' => 2,
+                'language_id' => 1,
+                'title' => "Excerpt",
+                'key' => "excerpt",
+                'type' => 2,
+            ],
+            [
+                'id' => 14,
+                'config_field_id' => 2,
+                'language_id' => 2,
+                'title' => "Excerpt",
+                'key' => "excerpt",
+                'type' => 2,
+            ],
         ];
         Config_detail_field::insert($Config_detail_field);
         // \App\Models\Language::factory()->count(30)->create();

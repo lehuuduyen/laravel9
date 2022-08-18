@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 class PostController extends BaseController
 {
+    public $_SLUG = "";
     /**
      * Create a new controller instance.
      *
@@ -36,12 +37,13 @@ class PostController extends BaseController
 
 
         return $this->renderView('layouts/posts/list', [
-            'active' => 'list_post',
+            'postActive' => true,
+            'active' => $_GET['post_type'],
             'post' => $post,
             'getCategory' => $getCategory
         ]);
     }
-    public function new()
+    public function create()
     {
         $getCategory = $this->getCategory();
         $listField = Category_config_field::where('category_id', $getCategory->id)->pluck('config_field_id')->toArray();
@@ -49,21 +51,29 @@ class PostController extends BaseController
         $listDetailFieldImage = Config_detail_field::whereIn('config_field_id', $listField)->where('type',3)->where('language_id',1)->get();
 
         return $this->renderView('layouts/posts/new', [
-            'active' => 'list_post',
+            'postActive' => true,
+            'active' => $_GET['post_type'],
             'getCategory' => $getCategory,
             'listDetailFieldLanguage' => $listDetailField,
             'listDetailFieldNotLanguage' => $listDetailFieldImage
         ]);
     }
-    public function insert(Request  $request)
+    public function store(Request  $request)
     {
         // // Start transaction!
         DB::beginTransaction();
         try {
             $data = $request->all();
+            if($data['slug'] == null){
+                $this->_SLUG = $data['slug'] = $data['post_type'];
+            }
+
+            // check slug
+            $slug = $this->isSlugPost($data['slug']);
+            $slug = $this->_SLUG;
             
             $post = Post::create(
-                ['category_id' => $data['category_id']]
+                ['category_id' => $data['category_id'] , 'slug'=>$slug]
             );
             
             foreach($request->allFiles() as $key => $file){
@@ -107,5 +117,19 @@ class PostController extends BaseController
             return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
         }
         return Redirect::back()->with('success', 'Thêm thành công');
+    }
+
+    public function isSlugPost($slug){
+
+        $post = Post::where('slug',$slug)->first();
+            
+        
+        if($post){
+            
+            $this->isSlugPost($slug."-2");
+        }else{
+            $this->_SLUG = $slug;
+            return $slug;
+        }
     }
 }

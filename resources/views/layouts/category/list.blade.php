@@ -32,7 +32,7 @@
                                     <tr>
                                         <th>Category</th>
                                         <th>Slug</th>
-                                        <th>Title</th>
+                                        <th>Post Used</th>
                                         <th>Updated at</th>
                                         <th>Action</th>
                                     </tr>
@@ -45,7 +45,7 @@
                                     <tr>
                                         <th>Category</th>
                                         <th>Slug</th>
-                                        <th>Description</th>
+                                        <th>Post Used</th>
                                         <th>Updated at</th>
                                         <th>Action</th>
 

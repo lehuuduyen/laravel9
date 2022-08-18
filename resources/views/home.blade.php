@@ -351,7 +351,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link {{ isset($activeCategory) ? 'active' : '' }}">
+                            <a href="#" class="nav-link {{ isset($postActive) ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Post
@@ -363,7 +363,7 @@
                               foreach($category as $value){
                                 ?>
                                 <li class="nav-item ">
-                                    <a href="/{{ $value->slug }}"
+                                    <a href="/post?post_type={{ $value->slug }}"
                                         class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-copy"></i>
                                         <p>

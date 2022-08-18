@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/{{ $getCategory->slug }}/new"> Create New {{ $getCategory->title }}</a>
+                            <a class="btn btn-success" href="/post/create?post_type={{ $getCategory->slug }}"> Create New {{ $getCategory->title }}</a>
                         </div>
                         
                         <!-- /.card-header -->
@@ -29,7 +29,7 @@
                             <table id="example1" class=" table table-striped  " style="text-align: center;">
                                 <thead>
                                     <tr>
-                                        <th>Title</th>
+                                        <th>Slug</th>
                                         <th>Updated at</th>
                                         <th>Viewer</th>
                                         <th>Action</th>
@@ -41,7 +41,7 @@
                                         foreach($post as $value){
                                         ?>
                                         <tr>
-                                            <td>{{ $value->title }}</td>
+                                            <td>{{ $value->slug }}</td>
                                             
                                             <td>{{ $value->updated_at }}</td>
                                             <td>{{ rand(20,100)  }}</td>

@@ -1,7 +1,7 @@
 @extends('home')
 
 @section('title', $getCategory->name)
-@section('content-title', 'List ' . $getCategory->name)
+@section('content-title', $getCategory->name)
 
 @section('css')
     <!-- Select2 -->
@@ -14,6 +14,16 @@
 @section('content')
     <!-- Main content -->
     <section class="content">
+        @if (isset($postDetail))
+                    <div class="pull-right" style="text-align: right;margin: 10px 0px ">
+                        <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
+                    </div>
+                    <form action="/post/{{ $postDetail->id }}/edit?post_type={{ $getCategory->slug }}" id="form" method="put">
+                    @else
+                        <form action="/post?post_type={{ $getCategory->slug }}" id="form" method="post">
+                @endif
+
+
         <form action="/{{ $getCategory->slug }}/insert" enctype="multipart/form-data" id="form" method="post">
             {{ csrf_field() }}
             <div class="row">
@@ -113,23 +123,30 @@
                                 </div>
                             </div>
                             <!-- /.card -->
-                            <!-- /.card-footer -->
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                           
                         </div>
 
                     </div>
-
-
-
-
-
-
-
-
                 </div>
                 <div class="col-md-4">
+                    <div class="card card-primary card-outline card-outline-tabs">
+                        
+                        <div class="card-body">
+                            <div class="tab-content" id="custom-tabs-five-tabContent">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Slug</label>
+                                    <input type="text" class="form-control"
+                                        name="slug"
+                                        placeholder="Enter slug" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                        <!-- /.card-footer -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
                     <?php 
                         foreach($listDetailFieldNotLanguage as $value){
                             if($value['type'] == 3){
