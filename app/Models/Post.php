@@ -11,4 +11,8 @@ class Post extends Model
     protected $table = 'post';
     protected $fillable = ['category_id','status','slug'];
 
+    public function post_meta()
+    {
+        return $this->hasMany(Post_meta::class);
+    }
 }

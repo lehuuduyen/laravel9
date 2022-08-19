@@ -12,9 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+
 class PostController extends BaseController
 {
     public $_SLUG = "";
+    public $_DEFAULT_LANGUAGE = 1;
     /**
      * Create a new controller instance.
      *
@@ -47,8 +49,8 @@ class PostController extends BaseController
     {
         $getCategory = $this->getCategory();
         $listField = Category_config_field::where('category_id', $getCategory->id)->pluck('config_field_id')->toArray();
-        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type',[1,2])->where('language_id',1)->get();
-        $listDetailFieldImage = Config_detail_field::whereIn('config_field_id', $listField)->where('type',3)->where('language_id',1)->get();
+        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
+        $listDetailFieldImage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
 
         return $this->renderView('layouts/posts/new', [
             'postActive' => true,
@@ -58,57 +60,79 @@ class PostController extends BaseController
             'listDetailFieldNotLanguage' => $listDetailFieldImage
         ]);
     }
+    public function edit($id)
+    {
+        $getCategory = $this->getCategory();
+        $listField = Category_config_field::where('category_id', $getCategory->id)->pluck('config_field_id')->toArray();
+        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
+        $listDetailFieldImage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
+        $postDetail = Post::with('post_meta')->find($id);
+        
+        
+        return $this->renderView('layouts/posts/new', [
+            'postActive' => true,
+            'active' => $_GET['post_type'],
+            'getCategory' => $getCategory,
+            'listDetailFieldLanguage' => $listDetailField,
+            'listDetailFieldNotLanguage' => $listDetailFieldImage,
+            'postDetail' =>$postDetail
+        ]);
+    }
     public function store(Request  $request)
     {
         // // Start transaction!
         DB::beginTransaction();
         try {
             $data = $request->all();
-            if($data['slug'] == null){
+
+
+            if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
 
             // check slug
             $slug = $this->isSlugPost($data['slug']);
             $slug = $this->_SLUG;
-            
+
             $post = Post::create(
-                ['category_id' => $data['category_id'] , 'slug'=>$slug]
+                ['category_id' => $data['category_id'], 'slug' => $slug]
             );
-            
-            foreach($request->allFiles() as $key => $file){
-                $fileName = time() . "_" . $file->getClientOriginalName();
-                Storage::putFileAs('public', $file, $fileName);
-                Post_meta::create(
-                    [
-                        'post_id' => $post->id,
-                        'language_id' => 1,
-                        'meta_key' => $key,
-                        'meta_value' => $fileName,
-                    ]
-                );
-            }
-           
-            
-            
-            
-            foreach($data['languages'] as  $language){
-                foreach($language as $key =>$value){
-                    $postMeta = Post_meta::create(
+
+
+            if (isset($request->allFiles()['image'])) {
+                foreach ($request->allFiles()['image'] as $configDetailId => $files) {
+
+                    foreach ($files as $key => $file)
+
+                        $fileName = time() . "_" . $file->getClientOriginalName();
+
+                    Storage::putFileAs('public', $file, $fileName);
+                    Post_meta::create(
                         [
                             'post_id' => $post->id,
-                            'language_id' => $language['languge_id'],
+                            'config_detail_field_id' => $configDetailId,
+                            'language_id' => 1,
                             'meta_key' => $key,
-                            'meta_value' => $value,
+                            'meta_value' => $fileName,
                         ]
                     );
                 }
             }
-            
-            
-           
 
+            foreach ($data['languages'] as $configDetailId =>  $language) {
+                foreach ($language as $languge_id => $value) {
 
+                    $postMeta = Post_meta::create(
+                        [
+                            'post_id' => $post->id,
+                            'config_detail_field_id' => $configDetailId,
+                            'language_id' => $languge_id,
+                            'meta_key' => key($value),
+                            'meta_value' => $value[key($value)],
+                        ]
+                    );
+                }
+            }
             // Commit the queries!
             DB::commit();
         } catch (\Exception $e) {
@@ -119,15 +143,16 @@ class PostController extends BaseController
         return Redirect::back()->with('success', 'Thêm thành công');
     }
 
-    public function isSlugPost($slug){
+    public function isSlugPost($slug)
+    {
 
-        $post = Post::where('slug',$slug)->first();
-            
-        
-        if($post){
-            
-            $this->isSlugPost($slug."-2");
-        }else{
+        $post = Post::where('slug', $slug)->first();
+
+
+        if ($post) {
+
+            $this->isSlugPost($slug . "-2");
+        } else {
             $this->_SLUG = $slug;
             return $slug;
         }

@@ -14,17 +14,17 @@
 @section('content')
     <!-- Main content -->
     <section class="content">
+       
         @if (isset($postDetail))
+        
                     <div class="pull-right" style="text-align: right;margin: 10px 0px ">
                         <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
                     </div>
-                    <form action="/post/{{ $postDetail->id }}/edit?post_type={{ $getCategory->slug }}" id="form" method="put">
+                    <form action="/post/{{ $postDetail->id }}/edit?post_type={{ $getCategory->slug }}" enctype="multipart/form-data" id="form" method="put">
                     @else
-                        <form action="/post?post_type={{ $getCategory->slug }}" id="form" method="post">
+                        <form action="/post?post_type={{ $getCategory->slug }}" enctype="multipart/form-data" id="form" method="post">
                 @endif
 
-
-        <form action="/{{ $getCategory->slug }}/insert" enctype="multipart/form-data" id="form" method="post">
             {{ csrf_field() }}
             <div class="row">
 
@@ -57,6 +57,7 @@
                                 <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
                                     <?php 
                                     foreach($allLanguage as $key => $language){
+                                                                              
                                      ?>
                                     <li class="nav-item">
                                         <a class="nav-link {{ $key == 0 ? 'active' : '' }}"
@@ -85,35 +86,45 @@
                                             <div class="text-bold pt-2">Loading...</div>
                                             </div> --}}
                                             <?php 
-                                                foreach($listDetailFieldLanguage as $value ){
-                                                    if($value['type'] ==1){
+                                                foreach($listDetailFieldLanguage as $listDetailField ){
+                                                    $content ="";
+                                                    //get posstmta
+                                                    if(isset($postDetail)){
+                                                        foreach($postDetail->post_meta as $keyUnset => $postMeta){
+                                                            if($postMeta['language_id'] == $language['id'] && $postMeta['config_detail_field_id'] == $listDetailField['id']){
+                                                                $content = $postMeta['meta_value'];
+                                                                unset($postDetail->post_meta[$keyUnset]);
+                                                                break;
+                                                            }
+                                                        }
+
+                                                    }
+                                                    if($listDetailField['type'] ==1){
                                                         ?>
                                             {{-- text --}}
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">{{ $value['title'] }}</label>
+                                                <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
                                                 <input type=" text" class="form-control"
-                                                    name="languages[{{ $key }}][{{ $value['key'] }}]"
-                                                    placeholder="Enter {{ $value['title'] }}">
+                                                    name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]"
+                                                    placeholder="Enter {{ $listDetailField['title'] }}" value="{{ $content }}">
                                             </div>
                                             <?php
                                                                             }
-                                                                            if($value['type'] == 2){
+                                                                            if($listDetailField['type'] == 2){
                                                                                 ?>
                                             {{-- textarea --}}
 
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">{{ $value['title'] }}</label>
-                                                <textarea class="summernote" name="languages[{{ $key }}][{{ $value['key'] }}]">
-                                                                                </textarea>
+                                                <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                                <textarea class="summernote" name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">
+                                                                     {{ $content }}           </textarea>
                                             </div>
                                             <?php
                                                                 }
                                                 }    
                                                 
                                             ?>
-                                            <input type="hidden" name="languages[{{ $key }}][languge_id]"
-                                                value="{{ $language->id }}" />
-
+                                           
                                         </div>
                                     </div>
                                     <?php
@@ -137,7 +148,7 @@
                                     <label for="exampleInputEmail1">Slug</label>
                                     <input type="text" class="form-control"
                                         name="slug"
-                                        placeholder="Enter slug" value="">
+                                        placeholder="Enter slug" value="{{ isset($postDetail)?$postDetail['slug']:"" }}">
                                 </div>
                             </div>
                         </div>
@@ -149,6 +160,10 @@
                     </div>
                     <?php 
                         foreach($listDetailFieldNotLanguage as $value){
+                            if(isset($postDetail)){
+                               
+                                
+                            }
                             if($value['type'] == 3){
                                         ?>
                     {{-- image --}}
@@ -168,14 +183,14 @@
                         <div class="file-upload">
                             <div class="field-image">
                                 <div class="image-upload-wrap">
-                                    <input class="file-upload-input" name="{{ $value['key'] }}" type='file'
-                                        onchange="readURL(this);" accept="image/*" />
+                                    <input class="file-upload-input" name="image[{{ $value['id'] }}][{{ $value['key'] }}]" type='file'
+                                        onchange="readURL(this);"  accept="image/*" />
                                     <div class="drag-text">
                                         <h3>Drag and drop a file or select add Image</h3>
                                     </div>
                                 </div>
                                 <div class="file-upload-content">
-                                    <img class="file-upload-image" src="#" alt="your image" />
+                                    <img class="file-upload-image" src="/storage/1660891720_296360422_1216951305763125_8775322555285582177_n (1).jpg" alt="your image" />
                                     <div class="image-title-wrap">
                                         <button type="button" onclick="removeUpload(this)" class="remove-image">Remove
                                             <span class="image-title">Uploaded Image</span></button>
@@ -223,7 +238,6 @@
 
                     $(input).closest('.field-image').find('.image-title').html(input.files[0].name);
                 };
-                console.log(input.files[0])
                 reader.readAsDataURL(input.files[0]);
 
             } else {

@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-
+  
 @endsection
 
 @section('content')
-  
+    <input type="hidden" id="category_id" value="{{ $getCategory->id }}">
+    <input type="hidden" id="post_type" value="{{ $getCategory->slug }}">
 
     <!-- Main content -->
     <section class="content">
@@ -36,32 +37,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  
-                                        $list['title'] = ["Internet Explorer 4.0","Firefox 3.0","Camino 1.0","Internet Explorer 5.0","Firefox 1.0","Firefox 1.5","AOL browser (AOL desktop)"];
-                                        foreach($post as $value){
-                                        ?>
-                                        <tr>
-                                            <td>{{ $value->slug }}</td>
-                                            
-                                            <td>{{ $value->updated_at }}</td>
-                                            <td>{{ rand(20,100)  }}</td>
-                                            <td >
-                                                <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
-                                                            </button>
-                                                <button class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button> 
-                                            </td>
-
-                                        </tr>
-                                    <?php
-                                        }
-
-                                        ?>
                                     
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Title</th>
+                                        <th>Slug</th>
                                         <th>Updated at</th>
                                         <th>Viewer</th>
                                         <th>Action</th>
@@ -99,29 +79,82 @@
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
         $(function() {
-            $("#example1").DataTable({
-                initComplete: function() {
-                    this.api().columns().every(function() {
-                        var column = this;
-                        var select = $('<select><option value=""></option></select>')
-                            .appendTo($(column.footer()).empty())
-                            .on('change', function() {
-                                var val = $.fn.dataTable.util.escapeRegex(
-                                    $(this).val()
-                                );
+            let categoryId = $("#category_id").val()
+            let postType = $("#post_type").val()
+            var table = $('#example1').DataTable({
+                "responsive": true,
 
-                                column
-                                    .search(val ? '^' + val + '$' : '', true, false)
-                                    .draw();
-                            });
+                "processing": true,
+                "ajax": {
+                    "url": "/api/post?category_id="+categoryId,
+                    "type": "GET"
+                },
+                "columns": [{
+                        "data": "slug"
+                    },
+                    {
+                        "data": "update_at"
+                    },
+                    {
+                        "data": "id"
+                    }
+                    ,
+                    {
+                        "data": "id"
+                    }
+                ],
+                "aoColumnDefs": [
+                    {
+                        "mRender": function(data, type, row) {
 
-                        column.data().unique().sort().each(function(d, j) {
-                            select.append('<option value="' + d + '">' + d +
-                                '</option>')
-                        });
-                    });
-                }
+                            html = `
+                        <a href="/post/${row.id}/edit?post_type=${postType}">
+                            <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </a>
+                        `
+                                html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
+                                    class="fa fa-trash" aria-hidden="true"></i>
+                            </button>`
+
+
+                            return html;
+                        },
+                        "aTargets": [-1]
+                    },
+
+                ],
+
             });
+
+            function deleteRow(id) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: 'delete',
+                            url: `/post/${id}`,
+
+                            success: function(msg) {
+                                table.ajax.reload();
+                                Swal.fire(
+                                    'Deleted!',
+                                    msg.message,
+                                    'success'
+                                )
+                            }
+                        });
+
+                    }
+                })
+            }
 
         });
     </script>

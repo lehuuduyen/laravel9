@@ -83,6 +83,8 @@
     <script>
         $(function() {
             var table = $('#example1').DataTable({
+                "responsive": true,
+
                 "processing": true,
                 "ajax": {
                     "url": "/api/category",

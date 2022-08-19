@@ -17,6 +17,9 @@ class PostMeta extends Migration
             $table->bigIncrements("id");
             $table->unsignedBigInteger('post_id');
             $table->unsignedBigInteger('language_id');
+            $table->unsignedBigInteger('config_detail_field_id');
+            $table->foreign('config_detail_field_id')
+            ->references('id')->on('config_detail_field')->onDelete('cascade');
             $table->foreign('post_id')
                 ->references('id')->on('post')->onDelete('cascade');
             $table->foreign('language_id')

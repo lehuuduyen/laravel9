@@ -83,6 +83,8 @@
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
         var table = $('#example1').DataTable({
+            "responsive": true,
+
             "processing": true,
             "ajax": {
                 "url": "/api/config",

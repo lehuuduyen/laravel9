@@ -142,6 +142,9 @@
             border: 0;
             transition: all .2s ease;
         }
+        table{
+            width:100%
+        }
     </style>
     @yield('css')
 
