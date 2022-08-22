@@ -18,10 +18,12 @@
         @if (isset($postDetail))
         
                     <div class="pull-right" style="text-align: right;margin: 10px 0px ">
-                        <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
+                        <a class="btn btn-success" href="/post/create?post_type={{ $getCategory->slug }}"> Create New Config filed </a>
                     </div>
-                    <form action="/post/{{ $postDetail->id }}/edit?post_type={{ $getCategory->slug }}" enctype="multipart/form-data" id="form" method="put">
-                    @else
+                    <form action="/post/{{ $postDetail->id }}?post_type={{ $getCategory->slug }}" enctype="multipart/form-data" id="form" method="post">
+                        {{ method_field('PUT') }}
+
+                        @else
                         <form action="/post?post_type={{ $getCategory->slug }}" enctype="multipart/form-data" id="form" method="post">
                 @endif
 
@@ -87,18 +89,7 @@
                                             </div> --}}
                                             <?php 
                                                 foreach($listDetailFieldLanguage as $listDetailField ){
-                                                    $content ="";
-                                                    //get posstmta
-                                                    if(isset($postDetail)){
-                                                        foreach($postDetail->post_meta as $keyUnset => $postMeta){
-                                                            if($postMeta['language_id'] == $language['id'] && $postMeta['config_detail_field_id'] == $listDetailField['id']){
-                                                                $content = $postMeta['meta_value'];
-                                                                unset($postDetail->post_meta[$keyUnset]);
-                                                                break;
-                                                            }
-                                                        }
-
-                                                    }
+                                                    $value = (isset($listDetailField[$language['slug']]))?$listDetailField[$language['slug']]:"";
                                                     if($listDetailField['type'] ==1){
                                                         ?>
                                             {{-- text --}}
@@ -106,7 +97,7 @@
                                                 <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
                                                 <input type=" text" class="form-control"
                                                     name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]"
-                                                    placeholder="Enter {{ $listDetailField['title'] }}" value="{{ $content }}">
+                                                    placeholder="Enter {{ $listDetailField['title'] }}" value="{{ $value }}">
                                             </div>
                                             <?php
                                                                             }
@@ -117,7 +108,7 @@
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
                                                 <textarea class="summernote" name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">
-                                                                     {{ $content }}           </textarea>
+                                                                     {{ $value }}           </textarea>
                                             </div>
                                             <?php
                                                                 }
@@ -160,10 +151,8 @@
                     </div>
                     <?php 
                         foreach($listDetailFieldNotLanguage as $value){
-                            if(isset($postDetail)){
-                               
-                                
-                            }
+                            
+                            
                             if($value['type'] == 3){
                                         ?>
                     {{-- image --}}
@@ -171,14 +160,7 @@
                         <div class="card-header">
                             <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
 
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
+                           
                         </div>
                         <div class="file-upload">
                             <div class="field-image">
@@ -190,7 +172,7 @@
                                     </div>
                                 </div>
                                 <div class="file-upload-content">
-                                    <img class="file-upload-image" src="/storage/1660891720_296360422_1216951305763125_8775322555285582177_n (1).jpg" alt="your image" />
+                                    <img class="file-upload-image" src="{{ $value['value'] }}  " alt="your image" />
                                     <div class="image-title-wrap">
                                         <button type="button" onclick="removeUpload(this)" class="remove-image">Remove
                                             <span class="image-title">Uploaded Image</span></button>
@@ -224,7 +206,15 @@
             height: 200
         })
         $('.select2').select2()
-
+        $.each($(".file-upload-image"),function(key,ele){
+            str = $(ele).attr('src');
+           
+            if(str && str.length >2 ){
+                $(ele).closest('.field-image').find('.image-upload-wrap').hide();
+                $(ele).closest('.field-image').find('.file-upload-content').show();
+                
+            }            
+        })
         function readURL(input) {
             if (input.files && input.files[0]) {
 
@@ -246,7 +236,7 @@
         }
 
         function removeUpload(input) {
-            $(input).closest('.field-image').find('.file-upload-input').replaceWith($('.file-upload-input').clone());
+            $(input).closest('.field-image').find('.file-upload-input').replaceWith($(input).closest('.field-image').find('.file-upload-input'));
             $(input).closest('.field-image').find('.file-upload-content').hide();
             $(input).closest('.field-image').find('.image-upload-wrap').show();
         }

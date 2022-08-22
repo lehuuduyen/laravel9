@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Category extends Migration
+class Page extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class Category extends Migration
      */
     public function up()
     {
-        Schema::create('category', function (Blueprint $table) {
+        Schema::create('page', function (Blueprint $table) {
             $table->bigIncrements("id");
+            $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->string('name');
-            $table->string('img_sp');
-            $table->string('img_pc');
             $table->tinyInteger('status')->default(2);
-            $table->unsignedBigInteger('page_id');
-            $table->foreign('page_id')
-              ->references('id')->on('page')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ class Category extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category');
+        Schema::dropIfExists('page');
     }
 }

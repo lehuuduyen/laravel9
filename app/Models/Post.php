@@ -13,6 +13,7 @@ class Post extends Model
 
     public function post_meta()
     {
-        return $this->hasMany(Post_meta::class);
+        return $this->hasMany(Post_meta::class)->with('language');
     }
+    
 }

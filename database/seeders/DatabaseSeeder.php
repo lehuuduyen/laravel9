@@ -20,8 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ConfigFieldSeeder::class);
         $this->call(ConfigDetailFieldSeeder::class);
-        $this->call(CategorySeeder::class);
-        $this->call(CategoryTransiationsSeeder::class);
+        $this->call(Page::class);
         
         Model::reguard();
     }
