@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Category_config_field;
 use App\Models\Language;
+use App\Models\Page;
 use App\Models\Post;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
@@ -12,27 +13,32 @@ use Illuminate\Support\Facades\URL;
 
 class BaseController extends Controller
 {
-    public $_ENGLISH = 0;
+ 
     public function renderView($file, $param)
     {
-        $listSlugCategory = [];
-        $category = Category::with('category_transiation')->where('status',1)->get();
+       
         
-        $param['category'] = $category;
-        foreach ($param['category'] as $key => $val) {
-            $param['category'][$key]['title'] = $val['category_transiation'][$this->_ENGLISH]->title; 
-            $param['category'][$key]['sub_title'] = $val['category_transiation'][$this->_ENGLISH]->sub_title; 
-            $param['category'][$key]['excerpt'] = $val['category_transiation'][$this->_ENGLISH]->excerpt; 
+        
+        $listSlugCategory = [];
+        $page = Page::with('page_transiation')->where('status',1)->get();
+        
+        
+        $param['page'] = $page;
+        foreach ($param['page'] as $key => $val) {
+        
+            $param['page'][$key]['title'] = $val['page_transiation']->title; 
             $listSlugCategory[] = $val->slug;
         }
         if (in_array(Request::path(), $listSlugCategory)) {
             $param['active'] = Request::path();
-            $param['activeCategory'] = true;
+            $param['activePage'] = true;
         }
 
         //list language
         $allLanguage = Language::get();
         $param['allLanguage'] = $allLanguage;
+        $param['slugLanguage'] = \Session::get('website_language',config('app.locale'));
+        
         return view($file, $param);
     }
     public function storeImage($request) {
@@ -66,7 +72,7 @@ class BaseController extends Controller
         $listPost = Post::whereIn('category_id',$listCategory)->pluck('id');
         return $listPost;
     }
-    public function getPostByCategory($id)
+    public function getPostByPage($id)
     {
         # code...
         $listPost = Post::where('category_id',$id)->pluck('id');

@@ -18,8 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['middleware' => 'api'], function() {
+    Route::apiResource('config', 'App\Http\Controllers\Api\ConfigFieldController');
+    Route::apiResource('category', 'App\Http\Controllers\Api\CategoryController');
+    Route::apiResource('page', 'App\Http\Controllers\Api\PageController');
+    Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
+});
 
-Route::apiResource('config', 'App\Http\Controllers\Api\ConfigFieldController');
-Route::apiResource('category', 'App\Http\Controllers\Api\CategoryController');
-Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
 

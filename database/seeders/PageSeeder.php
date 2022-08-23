@@ -20,42 +20,36 @@ class PageSeeder extends Seeder
     {
         $page = [[
             'id' => 1,
-            'name' => "Banner Top",
             'slug' => "banner_top",
             'status' => 2,
 
         ],
         [
             'id' => 2,
-            'name' => "About",
             'slug' => "about",
             'status' => 2,
 
         ],
         [
             'id' => 3,
-            'name' => "Service",
             'slug' => "services",
             'status' => 1,
 
         ],
         [
             'id' => 4,
-            'name' => "Strengths",
             'slug' => "strengths",
             'status' => 2,
 
         ],
         [
             'id' => 5,
-            'name' => "Works",
             'slug' => "works",
             'status' => 1,
 
         ],
         [
             'id' => 6,
-            'name' => "News",
             'slug' => "news",
             'status' => 1,
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Page extends Migration
+class PostCategory extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class Page extends Migration
      */
     public function up()
     {
-        Schema::create('page', function (Blueprint $table) {
+        Schema::create('post_category', function (Blueprint $table) {
             $table->bigIncrements("id");
-            $table->string('slug')->unique();
-            $table->tinyInteger('status')->default(2);
+            $table->unsignedBigInteger('post_id');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('post_id')
+              ->references('id')->on('post')->onDelete('cascade');
+              $table->foreign('category_id')
+              ->references('id')->on('category')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class Page extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('page');
+        //
     }
 }

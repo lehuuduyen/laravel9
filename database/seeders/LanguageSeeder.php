@@ -21,7 +21,7 @@ class LanguageSeeder extends Seeder
         $language = [[
             'id' => 1,
             'name' => "English",
-            'slug' => "eng",
+            'slug' => "en",
         ],
         [
             'id' => 2,

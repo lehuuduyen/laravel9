@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use PageTransiations;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ConfigFieldSeeder::class);
         $this->call(ConfigDetailFieldSeeder::class);
-        $this->call(Page::class);
+        $this->call(PageSeeder::class);
+        $this->call(PageTransiationsSeeder::class);
         
         Model::reguard();
     }

@@ -28,11 +28,18 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 
 
 
-Route::resources([
-    'category'  => App\Http\Controllers\CategoryController::class,
-    'config'    => App\Http\Controllers\ConfigFieldController::class,
-    'post'    => App\Http\Controllers\PostController::class,
-]);
+
+
+Route::group(['middleware' => 'web'], function() {
+    Route::resources([
+        'page'  => App\Http\Controllers\PageController::class,
+        'category'  => App\Http\Controllers\CategoryController::class,
+        'config'    => App\Http\Controllers\ConfigFieldController::class,
+        'post'    => App\Http\Controllers\PostController::class,
+    ]);
+    Route::get('change-language/{language}', 'App\Http\Controllers\HomeController@changeLanguage')
+        ->name('user.change-language');
+});
 
 
 // $listCategory = Category::all();

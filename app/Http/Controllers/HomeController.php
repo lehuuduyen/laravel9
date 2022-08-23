@@ -23,6 +23,12 @@ class HomeController extends BaseController
      */
     public function index()
     {
-        return view('home',['active'=>'dashboard']);
+        return view('home', ['active' => 'dashboard']);
+    }
+    public function changeLanguage($language)
+    {
+        
+        \Session::put('website_language', $language);
+        return redirect()->back();
     }
 }

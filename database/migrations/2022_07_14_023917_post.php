@@ -15,9 +15,9 @@ class Post extends Migration
     {
         Schema::create('post', function (Blueprint $table) {
             $table->bigIncrements("id");
-            $table->unsignedBigInteger('category_id');
-              $table->foreign('category_id')
-              ->references('id')->on('category')->onDelete('cascade');
+            $table->unsignedBigInteger('page_id');
+              $table->foreign('page_id')
+              ->references('id')->on('page')->onDelete('cascade');
             $table->tinyInteger('status')->default(1); 
             $table->string('slug');
             $table->timestamps();
