@@ -75,7 +75,7 @@ class BaseController extends Controller
     public function getPostByPage($id)
     {
         # code...
-        $listPost = Post::where('category_id',$id)->pluck('id');
+        $listPost = Post::where('page_id',$id)->pluck('id');
         return $listPost;
     }
     public function returnJson($data,$message ='',$status=true,$code=Response::HTTP_OK)

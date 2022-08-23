@@ -106,17 +106,19 @@ class PageController extends BaseController
             }
             $selectListField = $data['select_list_field'];
 
-            //kiểm tra xem page này đã tồn tại ở category chưa?
-            $pageField = Page::with('page_config_field')->where('id', $id)->first();
-            foreach ($pageField['page_config_field'] as $value) {
-                if (!in_array($value['config_field_id'], $selectListField)) {
-                    throw new Exception("Filed is used in post ");
+            //kiểm tra xem page này đã tồn tại ở post chưa?
+            $getPostByPage = $this->getPostByPage($id);
+            if (count($getPostByPage) > 0) {
+                $pageField = Page::with('page_config_field')->where('id', $id)->first();
+                foreach ($pageField['page_config_field'] as $value) {
+                    if (!in_array($value['config_field_id'], $selectListField)) {
+                        throw new Exception("Filed is used in post ");
+                    }
                 }
             }
 
-           
             $page->update(
-                [ 'status' => $data['status']]
+                ['status' => $data['status']]
             );
 
             //xóa Page_transiation
