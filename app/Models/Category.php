@@ -4,20 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
     use HasFactory;
     protected $table = 'category';
-    protected $fillable = ['name','slug','img_sp','img_pc','status'];
+    protected $fillable = ['name','slug','img_sp','img_pc','status','page_id'];
 
     public function category_transiation()
     {
         return $this->hasMany(Category_transiation::class,'category_id','id');
     }
-    public function category_config_field()
-    {
-        return $this->hasMany(Category_config_field::class,'category_id','id');
+    
+    public static function getCategoryByPage($pageSlug){
+        $data = DB::table('category')
+            ->join('page', 'page.id', '=', 'category.page_id')
+            ->where('page.slug',$pageSlug)
+            ->select('category.*')
+            ->get();
+            return $data;
     }
    
 }

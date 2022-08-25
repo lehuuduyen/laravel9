@@ -142,8 +142,9 @@
             border: 0;
             transition: all .2s ease;
         }
-        table{
-            width:100%
+
+        table {
+            width: 100%
         }
     </style>
     @yield('css')
@@ -178,13 +179,12 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
-                {{-- {{-- {{ __('message.welcome') }} --}}
-                {{ trans_choice('message.welcome',10) }}
-                
-                
+               {{ __('message.welcome') }}
+
+
                 <li class="nav-item">
                     <a href="{!! route('user.change-language', ['en']) !!}">English</a>
-                <a href="{!! route('user.change-language', ['jp']) !!}">Japan</a>
+                    <a href="{!! route('user.change-language', ['jp']) !!}">Japan</a>
                 </li>
             </ul>
         </nav>
@@ -238,33 +238,52 @@
                                 </p>
                             </a>
                         </li>
+                        <?php 
+                        foreach($page as $value){
+                          ?>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ (isset($pageSlug) && $pageSlug == $value->slug) ? 'active' : '' }}">
+                                    <i class="nav-icon fas  fa-file-alt"></i>
+                                    
+                                    <p>
+                                        {{ $value->title }}
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
 
-                        <li class="nav-item">
-                            <a href="#" class="nav-link {{ isset($postActive) ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-cog"></i>
-                                <p>
-                                    Post
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <?php 
-                              foreach($page as $value){
-                                ?>
-                                <li class="nav-item ">
-                                    <a href="/post?post_type={{ $value->slug }}"
-                                        class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-copy"></i>
-                                        <p>
-                                            {{ $value->title }}
-                                        </p>
-                                    </a>
-                                </li>
-                                <?php
-                              }
-                            ?>
-                            </ul>
-                        </li>
+                                    <li class="nav-item ">
+                                        <a href="/post?post_type={{ $value->slug }}"
+                                            class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-copy"></i>
+                                            <p>
+                                                {{ __('message.list', ['title' => $value->title]) }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a href="/post/create?post_type={{ $value->slug }}"
+                                            class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-copy"></i>
+                                            <p>
+                                                Add new
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a href="/category?post_type={{ $value->slug }}"
+                                            class="nav-link {{ $active == "category".$value->slug ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-copy"></i>
+                                            <p>
+                                                Category
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <?php
+                            }
+                        ?>
                         <li class="nav-item">
                             <a href="#"
                                 class="nav-link {{ $active == 'page' || $active == 'config' ? 'active' : '' }}">
@@ -384,8 +403,9 @@
     <script src="{{ asset('/js/sweetalert2.min.js') }}"></script>
     <script>
         const slugLanguage = $("#slugLanguage").val()
+
         function alertError(message = "") {
-            
+
             Swal.fire({
                 icon: 'error',
                 title: 'Ops...Error',

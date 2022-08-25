@@ -4,8 +4,6 @@
 @section('content-title', 'Category')
 
 @section('css')
-    <!-- Select2 -->
-    <link rel="stylesheet" href="{{ asset('/adminlte/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
 
 @endsection
 
@@ -19,13 +17,13 @@
             <div class="pull-right" style="text-align: right;margin: 10px 0px ">
                 <a class="btn btn-success" href="/category/create"> Create New Category </a>
             </div>
-            <form action="/category/{{ $getCategory->id }}" enctype="multipart/form-data" id="form" method="post">
+            <form action="/category/{{ $getCategory->id }}?post_type={{ $pageSlug }}" enctype="multipart/form-data" id="form" method="post">
                 {{ method_field('PUT') }}
 
             @else
                 <input type="hidden" name="action" value="Create">
 
-                <form action="/category" enctype="multipart/form-data" id="form" method="post">
+                <form action="/category?post_type={{ $pageSlug }}" enctype="multipart/form-data" id="form" method="post">
         @endif
         
         @csrf
@@ -86,49 +84,7 @@
                                 height: 200px;" />
                         </div>
                     </div>
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <h3 class="card-title">Attached Config Field</h3>
-
-
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Multiple</label>
-                                        <select class="duallistbox" id="selectListField" multiple="multiple"
-                                            name="select_list_field[]">
-                                            <?php
-                                                    foreach($configField as $value){
-                                                        if(isset($categoryFiled)){
-                                                            ?>
-                                            <option {{ in_array($value->id, $categoryFiled) ? 'selected="selected"' : '' }}
-                                                value="{{ $value->id }}">{{ $value->title }}</option>
-
-                                            <?php
-                                                        }else{
-                                                            ?>
-                                            <option value="{{ $value->id }}">{{ $value->title }}</option>
-                                            <?php 
-                                                        }
-
-                                                    }
-                                                ?>
-
-                                        </select>
-                                    </div>
-                                    <!-- /.form-group -->
-                                </div>
-                                <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-                        </div>
-                        <!-- /.card-body -->
-
-                    </div>
-
+                   
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="button" onclick="onSubmit()" class="btn btn-primary">Submit</button>

@@ -17,11 +17,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
+                    <input type="hidden" name="pageSlug" id="pageSlug" value="{{ $pageSlug }}">
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/category/create"> Create New Category</a>
+                            <a class="btn btn-success" href="/category/create?post_type={{ $pageSlug }}"> Create New Category</a>
                         </div>
 
                         <!-- /.card-header -->
@@ -82,12 +82,13 @@
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
         $(function() {
+            let pageSlug = $("#pageSlug").val()
             var table = $('#example1').DataTable({
                 "responsive": true,
 
                 "processing": true,
                 "ajax": {
-                    "url": "/api/category",
+                    "url": "/api/category?post_type="+pageSlug,
                     "type": "GET"
                 },
                 "columns": [{
@@ -110,11 +111,10 @@
                     
                     {
                         "mRender": function(data, type, row) {
-                            console.log(row.list_post);
 
                             html = '';
                             $.each(row.list_post, function(key, val) {
-                                html += `<a href = "/post/${val}/edit" > ${val} </a> </br>`
+                                html += `<a href = "/post/${val}/edit?post_type=${pageSlug}" > ${val} </a> </br>`
                             })
 
                             return html;
@@ -125,7 +125,7 @@
                         "mRender": function(data, type, row) {
 
                             html = `
-                        <a href="/category/${row.id}/edit">
+                        <a href="/category/${row.id}/edit?post_type=${pageSlug}">
                             <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
                         </a>

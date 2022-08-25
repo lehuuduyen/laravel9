@@ -32,28 +32,28 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        return $this->renderView('layouts/category/list', ['active' => 'category']);
+        $getPage = $this->getPage();
+        return $this->renderView('layouts/category/list', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug]);
     }
     public function create()
     {
-        $configField = Config_field::all();
+        $getPage = $this->getPage();
 
-        return $this->renderView('layouts/category/new', ['active' => 'category', 'configField' => $configField]);
+        return $this->renderView('layouts/category/new', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug]);
     }
     public function edit($id)
     {
-        $configField = Config_field::all();
-        $getCategory = Category::with('category_config_field')->with('category_transiation')->where('id',$id)->first();
-       
-        $categoryFiled = [];
-        foreach ($getCategory['category_config_field'] as $value) {
-            $categoryFiled[] = $value['config_field_id'];
-        }
+        $getPage = $this->getPage();
 
-        return $this->renderView('layouts/category/new', ['active' => 'category', 'configField' => $configField, 'getCategory' => $getCategory, 'categoryFiled' => $categoryFiled]);
+        $getCategory = Category::with('category_transiation')->where('id',$id)->first();
+       
+      
+
+        return $this->renderView('layouts/category/new', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug, 'getCategory' => $getCategory]);
     }
     public function store(Request  $request)
     {
+        $getPage = $this->getPage();
         // // Start transaction!
         DB::beginTransaction();
         try {
@@ -88,7 +88,7 @@ class CategoryController extends BaseController
             }
 
             $category = Category::create(
-                ['name' => $data['name'],'status' => $data['status'], 'slug' => $data['slug'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
+                ['name' => $data['name'],'page_id' => $getPage->id,'status' => $data['status'], 'slug' => $data['slug'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
             );
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
@@ -127,21 +127,6 @@ class CategoryController extends BaseController
             if ($data['name'] == null) {
                 throw new Exception("Name cannot be empty");
             }
-            if(!isset($data['select_list_field'])){
-                $data['select_list_field'] =[];
-            }
-            $selectListField = $data['select_list_field'];
-
-            $getPostByCategory = $this->getPostByCategory($id);
-            if (count($getPostByCategory) > 0) {
-                $categoryField = Category::with('category_config_field')->where('id',$id)->first();
-                foreach ($categoryField['category_config_field'] as $value) {
-                    if (!in_array($value['config_field_id'], $selectListField)) {
-                        throw new Exception("Filed is used in post ");
-                    }
-                }
-            }
-
             //image
 
             $fileNameSp = $category->img_sp;
@@ -152,8 +137,6 @@ class CategoryController extends BaseController
                 $fileNameSp = time() . "_" . $this->generateRandomString(3). "_" .$file->getClientOriginalName();
                 Storage::putFileAs('public', $file, $fileNameSp);
 
-               
-                
                 //delete file old
                 Storage::delete('public/'.$category['img_sp']);
                 // $file->move('app/public/', $file->getClientOriginalName());
@@ -192,16 +175,7 @@ class CategoryController extends BaseController
                 ]);
             }
 
-            //xóa Category_transiation
-            Category_config_field::where('category_id', $id)->delete();
-            //add Category_transiation
-            if (isset($data['select_list_field'])) {
-                foreach ($data['select_list_field'] as $fieldId) {
-                    Category_config_field::create(
-                        ['category_id' => $id, 'config_field_id' => $fieldId],
-                    );
-                }
-            }
+            
             // Commit the queries!
             DB::commit();
         } catch (\Exception $e) {

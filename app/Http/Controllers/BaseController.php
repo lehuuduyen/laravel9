@@ -45,15 +45,15 @@ class BaseController extends Controller
         $path = $request->storeAs('public/profile',"abc.png");
         return substr($path, strlen('public/'));
     }
-    public function getCategory(){
+    public function getPage(){
         if(isset($_GET['post_type'])){
             $slug = $_GET['post_type'];
-            $getCategory = Category::where('slug', $slug)->where('status',1)->first();
-            if($getCategory){
-                return $getCategory;
+            $getPage = Page::where('slug', $slug)->where('status',1)->first();
+            if($getPage){
+                return $getPage;
             }
         }
-        return $this->error("Empty","Category not exists");
+        return $this->error("Empty","Page not exists");
         
     }
 
@@ -73,6 +73,12 @@ class BaseController extends Controller
         return $listPost;
     }
     public function getPostByPage($id)
+    {
+        # code...
+        $listPost = Post::where('page_id',$id)->pluck('id');
+        return $listPost;
+    }
+    public function getPostByCategory($id)
     {
         # code...
         $listPost = Post::where('page_id',$id)->pluck('id');
