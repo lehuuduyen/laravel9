@@ -13,6 +13,7 @@
 @endsection
 
 @section('content')
+
     <!-- Main content -->
     <section class="content">
 
@@ -21,7 +22,7 @@
                 <input type="hidden" id="allLanguage" value="{{ json_encode($allLanguage) }}">
                 @if (isset($configFieldDetail))
                     <div class="pull-right" style="text-align: right;margin: 10px 0px ">
-                        <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
+                        <a class="btn btn-success" hre f="/config/create"> Create New Config filed </a>
                     </div>
                     <form action="/config/{{ $configFieldDetail->id }}" id="form" method="put">
                     @else
@@ -38,8 +39,8 @@
                         <div style="display:flex">
                             <div class="col-md-12 p-0 pr-1">
                                 <div class="form-group">
-                                    <label for="exampleInputtext1">Title</label>
-                                    <input type="text" style="border: 1px solid #20c997!important;" class="form-control"
+                                    <label for="exampleInputtext1">Title <abbr>*</abbr></label>
+                                    <input type="text" required style="border: 1px solid #20c997!important;" class="form-control"
                                         id="title" placeholder="Enter Title... "
                                         value="{{ isset($configFieldDetail->title) ? $configFieldDetail->title : '' }}">
                                 </div>
@@ -117,8 +118,8 @@
 
                                                 <div class="col-md-6 p-0 pl-1">
                                                     <div class="form-group">
-                                                        <label for="exampleInputtext1">Key</label>
-                                                        <input type="text" class="form-control" name="key"
+                                                        <label for="exampleInputtext1">Key <abbr>*</abbr></label>
+                                                        <input required type="text" class="form-control" name="key"
                                                             placeholder="Enter Key..." {{ $disabled }}
                                                             value="{{ $configDetailField['key'] }}"">
                                                     </div>
@@ -138,7 +139,8 @@
 
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="button" onclick="updateJson()" class="btn btn-primary">Submit</button>
+                    <button type="button" onclick="onSubmit(this)" data-original-text="Submit" class="btn btn-primary">Submit</button>
+                    
                 </div>
 
                 <!-- /.card -->
@@ -195,7 +197,7 @@
                             
                                         <div class="col-md-6 p-0 pl-1">
                                             <div class="form-group">
-                                                <label for="exampleInputtext1">Key</label>
+                                                <label for="exampleInputtext1">Key <abbr>*</abbr></label>
                                                 <input type="text" class="form-control" name="key"   placeholder="Enter Key...">
                                             </div>
                                         </div>
@@ -210,10 +212,7 @@
         }
 
 
-        function updateJson() {
-
-
-
+        function onSubmit(_this) {
             Swal.fire({
                 title: 'Do you want to create?',
                 showCancelButton: true,
@@ -221,6 +220,8 @@
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
+                    BtnLoading(_this)
+
                     let message = []
                     let el = $('.json-html');
                     let array = [];
@@ -256,9 +257,15 @@
                             json: JSON.stringify(array),
                         },
                         success: function(msg) {
-                            alertSuccess(msg.message)
+                            BtnReset(_this)
+                            if($("#form").attr('method') == 'put'){
+                                alertSuccess(msg.message)
+                            }else if($("#form").attr('method') == 'post'){
+                                alertSuccess(msg.message,'/config')
+                            }
                         },
                         error: function(msg) {
+                            BtnReset(_this)
                             alertError(msg.responseJSON.message)
                         }
                     });

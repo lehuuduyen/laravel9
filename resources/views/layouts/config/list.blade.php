@@ -25,14 +25,14 @@
                         </div>
 
                         <!-- /.card-header -->
-                        <div class="card-body table-responsive">
+                        <div class="card-body ">
                             <table id="example1" class=" table table-striped  " style="text-align: center">
                                 <thead>
                                     <tr>
                                         <th style="text-align: center">Title</th>
                                         <th style="text-align: center">Summary</th>
                                         <th style="text-align: center">Updated at</th>
-                                        <th style="text-align: center">Post Used</th>
+                                        <th style="text-align: center">Page Used</th>
 
                                         <th style="text-align: center">Action</th>
                                     </tr>
@@ -46,7 +46,7 @@
                                         <th style="text-align: center">Title</th>
                                         <th style="text-align: center">Summary</th>
                                         <th style="text-align: center">Updated at</th>
-                                        <th style="text-align: center">Post Used</th>
+                                        <th style="text-align: center">Page Used</th>
 
                                         <th style="text-align: center">Action</th>
 
@@ -116,10 +116,9 @@
                 },
                 {
                     "mRender": function(data, type, row) {
-                        console.log(row.list_post);
                         
                         html = '';
-                        $.each(row.list_post, function(key,val){
+                        $.each(row.list_page, function(key,val){
                             html+= `<a href = "/post/${val}/edit" > ${val} </a> </br>`
                         })
                        
@@ -136,7 +135,7 @@
                             </button>
                         </a>
                         `
-                        if(row.list_post.length ==0){
+                        if(row.list_page.length ==0){
                             html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
                                     class="fa fa-trash" aria-hidden="true"></i>
                             </button>`

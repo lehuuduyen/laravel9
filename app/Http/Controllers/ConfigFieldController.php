@@ -61,11 +61,11 @@ class ConfigFieldController extends BaseController
 
         $configFieldDetail->config_detail_field = $array;
 
-        $getPostByConfig = $this->getPostByConfig($id);
+        $getPageByConfig = $this->getPageByConfig($id);
 
 
 
-        return $this->renderView('layouts/config/new', ['active' => 'config', 'configFieldDetail' => $configFieldDetail, 'listPost' => $getPostByConfig]);
+        return $this->renderView('layouts/config/new', ['active' => 'config', 'configFieldDetail' => $configFieldDetail, 'listPost' => $getPageByConfig]);
     }
 
     public function store(Request  $request)
@@ -145,7 +145,7 @@ class ConfigFieldController extends BaseController
                 $tempKey[] = $json->key;
             }
             //check bai post
-            $checkPost = $this->getPostByConfig($id);
+            $checkPost = $this->getPageByConfig($id);
             // update config
             $configField = Config_field::where('id', $id)->update(
                 ['title' => $data['title']]
@@ -191,7 +191,7 @@ class ConfigFieldController extends BaseController
     }
     public function destroy($id)
     {
-        if (count($this->getPostByConfig($id)) == 0) {
+        if (count($this->getPageByConfig($id)) == 0) {
             return $this->returnJson('', 'Delete config field success', Config_field::destroy($id));
         }
         return $this->returnJson('', 'Already have a post to use', false, Response::HTTP_INTERNAL_SERVER_ERROR);

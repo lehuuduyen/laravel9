@@ -144,8 +144,14 @@
         }
 
         table {
-            width: 100%
+            width: 100% !important
         }
+        .brand-link{
+            padding: 0px !important
+        }
+        label abbr {
+    color: red;
+}
     </style>
     @yield('css')
 
@@ -179,7 +185,7 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <!-- Navbar Search -->
-               {{ __('message.welcome') }}
+                {{ __('message.welcome') }}
 
 
                 <li class="nav-item">
@@ -191,11 +197,11 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar elevation-4 sidebar-light-primary">
+        <aside class="main-sidebar elevation-4 sidebar-dark-primary">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link text-black navbar-light">
                 <img src="{{ asset('/adminlte/dist/img/icdLogo.png') }}" alt="ICD Logo"
-                    style="opacity: .8;margin-left:10px">
+                    style="opacity: .8;margin-left:18px">
             </a>
 
             <!-- Sidebar -->
@@ -241,47 +247,48 @@
                         <?php 
                         foreach($page as $value){
                           ?>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link {{ (isset($pageSlug) && $pageSlug == $value->slug) ? 'active' : '' }}">
-                                    <i class="nav-icon fas  fa-file-alt"></i>
-                                    
-                                    <p>
-                                        {{ $value->title }}
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#"
+                                class="nav-link {{ isset($pageSlug) && $pageSlug == $value->slug ? 'active' : '' }}">
+                                <i class="nav-icon fa fa-edit"></i>
 
-                                    <li class="nav-item ">
-                                        <a href="/post?post_type={{ $value->slug }}"
-                                            class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
-                                            <i class="nav-icon fas fa-copy"></i>
-                                            <p>
-                                                {{ __('message.list', ['title' => $value->title]) }}
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a href="/post/create?post_type={{ $value->slug }}"
-                                            class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
-                                            <i class="nav-icon fas fa-copy"></i>
-                                            <p>
-                                                Add new
-                                            </p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item ">
-                                        <a href="/category?post_type={{ $value->slug }}"
-                                            class="nav-link {{ $active == "category".$value->slug ? 'active' : '' }}">
-                                            <i class="nav-icon fas fa-copy"></i>
-                                            <p>
-                                                Category
-                                            </p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <?php
+                                <p>
+                                    {{ $value->title }}
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item ">
+                                    <a href="/post?post_type={{ $value->slug }}"
+                                        class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-copy"></i>
+                                        <p>
+                                            {{ __('message.list', ['title' => $value->title]) }}
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a href="/post/create?post_type={{ $value->slug }}"
+                                        class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-copy"></i>
+                                        <p>
+                                            Add new
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a href="/category?post_type={{ $value->slug }}"
+                                        class="nav-link {{ $active == 'category' . $value->slug ? 'active' : '' }}">
+                                        <i class="nav-icon fas fa-copy"></i>
+                                        <p>
+                                            Category
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php
                             }
                         ?>
                         <li class="nav-item">
@@ -404,6 +411,17 @@
     <script>
         const slugLanguage = $("#slugLanguage").val()
 
+        function BtnLoading(elem) {
+            $(elem).attr("data-original-text", $(elem).html());
+            $(elem).prop("disabled", true);
+            $(elem).html('<i class="spinner-border spinner-border-sm"></i> Loading...');
+        }
+
+        function BtnReset(elem) {
+            $(elem).prop("disabled", false);
+            $(elem).html($(elem).attr("data-original-text"));
+        }
+      
         function alertError(message = "") {
 
             Swal.fire({
@@ -415,7 +433,7 @@
             })
         }
 
-        function alertSuccess(message = "Saved!!!!") {
+        function alertSuccess(message = "Saved!!!!",redirect ="") {
             Swal.fire({
                 icon: 'success',
                 title: 'success',
@@ -423,6 +441,9 @@
                 // timer: 3000,
                 timerProgressBar: true
             })
+            if(redirect){
+                location.href=redirect
+            }
         }
         $.ajaxSetup({
             headers: {

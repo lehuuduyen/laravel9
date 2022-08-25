@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Category_config_field;
 use App\Models\Language;
 use App\Models\Page;
+use App\Models\Page_config_field;
 use App\Models\Post;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Request;
@@ -65,12 +66,11 @@ class BaseController extends Controller
         abort(404);
     }
 
-    public function getPostByConfig($id)
+    public function getPageByConfig($id)
     {
         # code...
-        $listCategory = Category_config_field::where('config_field_id',$id)->pluck('category_id');
-        $listPost = Post::whereIn('category_id',$listCategory)->pluck('id');
-        return $listPost;
+        $listPage = Page_config_field::where('config_field_id',$id)->pluck('page_id');
+        return $listPage;
     }
     public function getPostByPage($id)
     {

@@ -70,6 +70,9 @@ class PageController extends BaseController
                 ['status' => $data['status'], 'slug' => $data['slug']]
             );
             foreach ($data['languages'] as $language) {
+                if($language['title'] == null){
+                    throw new Exception("Title cannot be empty");
+                }
                 $pageTransiattion = Page_transiation::create([
                     "language_id" => $language['languge_id'],
                     "page_id" => $page->id,
@@ -87,10 +90,10 @@ class PageController extends BaseController
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
+            return $this->returnJson('', $e->getMessage(), false, Response::HTTP_INTERNAL_SERVER_ERROR);
 
-            return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
         }
-        return Redirect::back()->with('success', 'Create success');
+        return $this->returnJson($page, 'Create page success');
     }
     public function update(Request  $request, $id)
     {
@@ -126,6 +129,9 @@ class PageController extends BaseController
             //add Page_transiation
 
             foreach ($data['languages'] as $language) {
+                if($language['title'] == null){
+                    throw new Exception("Title cannot be empty");
+                }
                 $pageTransiattion = Page_transiation::create([
                     "language_id" => $language['languge_id'],
                     "page_id" => $id,
@@ -148,13 +154,13 @@ class PageController extends BaseController
         } catch (\Exception $e) {
             DB::rollback();
 
-            return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
+            return $this->returnJson('', $e->getMessage(), false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        return Redirect::back()->with('success', 'Update Success');
+        return $this->returnJson($page, 'Update page success');
     }
     public function destroy($id)
     {
-        if (count($this->getPostByConfig($id)) == 0) {
+        if (count($this->getPageByConfig($id)) == 0) {
             return $this->returnJson('', 'Delete config field success', Config_field::destroy($id));
         }
         return $this->returnJson('', 'Already have a post to use', false, Response::HTTP_INTERNAL_SERVER_ERROR);

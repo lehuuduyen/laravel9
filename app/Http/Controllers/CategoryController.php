@@ -187,7 +187,7 @@ class CategoryController extends BaseController
     }
     public function destroy($id)
     {
-        if (count($this->getPostByConfig($id)) == 0) {
+        if (count($this->getPageByConfig($id)) == 0) {
             return $this->returnJson('', 'Delete config field success', Config_field::destroy($id));
         }
         return $this->returnJson('', 'Already have a post to use', false, Response::HTTP_INTERNAL_SERVER_ERROR);

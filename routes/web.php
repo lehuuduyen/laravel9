@@ -41,8 +41,11 @@ Route::group(['middleware' => 'web'], function() {
         ->name('user.change-language');
 });
 
-
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });
 // $listCategory = Category::all();
 // foreach ($listCategory as $category) {
 //     // Route::resources("/$category->slug", [App\Http\Controllers\PostController::class, 'index']);
 // }
+Route::get('filemanager', [App\Http\Controllers\FileManagerController::class, 'index']);

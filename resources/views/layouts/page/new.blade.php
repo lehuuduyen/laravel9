@@ -19,8 +19,8 @@
             <div class="pull-right" style="text-align: right;margin: 10px 0px ">
                 <a class="btn btn-success" href="/page/create"> Create New Page </a>
             </div>
-            <form action="/page/{{ $getPage->id }}" enctype="multipart/form-data" id="form" method="post">
-                {{ method_field('PUT') }}
+            <form action="/page/{{ $getPage->id }}" enctype="multipart/form-data" id="form" method="put">
+                {{-- {{ method_field('PUT') }} --}}
 
             @else
                 <input type="hidden" name="action" value="Create">
@@ -33,20 +33,7 @@
             <div class="col-md-6">
 
                 <div class="card card-primary">
-                    @if (\Session::has('error'))
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{!! \Session::get('error') !!}</li>
-                            </ul>
-                        </div>
-                    @endif
-                    @if (\Session::has('success'))
-                        <div class="alert alert-success">
-                            <ul>
-                                <li>{!! \Session::get('success') !!}</li>
-                            </ul>
-                        </div>
-                    @endif
+                   
                     <!-- /.card-header -->
                     <!-- form start -->
 
@@ -62,7 +49,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Slug</label>
+                            <label for="exampleInputEmail1">Slug <abbr>*</abbr></label>
                             <input type="text" class="form-control" name="slug" {{ isset($getPage->slug)?"disabled":"" }}
                                 value="{{ isset($getPage->slug) ? $getPage->slug : '' }}" placeholder="Enter slug">
                         </div>
@@ -113,7 +100,7 @@
 
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" onclick="onSubmit()" class="btn btn-primary">Submit</button>
+                        <button type="button" onclick="onSubmit(this)" data-original-text="Submit" class="btn btn-primary">Submit</button>
                     </div>
 
                     <!-- /.card -->
@@ -160,7 +147,7 @@
                                             <div class="text-bold pt-2">Loading...</div>
                                             </div> --}}
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Title</label>
+                                            <label for="exampleInputEmail1">Title <abbr>*</abbr></label>
                                             <input type="text" class="form-control"
                                                 name="languages[{{ $key }}][title]" value="{{ $title }}"
                                                 placeholder="Enter title">
@@ -197,24 +184,11 @@
     <script src="{{ asset('/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
     <script>
         $('.duallistbox').bootstrapDualListbox()
-        imgpc.onchange = evt => {
-            const [file] = imgpc.files
-            if (file) {
-                blah_imgpc.src = URL.createObjectURL(file)
-            }
-        }
-        imgsp.onchange = evt => {
-            const [file] = imgsp.files
-            if (file) {
-                blah_imgsp.src = URL.createObjectURL(file)
-            }
-        }
-
         function changeTabLanguage(typeLanguage) {
             $("input[name='languge_id']").val(typeLanguage)
         }
 
-        function onSubmit(e) {
+        function onSubmit(_this) {
             let action = $('input[name="action"]').val();
             Swal.fire({
                 title: `Do You Want To ${action}?`,
@@ -223,8 +197,25 @@
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                    $("#form").submit()
-                    // Swal.fire('Saved!', '', 'success')
+                    BtnLoading(_this)
+
+                    $.ajax({
+                        type: $("#form").attr('method'),
+                        url: $("#form").attr('action'),
+                        data: $("#form").serialize(), // serializes the form's elements.
+                        success: function(msg) {
+                            BtnReset(_this)
+                            if($("#form").attr('method') == 'put'){
+                                alertSuccess(msg.message,location.href)
+                            }else if($("#form").attr('method') == 'post'){
+                                alertSuccess(msg.message,'/page')
+                            }
+                        },
+                        error: function(msg) {
+                            BtnReset(_this)
+                            alertError(msg.responseJSON.message)
+                        }
+                    });
                 }
             })
         }

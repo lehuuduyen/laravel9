@@ -46,7 +46,7 @@ class ConfigFieldController extends BaseController
             $configField[$key]['count_textarea'] = $countTextArea;
             $configField[$key]['count_img'] = $countImg;
 
-            $configField[$key]['list_post'] = $this->getPostByConfig($value->id);
+            $configField[$key]['list_page'] = $this->getPageByConfig($value->id);
         }
         return $this->returnJson($configField,'Data found');
     }
