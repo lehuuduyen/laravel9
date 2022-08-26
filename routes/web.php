@@ -41,11 +41,30 @@ Route::group(['middleware' => 'web'], function() {
         ->name('user.change-language');
 });
 
-// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-//     \UniSharp\LaravelFilemanager\Lfm::routes();
-// });
-// $listCategory = Category::all();
-// foreach ($listCategory as $category) {
-//     // Route::resources("/$category->slug", [App\Http\Controllers\PostController::class, 'index']);
-// }
-Route::get('filemanager', [App\Http\Controllers\FileManagerController::class, 'index']);
+
+Route::group(
+    ['prefix' => 'file-manager'],
+    function () {
+        Route::get('/', 'App\Http\Controllers\FileManager\FileManagerController@index');
+
+        Route::get('/errors', 'App\Http\Controllers\FileManager\FileManagerController@getErrors');
+
+        Route::any('/upload', 'App\Http\Controllers\FileManager\UploadController@upload')->name('filemanager.upload');
+
+        Route::get('/jsonitems', 'App\Http\Controllers\FileManager\ItemsController@getItems');
+
+        /*Route::get('/move', 'ItemsController@move');
+
+        Route::get('/domove', 'ItemsController@domove');*/
+
+        Route::post('/newfolder', 'App\Http\Controllers\FileManager\FolderController@addfolder');
+
+        Route::get('/folders', 'App\Http\Controllers\FileManager\FolderController@getFolders');
+
+        /*Route::get('/rename', 'RenameController@getRename');
+
+        Route::get('/download', 'DownloadController@getDownload');*/
+
+        Route::post('/delete', 'App\Http\Controllers\FileManager\DeleteController@delete');
+    }
+);

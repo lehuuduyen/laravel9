@@ -71,7 +71,7 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Image pc</label>
                             <input accept="image/*" type='file' name="imgpc" id="imgpc" />
-                            <img id="blah_imgpc"
+                            <img id="blah_imgpc" onclick='window.open("/file-manager?type=image", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400")'
                                 src="{{ (isset($getCategory->img_pc) && $getCategory->img_pc !="" ) ? '/storage/' . $getCategory->img_pc : asset('/adminlte/dist/img/empty.jpg') }}"
                                 style="    width: 60%;
                                 height: 200px;" />
