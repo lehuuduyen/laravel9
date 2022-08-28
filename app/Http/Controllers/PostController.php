@@ -26,7 +26,7 @@ class PostController extends BaseController
     {
         $this->middleware('auth');
     }
-
+    
     /**
      * Show the application dashboard.
      *
@@ -34,15 +34,15 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $getCategory = $this->getCategory();
-        $post = Post::where('category_id', $getCategory->id)->get();
+        $page = $this->getPage();
+        $post = Post::get();
 
 
         return $this->renderView('layouts/posts/list', [
             'postActive' => true,
             'active' => $_GET['post_type'],
             'post' => $post,
-            'getCategory' => $getCategory
+            'page' => $page
         ]);
     }
     public function create()
