@@ -17,15 +17,16 @@
             <div class="pull-right" style="text-align: right;margin: 10px 0px ">
                 <a class="btn btn-success" href="/category/create"> Create New Category </a>
             </div>
-            <form action="/category/{{ $getCategory->id }}?post_type={{ $pageSlug }}" enctype="multipart/form-data" id="form" method="post">
+            <form action="/category/{{ $getCategory->id }}?post_type={{ $pageSlug }}" enctype="multipart/form-data"
+                id="form" method="post">
                 {{ method_field('PUT') }}
-
             @else
                 <input type="hidden" name="action" value="Create">
 
-                <form action="/category?post_type={{ $pageSlug }}" enctype="multipart/form-data" id="form" method="post">
+                <form action="/category?post_type={{ $pageSlug }}" enctype="multipart/form-data" id="form"
+                    method="post">
         @endif
-        
+
         @csrf
         <div class="row">
             <div class="col-md-6">
@@ -49,14 +50,20 @@
                     <!-- form start -->
 
 
+
+
+
+
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Show on menu</label>
                             <select class="form-control" name="status">
-                                <option {{ (isset($getCategory->status) && $getCategory->status == 1) ? 'selected' : '' }} value="1">Active</option>
-                                <option {{ (isset($getCategory->status) && $getCategory->status == 2) ? 'selected' : '' }} value="2">Unactive</option>
+                                <option {{ isset($getCategory->status) && $getCategory->status == 1 ? 'selected' : '' }}
+                                    value="1">Active</option>
+                                <option {{ isset($getCategory->status) && $getCategory->status == 2 ? 'selected' : '' }}
+                                    value="2">Unactive</option>
                             </select>
-                           
+
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
@@ -65,26 +72,48 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Slug</label>
-                            <input type="text" class="form-control" name="slug" {{ isset($getCategory->slug)?"disabled":"" }}
+                            <input type="text" class="form-control" name="slug"
+                                {{ isset($getCategory->slug) ? 'disabled' : '' }}
                                 value="{{ isset($getCategory->slug) ? $getCategory->slug : '' }}" placeholder="Enter slug">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Image pc</label>
-                            <input accept="image/*" type='file' name="imgpc" id="imgpc" />
-                            <img id="blah_imgpc" onclick='window.open("/file-manager?type=image", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400")'
-                                src="{{ (isset($getCategory->img_pc) && $getCategory->img_pc !="" ) ? '/storage/' . $getCategory->img_pc : asset('/adminlte/dist/img/empty.jpg') }}"
-                                style="    width: 60%;
-                                height: 200px;" />
+                            <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
+                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagepc"
+                                    class="input-path" value="">
+                                <div class="dropify-preview image-hidden" style="display: none;"><span
+                                        class="dropify-render"></span>
+                                    <div class="dropify-infos">
+                                        <div class="dropify-infos-inner">
+                                            <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
+                                    <p>Click here to select file</p>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Image sp</label>
-                            <input accept="image/*" type='file' name="imgsp" id="imgsp" />
-                            <img id="blah_imgsp"src="{{ (isset($getCategory->img_sp) && $getCategory->img_sp !="" ) ? '/storage/' . $getCategory->img_sp : asset('/adminlte/dist/img/empty.jpg') }}"
-                                style="    width: 60%;
-                                height: 200px;" />
+                            <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
+                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagesp"
+                                    class="input-path" value="">
+                                <div class="dropify-preview image-hidden" style="display: none;"><span
+                                        class="dropify-render"></span>
+                                    <div class="dropify-infos">
+                                        <div class="dropify-infos-inner">
+                                            <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
+                                    <p>Click here to select file</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                   
+
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <button type="button" onclick="onSubmit()" class="btn btn-primary">Submit</button>
@@ -149,14 +178,14 @@
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Sub Title</label>
                                             <input type="text" class="form-control"
-                                                name="languages[{{ $key }}][sub_title]" value="{{ $subTitle }}"
-                                                placeholder="Enter sub title">
+                                                name="languages[{{ $key }}][sub_title]"
+                                                value="{{ $subTitle }}" placeholder="Enter sub title">
                                         </div>
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Excerpt</label>
                                             <input type="text" class="form-control"
-                                                name="languages[{{ $key }}][excerpt]" value="{{ $excerpt }}"
-                                                placeholder="Enter excerpt">
+                                                name="languages[{{ $key }}][excerpt]"
+                                                value="{{ $excerpt }}" placeholder="Enter excerpt">
                                         </div>
                                         <input type="hidden" name="languages[{{ $key }}][languge_id]"
                                             value="{{ $language->id }}" />

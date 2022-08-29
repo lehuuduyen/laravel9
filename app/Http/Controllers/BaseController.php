@@ -39,6 +39,7 @@ class BaseController extends Controller
         $allLanguage = Language::get();
         $param['allLanguage'] = $allLanguage;
         $param['slugLanguage'] = \Session::get('website_language',config('app.locale'));
+        $param['admin_prefix'] = config('app.admin_prefix');
         
         return view($file, $param);
     }

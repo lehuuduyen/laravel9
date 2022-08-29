@@ -29,7 +29,11 @@
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/summernote/summernote-bs4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/custom.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/sweetalert2.min.css') }}">
+    
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .file-upload {
             background-color: #ffffff;
@@ -408,6 +412,24 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('/adminlte/dist/js/demo.js') }}"></script>
     <script src="{{ asset('/js/sweetalert2.min.js') }}"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+    <script src="{{ asset('/js/filemanager.js') }}"></script>
+    <script src="{{ asset('/js/custom.min.js') }}"></script>
+    <script type="text/javascript">
+        /**
+         * JUZAWEB CMS - THE BEST CMS FOR LARAVEL PROJECT
+         *
+         * @package    juzaweb/juzacms
+         * @link       https://juzaweb.com/cms
+         * @license    GNU V2
+         */
+        var juzaweb = {
+            adminPrefix: "{{ $admin_prefix }}",
+            adminUrl: "{{ url($admin_prefix) }} ",
+            lang: @json($slugLanguage)
+        }
+    </script>
+    
     <script>
         const slugLanguage = $("#slugLanguage").val()
 
