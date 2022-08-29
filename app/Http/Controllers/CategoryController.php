@@ -66,29 +66,9 @@ class CategoryController extends BaseController
             }
 
 
-            $fileNameSp = "";
-            $fileNamePc = "";
-            if ($request->hasFile('imgsp')) {
-                $file = $request->imgsp;
-
-                $fileNameSp = time() . "_" . $file->getClientOriginalName();
-                Storage::putFileAs('public', $file, $fileNameSp);
-                // $file->move('app/public/', $file->getClientOriginalName());
-                // //Lấy Tên files $file->getClientOriginalName()
-                // //Lấy Đuôi File $file->getClientOriginalExtension()
-                // //Lấy đường dẫn tạm thời của file $file->getRealPath()
-                // //Lấy kích cỡ của file đơn vị tính theo bytes $file->getSize()
-                // //Lấy kiểu file $file->getMimeType()
-
-            }
-            if ($request->hasFile('imgpc')) {
-                $file = $request->imgpc;
-                $fileNamePc = time() . "_" . $file->getClientOriginalName();
-                Storage::putFileAs('public', $file, $fileNamePc);
-            }
-
+            
             $category = Category::create(
-                ['name' => $data['name'],'page_id' => $getPage->id,'status' => $data['status'], 'slug' => $data['slug'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
+                ['name' => $data['name'],'page_id' => $getPage->id,'status' => $data['status'], 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
@@ -100,13 +80,7 @@ class CategoryController extends BaseController
                     "languge_id" => $language['languge_id']
                 ]);
             }
-            if (isset($data['select_list_field'])) {
-                foreach ($data['select_list_field'] as $fieldId) {
-                    Category_config_field::create(
-                        ['category_id' => $category->id, 'config_field_id' => $fieldId],
-                    );
-                }
-            }
+          
             // Commit the queries!
             DB::commit();
         } catch (\Exception $e) {
@@ -129,35 +103,8 @@ class CategoryController extends BaseController
             }
             //image
 
-            $fileNameSp = $category->img_sp;
-            $fileNamePc = $category->img_pc;
-            if ($request->hasFile('imgsp')) {
-                $file = $request->imgsp;
-
-                $fileNameSp = time() . "_" . $this->generateRandomString(3). "_" .$file->getClientOriginalName();
-                Storage::putFileAs('public', $file, $fileNameSp);
-
-                //delete file old
-                Storage::delete('public/'.$category['img_sp']);
-                // $file->move('app/public/', $file->getClientOriginalName());
-                // //Lấy Tên files $file->getClientOriginalName()
-                // //Lấy Đuôi File $file->getClientOriginalExtension()
-                // //Lấy đường dẫn tạm thời của file $file->getRealPath()
-                // //Lấy kích cỡ của file đơn vị tính theo bytes $file->getSize()
-                // //Lấy kiểu file $file->getMimeType()
-
-            }
-
-            if ($request->hasFile('imgpc')) {
-                $file = $request->imgpc;
-                $fileNamePc = time() . "_". $this->generateRandomString(3). "_"  . $file->getClientOriginalName();
-                Storage::putFileAs('public', $file, $fileNamePc);
-                //delete file old
-                Storage::delete($category['img_pc']);
-            }
-
             $category->update(
-                ['name' => $data['name'],'status' => $data['status'], 'img_sp' => $fileNameSp, 'img_pc' => $fileNamePc]
+                ['name' => $data['name'],'status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Category_transiation

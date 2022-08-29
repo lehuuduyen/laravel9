@@ -81,8 +81,16 @@
                             <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
                                         class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagepc"
                                     class="input-path" value="">
-                                <div class="dropify-preview image-hidden" style="display: none;"><span
-                                        class="dropify-render"></span>
+                                <div class="dropify-preview image-hidden" style="{{ (isset($getCategory->img_sp) && $getCategory->img_sp !='')?'display: block':'display: none' }};">
+                                    <span class="dropify-render">
+                                        <?php
+                                            if(isset($getCategory->img_pc) && $getCategory->img_pc !=""){
+                                                ?>
+                                        <img src="/{{ $getCategory->img_pc }}" alt="">
+                                        <?php
+                                            }
+                                        ?>
+                                    </span>
                                     <div class="dropify-infos">
                                         <div class="dropify-infos-inner">
                                             <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
@@ -99,8 +107,15 @@
                             <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
                                         class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagesp"
                                     class="input-path" value="">
-                                <div class="dropify-preview image-hidden" style="display: none;"><span
-                                        class="dropify-render"></span>
+                                <div class="dropify-preview image-hidden" style="{{ (isset($getCategory->img_sp) && $getCategory->img_sp !='')?'display: block':'display: none' }};"><span
+                                        class="dropify-render">
+                                        <?php
+                                        if(isset($getCategory->img_sp) && $getCategory->img_sp !=""){
+                                            ?>
+                                        <img src="/{{ $getCategory->img_sp }}" alt="">
+                                        <?php
+                                        }
+                                    ?></span>
                                     <div class="dropify-infos">
                                         <div class="dropify-infos-inner">
                                             <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
