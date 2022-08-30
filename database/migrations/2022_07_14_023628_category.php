@@ -23,6 +23,8 @@ class Category extends Migration
             $table->foreign('page_id')
               ->references('id')->on('page')->onDelete('cascade');
             $table->string('slug');
+            $table->bigInteger('parent_id')->nullable()->index();
+
 
             $table->timestamps();
         });

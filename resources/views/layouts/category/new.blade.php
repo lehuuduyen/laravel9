@@ -52,7 +52,7 @@
 
 
 
-
+                        {!! $htmlCategory !!}
 
                     <div class="card-body">
                         <div class="form-group">
@@ -80,13 +80,13 @@
                             <label for="exampleInputEmail1">Image pc</label>
                             <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
                                         class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagepc"
-                                    class="input-path" value="">
-                                <div class="dropify-preview image-hidden" style="{{ (isset($getCategory->img_sp) && $getCategory->img_sp !='')?'display: block':'display: none' }};">
+                                    class="input-path" value="{{ (isset($getCategory->img_pc) && $getCategory->img_pc !='')?$getCategory->img_pc:'' }}">
+                                <div class="dropify-preview image-hidden" style="{{ (isset($getCategory->img_pc) && $getCategory->img_pc !='')?'display: block':'display: none' }};">
                                     <span class="dropify-render">
                                         <?php
                                             if(isset($getCategory->img_pc) && $getCategory->img_pc !=""){
                                                 ?>
-                                        <img src="/{{ $getCategory->img_pc }}" alt="">
+                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getCategory->img_pc) }}" alt="">
                                         <?php
                                             }
                                         ?>
@@ -106,13 +106,13 @@
                             <label for="exampleInputEmail1">Image sp</label>
                             <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
                                         class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagesp"
-                                    class="input-path" value="">
+                                    class="input-path" value="{{ (isset($getCategory->img_sp) && $getCategory->img_sp !='')?$getCategory->img_sp:'' }}">
                                 <div class="dropify-preview image-hidden" style="{{ (isset($getCategory->img_sp) && $getCategory->img_sp !='')?'display: block':'display: none' }};"><span
                                         class="dropify-render">
                                         <?php
                                         if(isset($getCategory->img_sp) && $getCategory->img_sp !=""){
                                             ?>
-                                        <img src="/{{ $getCategory->img_sp }}" alt="">
+                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getCategory->img_sp) }}" alt="">
                                         <?php
                                         }
                                     ?></span>
@@ -131,7 +131,7 @@
 
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" onclick="onSubmit()" class="btn btn-primary">Submit</button>
+                        <button type="button" onclick="onSubmit(this)" data-original-text="Submit" class="btn btn-primary">Submit</button>
                     </div>
 
                     <!-- /.card -->
@@ -233,24 +233,13 @@
     <script src="{{ asset('/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
     <script>
         $('.duallistbox').bootstrapDualListbox()
-        imgpc.onchange = evt => {
-            const [file] = imgpc.files
-            if (file) {
-                blah_imgpc.src = URL.createObjectURL(file)
-            }
-        }
-        imgsp.onchange = evt => {
-            const [file] = imgsp.files
-            if (file) {
-                blah_imgsp.src = URL.createObjectURL(file)
-            }
-        }
+       
 
         function changeTabLanguage(typeLanguage) {
             $("input[name='languge_id']").val(typeLanguage)
         }
 
-        function onSubmit(e) {
+        function onSubmit(_this) {
             let action = $('input[name="action"]').val();
             Swal.fire({
                 title: `Do You Want To ${action}?`,
@@ -259,6 +248,8 @@
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
+                    BtnLoading(_this)
+
                     $("#form").submit()
                     // Swal.fire('Saved!', '', 'success')
                 }

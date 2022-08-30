@@ -253,7 +253,7 @@
                           ?>
                         <li class="nav-item">
                             <a href="#"
-                                class="nav-link {{ isset($pageSlug) && $pageSlug == $value->slug ? 'active' : '' }}">
+                                class="nav-link {{ isset($active) && $active == $value->slug ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-edit"></i>
 
                                 <p>
@@ -265,7 +265,7 @@
 
                                 <li class="nav-item ">
                                     <a href="/post?post_type={{ $value->slug }}"
-                                        class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
+                                        class="nav-link {{ ($active == $value->slug && $postActive == "index") ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-copy"></i>
                                         <p>
                                             {{ __('message.list', ['title' => $value->title]) }}
@@ -274,7 +274,7 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a href="/post/create?post_type={{ $value->slug }}"
-                                        class="nav-link {{ $active == $value->slug ? 'active' : '' }}">
+                                        class="nav-link {{ ($active == $value->slug && $postActive == "create") ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-copy"></i>
                                         <p>
                                             Add new

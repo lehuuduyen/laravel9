@@ -1,7 +1,7 @@
 @extends('home')
 
-@section('title', $getCategory->name)
-@section('content-title', $getCategory->name)
+@section('title', $getPage['title'])
+@section('content-title', $getPage['title'])
 
 @section('css')
     <!-- Select2 -->
@@ -14,183 +14,188 @@
 @section('content')
     <!-- Main content -->
     <section class="content">
-       
-        @if (isset($postDetail))
-        
-                    <div class="pull-right" style="text-align: right;margin: 10px 0px ">
-                        <a class="btn btn-success" href="/post/create?post_type={{ $getCategory->slug }}"> Create New Config filed </a>
-                    </div>
-                    <form action="/post/{{ $postDetail->id }}?post_type={{ $getCategory->slug }}" enctype="multipart/form-data" id="form" method="post">
-                        {{ method_field('PUT') }}
 
-                        @else
-                        <form action="/post?post_type={{ $getCategory->slug }}" enctype="multipart/form-data" id="form" method="post">
+        @if (isset($postDetail))
+            <div class="pull-right" style="text-align: right;margin: 10px 0px ">
+                <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New Config filed </a>
+            </div>
+            <form action="/post/{{ $postDetail->id }}?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data"
+                id="form" method="post">
+                {{ method_field('PUT') }}
+            @else
+                <form action="/post?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data" id="form"
+                    method="post">
+        @endif
+
+        {{ csrf_field() }}
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <input type="hidden" name="category_id" value="{{ $getPage['id'] }}">
+
+
+
+                @if (\Session::has('error'))
+                    <div class="alert alert-danger">
+                        <ul>
+                            <li>{!! \Session::get('error') !!}</li>
+                        </ul>
+                    </div>
+                @endif
+                @if (\Session::has('success'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('success') !!}</li>
+                        </ul>
+                    </div>
                 @endif
 
-            {{ csrf_field() }}
-            <div class="row">
 
-                <div class="col-md-8">
+                <div class="col-md-12">
 
-                    <input type="hidden" name="category_id" value="{{ $getCategory->id }}">
-
-
-
-                    @if (\Session::has('error'))
-                        <div class="alert alert-danger">
-                            <ul>
-                                <li>{!! \Session::get('error') !!}</li>
-                            </ul>
-                        </div>
-                    @endif
-                    @if (\Session::has('success'))
-                        <div class="alert alert-success">
-                            <ul>
-                                <li>{!! \Session::get('success') !!}</li>
-                            </ul>
-                        </div>
-                    @endif
-
-
-                    <div class="col-md-12">
-
-                        <div class="card card-primary card-outline card-outline-tabs">
-                            <div class="card-header p-0 border-bottom-0">
-                                <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
-                                    <?php 
+                    <div class="card card-primary card-outline card-outline-tabs">
+                        <div class="card-header p-0 border-bottom-0">
+                            <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
+                                <?php 
                                     foreach($allLanguage as $key => $language){
                                                                               
                                      ?>
-                                    <li class="nav-item">
-                                        <a class="nav-link {{ $key == 0 ? 'active' : '' }}"
-                                            id="custom-tabs-five-overlay-tab" data-toggle="pill"
-                                            href="#custom-tabs{{ $key }}" role="tab"
-                                            aria-controls="custom-tabs-five-overlay"
-                                            aria-selected="true">{{ $language->name }}</a>
-                                    </li>
-                                    <?php
+                                <li class="nav-item">
+                                    <a class="nav-link {{ $key == 0 ? 'active' : '' }}" id="custom-tabs-five-overlay-tab"
+                                        data-toggle="pill" href="#custom-tabs{{ $key }}" role="tab"
+                                        aria-controls="custom-tabs-five-overlay"
+                                        aria-selected="true">{{ $language->name }}</a>
+                                </li>
+                                <?php
                                     }    
                                      ?>
 
 
-                                </ul>
-                            </div>
-                            <div class="card-body">
-                                <div class="tab-content" id="custom-tabs-five-tabContent">
-                                    <?php 
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="custom-tabs-five-tabContent">
+                                <?php 
                                     foreach($allLanguage as $key => $language){
                                      ?>
-                                    <div class="tab-pane fade {{ $key == 0 ? 'active show' : '' }}""
-                                        id="custom-tabs{{ $key }}" role="tabpanel"
-                                        aria-labelledby="custom-tabs-five-overlay-tab">
-                                        <div class="overlay-wrapper">
-                                            {{-- <div class="overlay"><i class="fas fa-3x fa-sync-alt fa-spin"></i>
+                                <div class="tab-pane fade {{ $key == 0 ? 'active show' : '' }}""
+                                    id="custom-tabs{{ $key }}" role="tabpanel"
+                                    aria-labelledby="custom-tabs-five-overlay-tab">
+                                    <div class="overlay-wrapper">
+                                        {{-- <div class="overlay"><i class="fas fa-3x fa-sync-alt fa-spin"></i>
                                             <div class="text-bold pt-2">Loading...</div>
                                             </div> --}}
-                                            <?php 
+                                        <?php 
                                                 foreach($listDetailFieldLanguage as $listDetailField ){
                                                     $value = (isset($listDetailField[$language['slug']]))?$listDetailField[$language['slug']]:"";
                                                     if($listDetailField['type'] ==1){
                                                         ?>
-                                            {{-- text --}}
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
-                                                <input type=" text" class="form-control"
-                                                    name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]"
-                                                    placeholder="Enter {{ $listDetailField['title'] }}" value="{{ $value }}">
-                                            </div>
-                                            <?php
+                                        {{-- text --}}
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                            <input type=" text" class="form-control"
+                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]"
+                                                placeholder="Enter {{ $listDetailField['title'] }}"
+                                                value="{{ $value }}">
+                                        </div>
+                                        <?php
                                                                             }
                                                                             if($listDetailField['type'] == 2){
                                                                                 ?>
-                                            {{-- textarea --}}
+                                        {{-- textarea --}}
 
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
-                                                <textarea class="summernote" name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                            <textarea class="summernote"
+                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">
                                                                      {{ $value }}           </textarea>
-                                            </div>
-                                            <?php
+                                        </div>
+                                        <?php
                                                                 }
                                                 }    
                                                 
                                             ?>
-                                           
-                                        </div>
+
                                     </div>
-                                    <?php
+                                </div>
+                                <?php
                                     }    
                                      ?>
 
-                                </div>
-                            </div>
-                            <!-- /.card -->
-                           
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card card-primary card-outline card-outline-tabs">
-                        
-                        <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-five-tabContent">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Slug</label>
-                                    <input type="text" class="form-control"
-                                        name="slug"
-                                        placeholder="Enter slug" value="{{ isset($postDetail)?$postDetail['slug']:"" }}">
-                                </div>
                             </div>
                         </div>
                         <!-- /.card -->
-                        <!-- /.card-footer -->
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-primary card-outline card-outline-tabs">
+
+                    <div class="card-body">
+                        <div class="tab-content" id="custom-tabs-five-tabContent">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Slug</label>
+                                <input type="text" class="form-control" name="slug" placeholder="Enter slug"
+                                    value="{{ isset($postDetail) ? $postDetail['slug'] : '' }}">
+                            </div>
                         </div>
                     </div>
-                    <?php 
+                    <!-- /.card -->
+                    <!-- /.card-footer -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+                <?php 
                         foreach($listDetailFieldNotLanguage as $value){
                             
                             
                             if($value['type'] == 3){
                                         ?>
-                    {{-- image --}}
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
-
-                           
-                        </div>
-                        <div class="file-upload">
-                            <div class="field-image">
-                                <div class="image-upload-wrap">
-                                    <input class="file-upload-input" name="image[{{ $value['id'] }}][{{ $value['key'] }}]" type='file'
-                                        onchange="readURL(this);"  accept="image/*" />
-                                    <div class="drag-text">
-                                        <h3>Drag and drop a file or select add Image</h3>
-                                    </div>
-                                </div>
-                                <div class="file-upload-content">
-                                    <img class="file-upload-image" src="{{ $value['value'] }}  " alt="your image" />
-                                    <div class="image-title-wrap">
-                                        <button type="button" onclick="removeUpload(this)" class="remove-image">Remove
-                                            <span class="image-title">Uploaded Image</span></button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                {{-- image --}}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
 
                     </div>
-                    <?php
+                    <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
+                                class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="image[{{ $value['id'] }}][{{ $value['key'] }}]"
+                            class="input-path"
+                            value="{{ $value['value'] }}">
+                        <div class="dropify-preview image-hidden"
+                            style="{{ isset($value['value']) && $value['value'] != '' ? 'display: block' : 'display: none' }};">
+                            <span class="dropify-render">
+                                <?php
+                            if(isset($value['value']) && $value['value'] !=""){
+                                ?>
+                                <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($value['value']) }}"
+                                    alt="">
+                                <?php
+                            }
+                        ?></span>
+                            <div class="dropify-infos">
+                                <div class="dropify-infos-inner">
+                                    <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
+                            <p>Click here to select file</p>
+                        </div>
+                    </div>
+
+                </div>
+                <?php
                                     }
                         }    
                         
                         
                     ?>
-                </div>
             </div>
+        </div>
 
         </form>
     </section>
@@ -206,45 +211,8 @@
             height: 200
         })
         $('.select2').select2()
-        $.each($(".file-upload-image"),function(key,ele){
-            str = $(ele).attr('src');
-           
-            if(str && str.length >2 ){
-                $(ele).closest('.field-image').find('.image-upload-wrap').hide();
-                $(ele).closest('.field-image').find('.file-upload-content').show();
-                
-            }            
-        })
-        function readURL(input) {
-            if (input.files && input.files[0]) {
+        
 
-                var reader = new FileReader();
-
-                reader.onload = function(e) {
-                    $(input).closest('.field-image').find('.image-upload-wrap').hide();
-
-                    $(input).closest('.field-image').find('.file-upload-image').attr('src', e.target.result);
-                    $(input).closest('.field-image').find('.file-upload-content').show();
-
-                    $(input).closest('.field-image').find('.image-title').html(input.files[0].name);
-                };
-                reader.readAsDataURL(input.files[0]);
-
-            } else {
-                removeUpload();
-            }
-        }
-
-        function removeUpload(input) {
-            $(input).closest('.field-image').find('.file-upload-input').replaceWith($(input).closest('.field-image').find('.file-upload-input'));
-            $(input).closest('.field-image').find('.file-upload-content').hide();
-            $(input).closest('.field-image').find('.image-upload-wrap').show();
-        }
-        $('.image-upload-wrap').bind('dragover', function() {
-            $('.image-upload-wrap').addClass('image-dropping');
-        });
-        $('.image-upload-wrap').bind('dragleave', function() {
-            $('.image-upload-wrap').removeClass('image-dropping');
-        });
+        
     </script>
 @endsection

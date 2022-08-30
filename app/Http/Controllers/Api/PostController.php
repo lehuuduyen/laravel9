@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends BaseController
 {
@@ -16,16 +17,21 @@ class PostController extends BaseController
      */
     public function index()
     {
-        if(isset($_GET['category_id'])){
-            $allPost = Post::where('category_id',$_GET['category_id'])->get();
-        }else{
-            $allPost = Post::get();
-
+        $allPost = [];
+        if(isset($_GET['post_type'])){
+            $allPost =  DB::table('post')
+            ->select('post.*','category.name as name_category')
+            ->join('page', 'page.id', '=', 'post.page_id')
+            ->join('post_category', 'post_category.post_id', '=', 'post.id')
+            ->join('category', 'post_category.category_id', '=', 'category.id')
+            ->where('post.slug', $_GET['post_type'])
+            ->get();
         }
         foreach($allPost as $key => $Post){
             $allPost[$key]['update_at'] = date('Y-m-d H:i:s',strtotime($Post['updated_at']));
         }
         return $this->returnJson($allPost,'Data found');
+        
     }
 
     /**

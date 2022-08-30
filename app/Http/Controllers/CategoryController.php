@@ -38,9 +38,14 @@ class CategoryController extends BaseController
     public function create()
     {
         $getPage = $this->getPage();
+        $getAllCategory = $this->getAllCategory();
+        $htmlCategory = $this->htmlRecursiveCategory($getAllCategory);
+        
 
-        return $this->renderView('layouts/category/new', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug]);
+        
+        return $this->renderView('layouts/category/new', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug,'htmlCategory'=>$htmlCategory]);
     }
+    
     public function edit($id)
     {
         $getPage = $this->getPage();

@@ -1,7 +1,7 @@
 @extends('home')
 
-@section('title', $getCategory->name)
-@section('content-title', 'List '.$getCategory->name)
+@section('title', $getPage['title'])
+@section('content-title', 'List '.$getPage['title'])
 @section('css')
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -10,8 +10,9 @@
 @endsection
 
 @section('content')
-    <input type="hidden" id="category_id" value="{{ $getCategory->id }}">
-    <input type="hidden" id="post_type" value="{{ $getCategory->slug }}">
+
+    <input type="hidden" id="page_id" value="{{ $getPage['id'] }}">
+    <input type="hidden" id="post_type" value="{{ $getPage['slug'] }}">
 
     <!-- Main content -->
     <section class="content">
@@ -22,7 +23,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/post/create?post_type={{ $getCategory->slug }}"> Create New {{ $getCategory->title }}</a>
+                            <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New {{ $getPage['title'] }}</a>
                         </div>
                         
                         <!-- /.card-header -->
@@ -79,14 +80,14 @@
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
         $(function() {
-            let categoryId = $("#category_id").val()
+            let categoryId = $("#page_id").val()
             let postType = $("#post_type").val()
             var table = $('#example1').DataTable({
                 "responsive": true,
 
                 "processing": true,
                 "ajax": {
-                    "url": "/api/post?category_id="+categoryId,
+                    "url": "/api/post?page_id="+categoryId,
                     "type": "GET"
                 },
                 "columns": [{

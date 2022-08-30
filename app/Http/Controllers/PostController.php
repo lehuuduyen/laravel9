@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Page_config_field;
 use App\Models\Config_detail_field;
 use App\Models\Config_field;
+use App\Models\Page;
 use App\Models\Post;
 use App\Models\Post_meta;
 use Illuminate\Http\Request;
@@ -34,35 +35,40 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $page = $this->getPage();
-        $post = Post::get();
+        $getPage = $this->getPage();
+        
 
 
         return $this->renderView('layouts/posts/list', [
-            'postActive' => true,
+            'postActive' => "index",
             'active' => $_GET['post_type'],
-            'post' => $post,
-            'page' => $page
+            'getPage' => $getPage
         ]);
     }
     public function create()
     {
-        $getCategory = $this->getCategory();
-        $listField = Page_config_field::where('category_id', $getCategory->id)->pluck('config_field_id')->toArray();
-        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
-        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
+        $pageModel =new Page();
+        
+        $getPage = $this->getPage();
+
+        $getCategory = $this->getAllCategory();
+        $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
+        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', $pageModel->getLanguageId())->get();
+        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', $pageModel->getLanguageId())->get();
         
         return $this->renderView('layouts/posts/new', [
-            'postActive' => true,
+            'postActive' => "create",
             'active' => $_GET['post_type'],
             'getCategory' => $getCategory,
             'listDetailFieldLanguage' => $listDetailFieldLanguage,
-            'listDetailFieldNotLanguage' => $listDetailFieldNotLanguage
+            'listDetailFieldNotLanguage' => $listDetailFieldNotLanguage,
+            'getPage' => $getPage
+
         ]);
     }
     public function edit($id)
     {
-        $getCategory = $this->getCategory();
+        $getCategory = $this->getAllCategory();
         $listField = Page_config_field::where('category_id', $getCategory->id)->pluck('config_field_id')->toArray();
         $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
         $postDetail = Post::with('post_meta')->find($id);
@@ -95,7 +101,7 @@ class PostController extends BaseController
 
 
         return $this->renderView('layouts/posts/new', [
-            'postActive' => true,
+            'postActive' => "create",
             'active' => $_GET['post_type'],
             'getCategory' => $getCategory,
             'listDetailFieldLanguage' => $listDetailFieldLanguage,
@@ -110,7 +116,6 @@ class PostController extends BaseController
         try {
             $data = $request->all();
 
-
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
@@ -124,23 +129,19 @@ class PostController extends BaseController
             );
 
 
-            if (isset($request->allFiles()['image'])) {
-                foreach ($request->allFiles()['image'] as $configDetailId => $files) {
-
-                    foreach ($files as $key => $file)
-
-                        $fileName = time() . "_" . $file->getClientOriginalName();
-
-                    Storage::putFileAs('public', $file, $fileName);
-                    Post_meta::create(
-                        [
-                            'post_id' => $post->id,
-                            'config_detail_field_id' => $configDetailId,
-                            'language_id' => 1,
-                            'meta_key' => $key,
-                            'meta_value' => $fileName,
-                        ]
-                    );
+            if (isset($request['image'])) {
+                foreach ($request['image'] as $configDetailId => $files) {
+                    foreach ($files as $key => $file){
+                        Post_meta::create(
+                            [
+                                'post_id' => $post->id,
+                                'config_detail_field_id' => $configDetailId,
+                                'language_id' => 1,
+                                'meta_key' => $key,
+                                'meta_value' => $file,
+                            ]
+                        );
+                    }
                 }
             }
 
@@ -190,40 +191,19 @@ class PostController extends BaseController
             //xóa tất cả post meta type khác hình
             DB::table('post_meta')->join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')
                 ->where('config_detail_field.type', '!=', Config_detail_field::typeImg())->where('post_meta.post_id', $id)->delete();
-
-
             //xóa tất cả file hình rồi thêm lại
-
-
-
-            if (isset($request->allFiles()['image'])) {
-                // Storage::delete('public/'.$link['value']);
-                //xóa tất cả post meta type  hình 
-                foreach ($request->allFiles()['image'] as $configDetailId => $files) {
-
-                    foreach ($files as $key => $file) {
-                        $fileName = time() . "_" . $file->getClientOriginalName();
-
-                        Storage::putFileAs('public', $file, $fileName);
-                        $getMeta = Post_meta::where('post_id', $id)->where('config_detail_field_id', $configDetailId)->where('meta_key', $key)->first();
-                        if ($getMeta) {
-                            Storage::delete('public/' . $getMeta->meta_value);
-                            Post_meta::where('post_id', $id)->where('config_detail_field_id', $configDetailId)->where('meta_key', $key)->update(
-                                [
-                                    'meta_value' => $fileName,
-                                ]
-                            );
-                        } else {
-                            Post_meta::create(
-                                [
-                                    'post_id' => $id,
-                                    'config_detail_field_id' => $configDetailId,
-                                    'language_id' => 1,
-                                    'meta_key' => $key,
-                                    'meta_value' => $fileName,
-                                ]
-                            );
-                        }
+            if (isset($request['image'])) {
+                foreach ($request['image'] as $configDetailId => $files) {
+                    foreach ($files as $key => $file){
+                        Post_meta::create(
+                            [
+                                'post_id' => $post->id,
+                                'config_detail_field_id' => $configDetailId,
+                                'language_id' => 1,
+                                'meta_key' => $key,
+                                'meta_value' => $file,
+                            ]
+                        );
                     }
                 }
             }
@@ -231,7 +211,6 @@ class PostController extends BaseController
 
             foreach ($data['languages'] as $configDetailId =>  $language) {
                 foreach ($language as $languge_id => $value) {
-
                     $postMeta = Post_meta::create(
                         [
                             'post_id' => $id,
