@@ -32,7 +32,6 @@
                                     <tr>
                                         <th>Category</th>
                                         <th>Slug</th>
-                                        <th>Post Used</th>
                                         <th>Updated at</th>
                                         <th>Action</th>
                                     </tr>
@@ -45,7 +44,6 @@
                                     <tr>
                                         <th>Category</th>
                                         <th>Slug</th>
-                                        <th>Post Used</th>
                                         <th>Updated at</th>
                                         <th>Action</th>
 
@@ -98,9 +96,6 @@
                         "data": "slug"
                     },
                     {
-                        "data": "id"
-                    },
-                    {
                         "data": "update_at"
                     },
                     {
@@ -109,18 +104,7 @@
                 ],
                 "aoColumnDefs": [
                     
-                    {
-                        "mRender": function(data, type, row) {
-
-                            html = '';
-                            $.each(row.list_post, function(key, val) {
-                                html += `<a href = "/post/${val}/edit?post_type=${pageSlug}" > ${val} </a> </br>`
-                            })
-
-                            return html;
-                        },
-                        "aTargets": [2]
-                    },
+                   
                     {
                         "mRender": function(data, type, row) {
 
@@ -130,11 +114,11 @@
                             </button>
                         </a>
                         `
-                            if (row.list_post.length == 0) {
-                                html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
-                                    class="fa fa-trash" aria-hidden="true"></i>
-                            </button>`
-                            }
+                            // if (row.list_post.length == 0) {
+                            //     html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
+                            //         class="fa fa-trash" aria-hidden="true"></i>
+                            // </button>`
+                            // }
 
 
                             return html;

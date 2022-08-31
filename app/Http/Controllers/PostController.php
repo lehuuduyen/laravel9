@@ -8,6 +8,7 @@ use App\Models\Config_detail_field;
 use App\Models\Config_field;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Post_category;
 use App\Models\Post_meta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,7 @@ class PostController extends BaseController
 
         return $this->renderView('layouts/posts/list', [
             'postActive' => "index",
+            'activeUL' => $_GET['post_type'],
             'active' => $_GET['post_type'],
             'getPage' => $getPage
         ]);
@@ -51,15 +53,18 @@ class PostController extends BaseController
         
         $getPage = $this->getPage();
 
-        $getCategory = $this->getAllCategory();
+        $getAllCategory = $this->getAllCategory();
+        $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
+        
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
         $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', $pageModel->getLanguageId())->get();
         $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', $pageModel->getLanguageId())->get();
         
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
+            'activeUL' => $_GET['post_type'],
             'active' => $_GET['post_type'],
-            'getCategory' => $getCategory,
+            'htmlRecursiveCategory' => $htmlRecursiveCategory,
             'listDetailFieldLanguage' => $listDetailFieldLanguage,
             'listDetailFieldNotLanguage' => $listDetailFieldNotLanguage,
             'getPage' => $getPage
@@ -102,6 +107,7 @@ class PostController extends BaseController
 
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
+            'activeUL' => $_GET['post_type'],
             'active' => $_GET['post_type'],
             'getCategory' => $getCategory,
             'listDetailFieldLanguage' => $listDetailFieldLanguage,
@@ -115,7 +121,7 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-
+            
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
@@ -123,12 +129,12 @@ class PostController extends BaseController
             // check slug
             $slug = $this->isSlugPost($data['slug']);
             $slug = $this->_SLUG;
-
+            $getPage = $this->getPage();
             $post = Post::create(
-                ['category_id' => $data['category_id'], 'slug' => $slug]
+                ['slug' => $slug,'page_id' => $getPage->id]
             );
 
-
+            //image
             if (isset($request['image'])) {
                 foreach ($request['image'] as $configDetailId => $files) {
                     foreach ($files as $key => $file){
@@ -144,21 +150,39 @@ class PostController extends BaseController
                     }
                 }
             }
-
-            foreach ($data['languages'] as $configDetailId =>  $language) {
-                foreach ($language as $languge_id => $value) {
-
-                    $postMeta = Post_meta::create(
+            //language
+            if(isset($data['languages'])){
+                foreach ($data['languages'] as $configDetailId =>  $language) {
+                    foreach ($language as $languge_id => $value) {
+    
+                        $postMeta = Post_meta::create(
+                            [
+                                'post_id' => $post->id,
+                                'config_detail_field_id' => $configDetailId,
+                                'language_id' => $languge_id,
+                                'meta_key' => key($value),
+                                'meta_value' => $value[key($value)],
+                            ]
+                        );
+                    }
+                }
+            }
+            
+            //category
+            // delete category
+            DB::table('post_category')->where('post_id', $post->id)->delete();
+            //them category
+            if(isset($data['categories'])){
+                foreach($data['categories'] as $category){
+                    $postCategory = Post_category::create(
                         [
                             'post_id' => $post->id,
-                            'config_detail_field_id' => $configDetailId,
-                            'language_id' => $languge_id,
-                            'meta_key' => key($value),
-                            'meta_value' => $value[key($value)],
+                            'category_id' => $category,
                         ]
                     );
                 }
             }
+
             // Commit the queries!
             DB::commit();
         } catch (\Exception $e) {
@@ -188,7 +212,7 @@ class PostController extends BaseController
             $post = Post::find($id)->update(
                 ['slug' => $slug]
             );
-            //xóa tất cả post meta type khác hình
+            //xóa tất cả post meta type ko là hình
             DB::table('post_meta')->join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')
                 ->where('config_detail_field.type', '!=', Config_detail_field::typeImg())->where('post_meta.post_id', $id)->delete();
             //xóa tất cả file hình rồi thêm lại

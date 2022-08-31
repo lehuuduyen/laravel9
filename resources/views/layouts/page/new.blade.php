@@ -16,7 +16,7 @@
         <input type="hidden" id="allLanguage" value="{{ json_encode($allLanguage) }}">
         @if (isset($getPage))
             <input type="hidden" name="action" value="Update">
-            <div class="pull-right" style="text-align: right;margin: 10px 0px ">
+            <div class="" style="text-align: right;margin: 10px 0px ">
                 <a class="btn btn-success" href="/page/create"> Create New Page </a>
             </div>
             <form action="/page/{{ $getPage->id }}" enctype="multipart/form-data" id="form" method="put">

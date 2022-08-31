@@ -253,7 +253,7 @@
                           ?>
                         <li class="nav-item">
                             <a href="#"
-                                class="nav-link {{ isset($active) && $active == $value->slug ? 'active' : '' }}">
+                                class="nav-link {{ isset($activeUL) && $activeUL == $value->slug ? 'active' : '' }}">
                                 <i class="nav-icon fa fa-edit"></i>
 
                                 <p>

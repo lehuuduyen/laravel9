@@ -27,12 +27,7 @@ class CategoryController extends BaseController
         
         
         foreach($allCategory as $key => $category){
-            
-            
             $allCategory[$key]->update_at = date('Y-m-d H:i:s',strtotime($category->updated_at));
-            
-            $allCategory[$key]->list_post = $this->getPostByCategory($category->id);
-         
         }
         return $this->returnJson($allCategory,'Data found');
     }

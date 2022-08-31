@@ -21,7 +21,7 @@
             <div class="col-md-12">
                 <input type="hidden" id="allLanguage" value="{{ json_encode($allLanguage) }}">
                 @if (isset($configFieldDetail))
-                    <div class="pull-right" style="text-align: right;margin: 10px 0px ">
+                    <div class="" style="text-align: right;margin: 10px 0px ">
                         <a class="btn btn-success" hre f="/config/create"> Create New Config filed </a>
                     </div>
                     <form action="/config/{{ $configFieldDetail->id }}" id="form" method="put">

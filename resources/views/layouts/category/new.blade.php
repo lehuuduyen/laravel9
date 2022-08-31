@@ -4,6 +4,7 @@
 @section('content-title', 'Category')
 
 @section('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 @endsection
 
@@ -14,8 +15,8 @@
         <input type="hidden" id="allLanguage" value="{{ json_encode($allLanguage) }}">
         @if (isset($getCategory))
             <input type="hidden" name="action" value="Update">
-            <div class="pull-right" style="text-align: right;margin: 10px 0px ">
-                <a class="btn btn-success" href="/category/create"> Create New Category </a>
+            <div class="" style="text-align: right;margin: 10px 0px ">
+                <a class="btn btn-success" href="/category/create?post_type={{ $pageSlug }}"> Create New Category </a>
             </div>
             <form action="/category/{{ $getCategory->id }}?post_type={{ $pageSlug }}" enctype="multipart/form-data"
                 id="form" method="post">
@@ -52,19 +53,9 @@
 
 
 
-                        {!! $htmlCategory !!}
 
                     <div class="card-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Show on menu</label>
-                            <select class="form-control" name="status">
-                                <option {{ isset($getCategory->status) && $getCategory->status == 1 ? 'selected' : '' }}
-                                    value="1">Active</option>
-                                <option {{ isset($getCategory->status) && $getCategory->status == 2 ? 'selected' : '' }}
-                                    value="2">Unactive</option>
-                            </select>
-
-                        </div>
+                        
                         <div class="form-group">
                             <label for="exampleInputEmail1">Name</label>
                             <input type="text" class="form-control" name="name"
@@ -75,6 +66,15 @@
                             <input type="text" class="form-control" name="slug"
                                 {{ isset($getCategory->slug) ? 'disabled' : '' }}
                                 value="{{ isset($getCategory->slug) ? $getCategory->slug : '' }}" placeholder="Enter slug">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Parent</label>
+                            <select class="select2 form-control" name="parent_id">
+                                <option value="">Choose option parent</option>
+                                @foreach ($getAllCategory as $item)
+                                    <option value="{{ $item->id }}" {{ (isset($getCategory) && $getCategory->parent_id == $item->id ) ?"selected":"" }}>{{ $item->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Image pc</label>
@@ -229,11 +229,9 @@
 @endsection
 
 @section('javascript')
-    <!-- Bootstrap4 Duallistbox -->
-    <script src="{{ asset('/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        $('.duallistbox').bootstrapDualListbox()
-       
+        $(".select2").select2()
 
         function changeTabLanguage(typeLanguage) {
             $("input[name='languge_id']").val(typeLanguage)

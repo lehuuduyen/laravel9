@@ -32,6 +32,7 @@
                                 <thead>
                                     <tr>
                                         <th>Slug</th>
+                                        <th>Category</th>
                                         <th>Updated at</th>
                                         <th>Viewer</th>
                                         <th>Action</th>
@@ -43,6 +44,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>Slug</th>
+                                        <th>Category</th>
                                         <th>Updated at</th>
                                         <th>Viewer</th>
                                         <th>Action</th>
@@ -92,6 +94,9 @@
                 },
                 "columns": [{
                         "data": "slug"
+                    },
+                    {
+                        "data": "category"
                     },
                     {
                         "data": "update_at"

@@ -39,30 +39,28 @@ class BaseController extends Controller
             // Nếu là chuyên mục con thì hiển thị
             if ($item->parent_id == $parent_id) {
                 if ($char !== False && $parent_id == NULL) {
-
                     for($i=1;$i<=$this->_stt;$i++){
-
                         $this->_html.='</li>';
+                        $this->_html.='</ul>';
                     }
                     $this->_stt =0;
 
                 }
                 if($parent_id ==NULL){
-                    $char = '<li class="m-1" id="item-category-3">
+                    $char = '<li class="m-1" id="item-category-'.$item->id.'">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="categories[]" class="custom-control-input" id="categories-3" value="3">
-                        <label class="custom-control-label" for="categories-3">' . $item->name . '</label>
+                        <input type="checkbox" name="categories[]" class="custom-control-input" id="categories-'.$item->id.'" value="'.$item->id.'">
+                        <label class="custom-control-label" for="categories-'.$item->id.'">' . $item->name . '</label>
                     </div>
                     ';
                 }else{
                     $this->_stt++;
-
                     $char ='<ul class="ml-3 p-0">
-                    <li class="m-1" id="item-category-9">
+                    <li class="m-1" id="item-category-'.$item->id.'">
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" name="categories[]" class="custom-control-input"
-                                id="categories-9" value="9">
-                            <label class="custom-control-label" for="categories-9">' . $item->name . '</label>
+                                id="categories-'.$item->id.'" value="'.$item->id.'">
+                            <label class="custom-control-label" for="categories-'.$item->id.'">' . $item->name . '</label>
                         </div>';
                 }
                 
@@ -128,7 +126,7 @@ class BaseController extends Controller
         }
         return $this->error("Empty", "Page not exists");
     }
-    public function getAllCategory()
+    public function getAllCategory($whereNotIn = "")
     {
         $allCategory = [];
         if (isset($_GET['post_type'])) {
@@ -136,8 +134,12 @@ class BaseController extends Controller
             $allCategory =  DB::table('category')
                 ->select("category.*")
                 ->join('page', 'page.id', '=', 'category.page_id')
-                ->where('page.slug', $slug)
-                ->get()->toArray();
+                ->where('page.slug', $slug);
+            if($whereNotIn){
+                $allCategory =  $allCategory->whereNotIn('category.id',$whereNotIn);
+
+            }
+            $allCategory =  $allCategory->get()->toArray();
         }
         return $allCategory;
     }
@@ -153,8 +155,8 @@ class BaseController extends Controller
     public function getPageByConfig($id)
     {
         # code...
-        $listPage = Page_config_field::where('config_field_id', $id)->pluck('page_id');
-        return $listPage;
+        $Page_config_field = Page_config_field::where('config_field_id', $id)->pluck('page_id');
+        return $Page_config_field;
     }
     public function getPostByPage($id)
     {
@@ -162,11 +164,21 @@ class BaseController extends Controller
         $listPost = Post::where('page_id', $id)->pluck('id');
         return $listPost;
     }
-    public function getPostByCategory($id)
+    public function getNameCategoryByPost($postId)
     {
         # code...
-        $listPost = Post::where('page_id', $id)->pluck('id');
-        return $listPost;
+        $str="";
+        $listCategory = 
+        DB::table('category')
+                ->join('post_category', 'category.id', '=', 'post_category.category_id')
+                ->where('post_category.post_id', $postId)->pluck('name');
+                foreach($listCategory as $key => $name){
+                    $str.=$name;
+                    if($key +1 < count($listCategory)){
+                        $str .=", ";
+                    }
+                }
+        return $str;
     }
     public function returnJson($data, $message = '', $status = true, $code = Response::HTTP_OK)
     {

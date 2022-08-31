@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- dropzonejs -->
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/dropzone/min/dropzone.min.css') }}">
+    <style>.show-taxonomies {
+        max-height: 200px;
+        overflow: auto;
+    }</style>
 @endsection
 
 @section('content')
@@ -16,13 +20,17 @@
     <section class="content">
 
         @if (isset($postDetail))
-            <div class="pull-right" style="text-align: right;margin: 10px 0px ">
+            <input type="hidden" name="action" value="Update">
+
+            <div class="" style="text-align: right;margin: 10px 0px ">
                 <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New Config filed </a>
             </div>
             <form action="/post/{{ $postDetail->id }}?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data"
                 id="form" method="post">
                 {{ method_field('PUT') }}
             @else
+            <input type="hidden" name="action" value="Create">
+
                 <form action="/post?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data" id="form"
                     method="post">
         @endif
@@ -75,7 +83,7 @@
                             </ul>
                         </div>
                         <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-five-tabContent">
+                            <div class="tab-content" >
                                 <?php 
                                     foreach($allLanguage as $key => $language){
                                      ?>
@@ -133,9 +141,14 @@
             </div>
             <div class="col-md-4">
                 <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-body" style="text-align: center">
+                        <button type="button" onclick="onSubmit(this)" data-original-text="Submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+                <div class="card card-primary card-outline card-outline-tabs">
 
                     <div class="card-body">
-                        <div class="tab-content" id="custom-tabs-five-tabContent">
+                        <div class="tab-content" >
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Slug</label>
                                 <input type="text" class="form-control" name="slug" placeholder="Enter slug"
@@ -143,10 +156,15 @@
                             </div>
                         </div>
                     </div>
-                    <!-- /.card -->
-                    <!-- /.card-footer -->
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+                <div class="card card-primary card-outline card-outline-tabs">
+                    <div class="card-body">
+                        <div class="tab-content" >
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Category</label>
+                                {!! $htmlRecursiveCategory !!}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <?php 
@@ -212,7 +230,22 @@
         })
         $('.select2').select2()
         
+        function onSubmit(_this) {
+            let action = $('input[name="action"]').val();
+            Swal.fire({
+                title: `Do You Want To ${action}?`,
+                showCancelButton: true,
+                confirmButtonText: action,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    BtnLoading(_this)
 
+                    $("#form").submit()
+                    // Swal.fire('Saved!', '', 'success')
+                }
+            })
+        }
         
     </script>
 @endsection

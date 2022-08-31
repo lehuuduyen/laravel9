@@ -18,17 +18,18 @@ class PostController extends BaseController
     public function index()
     {
         $allPost = [];
-        if(isset($_GET['post_type'])){
+        
+        if(isset($_GET['page_id'])){
             $allPost =  DB::table('post')
-            ->select('post.*','category.name as name_category')
-            ->join('page', 'page.id', '=', 'post.page_id')
-            ->join('post_category', 'post_category.post_id', '=', 'post.id')
-            ->join('category', 'post_category.category_id', '=', 'category.id')
-            ->where('post.slug', $_GET['post_type'])
+            ->select('post.*')
+            ->where('post.page_id', $_GET['page_id'])
             ->get();
         }
-        foreach($allPost as $key => $Post){
-            $allPost[$key]['update_at'] = date('Y-m-d H:i:s',strtotime($Post['updated_at']));
+        
+        foreach($allPost as $key => $post){
+            $allPost[$key]->update_at = date('Y-m-d H:i:s',strtotime($post->updated_at));
+            $allPost[$key]->category = $this->getNameCategoryByPost($post->id);
+
         }
         return $this->returnJson($allPost,'Data found');
         

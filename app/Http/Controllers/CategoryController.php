@@ -33,17 +33,14 @@ class CategoryController extends BaseController
     public function index()
     {
         $getPage = $this->getPage();
-        return $this->renderView('layouts/category/list', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug]);
+            
+        return $this->renderView('layouts/category/list', ['activeUL' => $_GET['post_type'],'active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug ]);
     }
     public function create()
     {
         $getPage = $this->getPage();
         $getAllCategory = $this->getAllCategory();
-        $htmlCategory = $this->htmlRecursiveCategory($getAllCategory);
-        
-
-        
-        return $this->renderView('layouts/category/new', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug,'htmlCategory'=>$htmlCategory]);
+        return $this->renderView('layouts/category/new', ['activeUL' => $_GET['post_type'],'active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug,'getAllCategory'=>$getAllCategory]);
     }
     
     public function edit($id)
@@ -51,10 +48,10 @@ class CategoryController extends BaseController
         $getPage = $this->getPage();
 
         $getCategory = Category::with('category_transiation')->where('id',$id)->first();
-       
+        $getAllCategory = $this->getAllCategory([$getCategory->id]);
       
 
-        return $this->renderView('layouts/category/new', ['active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug, 'getCategory' => $getCategory]);
+        return $this->renderView('layouts/category/new', ['activeUL' => $_GET['post_type'],'active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug, 'getCategory' => $getCategory,'getAllCategory'=>$getAllCategory]);
     }
     public function store(Request  $request)
     {
@@ -73,7 +70,7 @@ class CategoryController extends BaseController
 
             
             $category = Category::create(
-                ['name' => $data['name'],'page_id' => $getPage->id,'status' => $data['status'], 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['name' => $data['name'],'parent_id' => $data['parent_id'],'page_id' => $getPage->id, 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
@@ -109,7 +106,7 @@ class CategoryController extends BaseController
             //image
 
             $category->update(
-                ['name' => $data['name'],'status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['name' => $data['name'],'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Category_transiation

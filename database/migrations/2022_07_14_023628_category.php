@@ -16,14 +16,14 @@ class Category extends Migration
         Schema::create('category', function (Blueprint $table) {
             $table->bigIncrements("id");
             $table->string('name');
-            $table->string('img_sp');
-            $table->string('img_pc');
+            $table->string('img_sp')->nullable();
+            $table->string('img_pc')->nullable();
             $table->tinyInteger('status')->default(2);
             $table->unsignedBigInteger('page_id');
             $table->foreign('page_id')
               ->references('id')->on('page')->onDelete('cascade');
             $table->string('slug');
-            $table->bigInteger('parent_id')->nullable()->index();
+            $table->bigInteger('parent_id')->nullable();
 
 
             $table->timestamps();

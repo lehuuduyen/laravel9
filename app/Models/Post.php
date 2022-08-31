@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
     protected $table = 'post';
-    protected $fillable = ['category_id','status','slug'];
+    protected $fillable = ['page_id','status','slug'];
 
     public function post_meta()
     {
