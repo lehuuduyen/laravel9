@@ -9,7 +9,7 @@ class Page extends Model
 {
     use HasFactory;
     protected $table = 'page';
-    protected $fillable = ['name','slug','status'];
+    protected $fillable = ['name','img_sp','img_pc','slug','status'];
     public $_ENGLISH = 1;
     public function getLanguageId(){
        

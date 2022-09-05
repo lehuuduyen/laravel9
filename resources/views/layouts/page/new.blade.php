@@ -21,19 +21,18 @@
             </div>
             <form action="/page/{{ $getPage->id }}" enctype="multipart/form-data" id="form" method="put">
                 {{-- {{ method_field('PUT') }} --}}
-
             @else
                 <input type="hidden" name="action" value="Create">
 
                 <form action="/page" enctype="multipart/form-data" id="form" method="post">
         @endif
-        
+
         @csrf
         <div class="row">
             <div class="col-md-6">
 
                 <div class="card card-primary">
-                   
+
                     <!-- /.card-header -->
                     <!-- form start -->
 
@@ -42,18 +41,78 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Show on menu</label>
                             <select class="form-control" name="status">
-                                <option {{ (isset($getPage->status) && $getPage->status == 1) ? 'selected' : '' }} value="1">Active</option>
-                                <option {{ (isset($getPage->status) && $getPage->status == 2) ? 'selected' : '' }} value="2">Unactive</option>
+                                <option {{ isset($getPage->status) && $getPage->status == 1 ? 'selected' : '' }}
+                                    value="1">Active</option>
+                                <option {{ isset($getPage->status) && $getPage->status == 2 ? 'selected' : '' }}
+                                    value="2">Unactive</option>
                             </select>
-                           
+
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="exampleInputEmail1">Slug <abbr>*</abbr></label>
-                            <input type="text" class="form-control" name="slug" {{ isset($getPage->slug)?"disabled":"" }}
+                            <input type="text" class="form-control" name="slug"
+                                {{ isset($getPage->slug) ? 'disabled' : '' }}
                                 value="{{ isset($getPage->slug) ? $getPage->slug : '' }}" placeholder="Enter slug">
                         </div>
-                       
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Image pc</label>
+                            <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
+                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagepc"
+                                    class="input-path"
+                                    value="{{ isset($getPage->img_pc) && $getPage->img_pc != '' ? $getPage->img_pc : '' }}">
+                                <div class="dropify-preview image-hidden"
+                                    style="{{ isset($getPage->img_pc) && $getPage->img_pc != '' ? 'display: block' : 'display: none' }};">
+                                    <span class="dropify-render">
+                                        <?php
+                                            if(isset($getPage->img_pc) && $getPage->img_pc !=""){
+                                                ?>
+                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getPage->img_pc) }}"
+                                            alt="">
+                                        <?php
+                                            }
+                                        ?>
+                                    </span>
+                                    <div class="dropify-infos">
+                                        <div class="dropify-infos-inner">
+                                            <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
+                                    <p>Click here to select file</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Image sp</label>
+                            <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
+                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagesp"
+                                    class="input-path"
+                                    value="{{ isset($getPage->img_sp) && $getPage->img_sp != '' ? $getPage->img_sp : '' }}">
+                                <div class="dropify-preview image-hidden"
+                                    style="{{ isset($getPage->img_sp) && $getPage->img_sp != '' ? 'display: block' : 'display: none' }};">
+                                    <span class="dropify-render">
+                                        <?php
+                                        if(isset($getPage->img_sp) && $getPage->img_sp !=""){
+                                            ?>
+                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getPage->img_sp) }}"
+                                            alt="">
+                                        <?php
+                                        }
+                                    ?></span>
+                                    <div class="dropify-infos">
+                                        <div class="dropify-infos-inner">
+                                            <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
+                                    <p>Click here to select file</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="card card-default">
                         <div class="card-header">
@@ -100,7 +159,8 @@
 
                     <!-- /.card-body -->
                     <div class="card-footer">
-                        <button type="button" onclick="onSubmit(this)" data-original-text="Submit" class="btn btn-primary">Submit</button>
+                        <button type="button" onclick="onSubmit(this)" data-original-text="Submit"
+                            class="btn btn-primary">Submit</button>
                     </div>
 
                     <!-- /.card -->
@@ -134,8 +194,14 @@
                                 <?php 
                                     foreach($allLanguage as $key => $language){
                                         $title = "";
+                                        $subTitle = "";
+                                        $excerpt = "";
+                                       
+                                        
                                         if(isset($getPage)){
                                             $title = ($getPage['page_all_transiation'][$key]['language_id'] == $language->id )?$getPage['page_all_transiation'][$key]['title']:"";
+                                            $subTitle = ($getPage['page_all_transiation'][$key]['language_id'] == $language->id )?$getPage['page_all_transiation'][$key]['sub_title']:"";
+                                            $excerpt = ($getPage['page_all_transiation'][$key]['language_id'] == $language->id )?$getPage['page_all_transiation'][$key]['excerpt']:"";
                                         }
 
                                      ?>
@@ -147,12 +213,24 @@
                                             <div class="text-bold pt-2">Loading...</div>
                                             </div> --}}
                                         <div class="form-group">
-                                            <label for="exampleInputEmail1">Title <abbr>*</abbr></label>
+                                            <label for="exampleInputEmail1">Title</label>
                                             <input type="text" class="form-control"
                                                 name="languages[{{ $key }}][title]" value="{{ $title }}"
                                                 placeholder="Enter title">
                                         </div>
-                                        
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Sub Title</label>
+                                            <input type="text" class="form-control"
+                                                name="languages[{{ $key }}][sub_title]"
+                                                value="{{ $subTitle }}" placeholder="Enter sub title">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Excerpt</label>
+                                            <input type="text" class="form-control"
+                                                name="languages[{{ $key }}][excerpt]"
+                                                value="{{ $excerpt }}" placeholder="Enter excerpt">
+                                        </div>
+
                                         <input type="hidden" name="languages[{{ $key }}][languge_id]"
                                             value="{{ $language->id }}" />
 
@@ -184,6 +262,7 @@
     <script src="{{ asset('/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
     <script>
         $('.duallistbox').bootstrapDualListbox()
+
         function changeTabLanguage(typeLanguage) {
             $("input[name='languge_id']").val(typeLanguage)
         }
@@ -205,10 +284,10 @@
                         data: $("#form").serialize(), // serializes the form's elements.
                         success: function(msg) {
                             BtnReset(_this)
-                            if($("#form").attr('method') == 'put'){
-                                alertSuccess(msg.message,location.href)
-                            }else if($("#form").attr('method') == 'post'){
-                                alertSuccess(msg.message,'/page')
+                            if ($("#form").attr('method') == 'put') {
+                                alertSuccess(msg.message, location.href)
+                            } else if ($("#form").attr('method') == 'post') {
+                                alertSuccess(msg.message, '/page')
                             }
                         },
                         error: function(msg) {

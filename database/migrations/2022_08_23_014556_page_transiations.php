@@ -23,6 +23,8 @@ class PageTransiations extends Migration
                 ->references('id')->on('languages')->onDelete('cascade');
 
             $table->string('title');
+            $table->string('sub_title')->nullable();
+            $table->string('excerpt')->nullable();
             $table->timestamps();
         });
     }
