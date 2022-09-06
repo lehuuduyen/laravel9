@@ -60,9 +60,6 @@ class Page extends Model
         }
         if ($page) {
             $page_transiations = Page_transiation::where("language_id", $languageId)->where('page_id', $page->id)->first();
-
-            $title = (isset($page_transiations->title)) ? $page_transiations->title : "";
-            $excerpt = (isset($page_transiations->excerpt)) ? $page_transiations->excerpt : "";
             foreach($listKeyPageTransiation as $keyPageTransiatio){
                 $temp[$keyPageTransiatio] = (isset($page_transiations->$keyPageTransiatio)) ? $page_transiations->$keyPageTransiatio : ""; 
             }
