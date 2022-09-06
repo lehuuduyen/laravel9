@@ -17,6 +17,7 @@ class Page extends Migration
             $table->bigIncrements("id");
             $table->string('slug')->unique();
             $table->tinyInteger('status')->default(2);
+            $table->tinyInteger('is_category')->default(2);
             $table->timestamps();
         });
     }
