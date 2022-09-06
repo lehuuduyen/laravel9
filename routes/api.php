@@ -23,6 +23,8 @@ Route::group(['middleware' => 'api'], function() {
     Route::apiResource('category', 'App\Http\Controllers\Api\CategoryController');
     Route::apiResource('page', 'App\Http\Controllers\Api\PageController');
     Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
+    Route::get('/top', 'App\Http\Controllers\Api\PageController@topPage');
 });
+
 
 
