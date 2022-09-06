@@ -73,10 +73,15 @@ class PostController extends BaseController
     }
     public function edit($id)
     {
+        $pageModel =new Page();
+
         $getCategory = $this->getAllCategory();
-        $listField = Page_config_field::where('category_id', $getCategory->id)->pluck('config_field_id')->toArray();
-        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', $this->_DEFAULT_LANGUAGE)->get();
+        $getPage = $this->getPage();
+        $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
+        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', $pageModel->getLanguageId())->get();
         $postDetail = Post::with('post_meta')->find($id);
+        $getAllCategory = $this->getAllCategory();
+        $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
         foreach ($listDetailField as $key => $detailField) {
             $listDetailField[$key]['value'] = "";
             foreach ($postDetail->post_meta as $keyPostMeta => $postMeta) {
@@ -97,7 +102,7 @@ class PostController extends BaseController
             }
             if ($detailField['type'] == 3) {
                 if ($listDetailField[$key]['value'] != "") {
-                    $listDetailField[$key]['value'] = '/storage/' . $listDetailField[$key]['value'];
+                    $listDetailField[$key]['value'] =  $listDetailField[$key]['value'];
                 }
                 $listDetailFieldNotLanguage[] = $listDetailField[$key];
             }
@@ -112,7 +117,11 @@ class PostController extends BaseController
             'getCategory' => $getCategory,
             'listDetailFieldLanguage' => $listDetailFieldLanguage,
             'listDetailFieldNotLanguage' => $listDetailFieldNotLanguage,
-            'postDetail' => $postDetail
+            'postDetail' => $postDetail,
+            'getPage' => $getPage,
+            'htmlRecursiveCategory' => $htmlRecursiveCategory,
+
+
         ]);
     }
     public function store(Request  $request)
@@ -221,7 +230,7 @@ class PostController extends BaseController
                     foreach ($files as $key => $file){
                         Post_meta::create(
                             [
-                                'post_id' => $post->id,
+                                'post_id' => $id,
                                 'config_detail_field_id' => $configDetailId,
                                 'language_id' => 1,
                                 'meta_key' => $key,
