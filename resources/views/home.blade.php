@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/summernote/summernote-bs4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/custom.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/sweetalert2.min.css') }}">
-    
+
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -150,12 +150,14 @@
         table {
             width: 100% !important
         }
-        .brand-link{
+
+        .brand-link {
             padding: 0px !important
         }
+
         label abbr {
-    color: red;
-}
+            color: red;
+        }
     </style>
     @yield('css')
 
@@ -265,7 +267,7 @@
 
                                 <li class="nav-item ">
                                     <a href="/post?post_type={{ $value->slug }}"
-                                        class="nav-link {{ ($active == $value->slug && $postActive == "index") ? 'active' : '' }}">
+                                        class="nav-link {{ $active == $value->slug && $postActive == 'index' ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-copy"></i>
                                         <p>
                                             {{ __('message.list', ['title' => $value->title]) }}
@@ -274,22 +276,28 @@
                                 </li>
                                 <li class="nav-item ">
                                     <a href="/post/create?post_type={{ $value->slug }}"
-                                        class="nav-link {{ ($active == $value->slug && $postActive == "create") ? 'active' : '' }}">
+                                        class="nav-link {{ $active == $value->slug && $postActive == 'create' ? 'active' : '' }}">
                                         <i class="nav-icon fas fa-copy"></i>
                                         <p>
                                             Add new
                                         </p>
                                     </a>
                                 </li>
-                                <li class="nav-item ">
-                                    <a href="/category?post_type={{ $value->slug }}"
-                                        class="nav-link {{ $active == 'category' . $value->slug ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-copy"></i>
-                                        <p>
-                                            Category
-                                        </p>
-                                    </a>
-                                </li>
+                                @if ($value->is_category == 1)
+                                    <li class="nav-item ">
+                                        <a href="/category?post_type={{ $value->slug }}"
+                                            class="nav-link {{ $active == 'category' . $value->slug ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-copy"></i>
+                                            <p>
+                                                Category
+                                            </p>
+                                        </a>
+                                    </li>
+                                @endif
+
+
+
+
                             </ul>
                         </li>
                         <?php
@@ -429,7 +437,7 @@
             lang: @json($slugLanguage)
         }
     </script>
-    
+
     <script>
         const slugLanguage = $("#slugLanguage").val()
 
@@ -443,7 +451,7 @@
             $(elem).prop("disabled", false);
             $(elem).html($(elem).attr("data-original-text"));
         }
-      
+
         function alertError(message = "") {
 
             Swal.fire({
@@ -455,7 +463,7 @@
             })
         }
 
-        function alertSuccess(message = "Saved!!!!",redirect ="") {
+        function alertSuccess(message = "Saved!!!!", redirect = "") {
             Swal.fire({
                 icon: 'success',
                 title: 'success',
@@ -463,8 +471,8 @@
                 // timer: 3000,
                 timerProgressBar: true
             })
-            if(redirect){
-                location.href=redirect
+            if (redirect) {
+                location.href = redirect
             }
         }
         $.ajaxSetup({

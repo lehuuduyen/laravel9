@@ -67,7 +67,7 @@ class PageController extends BaseController
 
 
             $page = Page::create(
-                ['status' => $data['status'], 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['status' => $data['status'], 'is_category' => $data['is_category'], 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
                 if($language['title'] == null){
@@ -123,7 +123,7 @@ class PageController extends BaseController
             }
 
             $page->update(
-                ['status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['is_category' => $data['is_category'],'status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Page_transiation

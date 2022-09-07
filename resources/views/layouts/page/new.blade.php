@@ -48,7 +48,14 @@
                             </select>
 
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Show category</label>
+                            <select class="form-control" name="is_category">
+                                <option {{ (isset($getPage->status) && $getPage->is_category == 1) ? 'selected' : '' }} value="1">Active</option>
+                                <option {{ (isset($getPage->status) && $getPage->is_category == 2) ? 'selected' : '' }} value="2">Unactive</option>
+                            </select>
 
+                        </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Slug <abbr>*</abbr></label>
                             <input type="text" class="form-control" name="slug"

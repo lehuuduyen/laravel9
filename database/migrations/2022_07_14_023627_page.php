@@ -19,6 +19,7 @@ class Page extends Migration
             $table->tinyInteger('status')->default(2);
             $table->string('img_sp')->nullable();
             $table->string('img_pc')->nullable();
+            $table->tinyInteger('is_category')->default(2);
             $table->timestamps();
         });
     }

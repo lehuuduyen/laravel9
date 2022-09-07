@@ -56,6 +56,7 @@ class PageController extends BaseController
         }
         return $this->returnJson($data, 'Data found');
     }
+
     /**
      * Store a newly created resource in storage.
      *
