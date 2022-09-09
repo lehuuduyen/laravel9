@@ -1,183 +1,119 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@extends('home')
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Create Fullcalender CRUD Events in Laravel</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-    {{-- Scripts --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
-
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script src="https://unpkg.com/moment@2.19.1/min/moment.min.js"></script>
+@section('title', 'List page')
+@section('content-title', 'List page')
+@section('css')
     <style>
-        .fc-view {
-            overflow-x: auto;
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            font-size: 14px;
         }
 
-        .fc-view>table {
-            min-width: 100%;
-        }
-
-        .fc-time-grid .fc-slats {
-            z-index: 4;
-            pointer-events: none;
-        }
-
-        .fc-scroller.fc-time-grid-container {
-            overflow: initial !important;
-        }
-
-        .fc-axis {
-            position: sticky;
-            left: 0;
-            background: white;
+        #calendar {
+            max-width: 1100px;
+            margin: 40px auto;
         }
     </style>
-</head>
 
-<body>
-    <div class="container mt-5" >
-        <h2 class="h2 text-center mb-5 border-bottom pb-3">Laravel FullCalender CRUD Events Example</h2>
-        <div id='full_calendar_events'></div>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.js"></script>
 
+@endsection
+
+@section('content')
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+
+                    <div id='full_calendar_events'></div>
+
+                    <input type="hidden" name="user" id="user" value="{{ $user }}">
+
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+@endsection
+
+@section('javascript')
     <script>
-        $(document).ready(function() {
-            var SITEURL = "{{ url('/') }}";
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+        var SITEURL = "{{ url('/') }}";
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('full_calendar_events');
+            var user = JSON.parse(document.getElementById('user').value);
 
-            var calendar = $('#full_calendar_events').fullCalendar({
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                allDaySlot: false,
                 editable: true,
-                events: SITEURL + "/calendar-event",
-                displayEventTime: true,
-                defaultView: 'agendaWeek',
 
+                initialView: 'resourceTimeGridFourDay',
+                headerToolbar: {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'resourceTimeGridDay,resourceTimeGridFourDay'
+                },
+                views: {
+                    resourceTimeGridFourDay: {
+                        type: 'resourceTimeGrid',
 
-                // defaultView: 'resourceTimeGridFourDay',
-                // datesAboveResources: true,
-                // allDaySlot: false,
-                // plugins: ['resourceTimeGrid'],
-                // header: {
-                //     left: 'prev,next',
-                //     center: 'title',
-                //     right: 'resourceTimeGridDay,resourceTimeGridFourDay'
-                // },
-                // views: {
-                //     resourceTimeGridFourDay: {
-                //         type: 'resourceTimeGrid',
-                //         duration: {
-                //             days: 4
-                //         },
-                //         buttonText: '4 days'
-                //     }
-                // },
-                // resources: [{
-                //         id: 'a',
-                //         title: 'Room A'
-                //     },
-                //     {
-                //         id: 'b',
-                //         title: 'Room B'
-                //     }
-                // ],
-                // events: 'https://fullcalendar.io/demo-events.json?with-resources=2',
-
-                eventRender: function(event, element, view) {
-                    if (event.allDay === 'true') {
-                        event.allDay = true;
-                    } else {
-                        event.allDay = false;
+                        buttonText: 'All days'
                     }
                 },
-                selectable: true,
+                resources: user,
+                events: {
+                    url: SITEURL + "/calendar-event",
+                },
                 selectHelper: true,
-                select: function(event_start, event_end, allDay) {
-                    var event_name = prompt('Event Name:');
-                    if (event_name) {
-                        console.log(event_start);
-                        
-                        var event_start = moment (event_start).format( "Y-MM-DD HH:mm:ss");
-                        console.log(event_start);
-                        
-                        var event_end = moment (event_end).format("Y-MM-DD HH:mm:ss");
-                        $.ajax({
-                            url: SITEURL + "/calendar-crud-ajax",
-                            data: {
-                                event_name: event_name,
-                                event_start: event_start,
-                                event_end: event_end,
-                                type: 'create'
-                            },
-                            type: "POST",
-                            success: function(data) {
-                                displayMessage("Event created.");
-                                calendar.fullCalendar('renderEvent', {
-                                    id: data.id,
-                                    title: event_name,
-                                    start: event_start,
-                                    end: event_end,
-                                    allDay: allDay
-                                }, true);
-                                calendar.fullCalendar('unselect');
-                            }
-                        });
-                    }
+
+                //hien thi hover https://fullcalendar.io/docs/date-clicking-selecting
+                selectable: true,
+                //ko dc dung lap
+                selectOverlap: false,
+                dateClick: function(info) {
+                    const nextURL = SITEURL + "/calendar-event";
+                    const nextTitle = 'My new page title';
+                    const nextState = {
+                        additionalInformation: 'Updated the URL with JS'
+                    };
+                    window.history.pushState(nextState, nextTitle, nextURL);
+
+
                 },
+
                 eventDrop: function(event, delta) {
-                    var event_start = $.fullCalendar.formatDate(event.start, "Y-MM-DD");
-                    var event_end = $.fullCalendar.formatDate(event.end, "Y-MM-DD");
-                    $.ajax({
-                        url: SITEURL + '/calendar-crud-ajax',
-                        data: {
-                            title: event.event_name,
-                            start: event_start,
-                            end: event_end,
-                            id: event.id,
-                            type: 'edit'
-                        },
-                        type: "POST",
-                        success: function(response) {
-                            displayMessage("Event updated");
-                        }
-                    });
+                    alert(event.title + ' was moved ' + delta + ' days\n' +
+                        '(should probably update your database)');
                 },
-                eventClick: function(event) {
-                    var eventDelete = confirm("Are you sure?");
-                    if (eventDelete) {
-                        $.ajax({
-                            type: "POST",
-                            url: SITEURL + '/calendar-crud-ajax',
-                            data: {
-                                id: event.id,
-                                type: 'delete'
-                            },
-                            success: function(response) {
-                                calendar.fullCalendar('removeEvents', event.id);
-                                displayMessage("Event removed");
-                            }
-                        });
-                    }
+                snapDuration: '00:15:00',
+                locale: 'en-GB',
+
+                slotLabelFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: false
                 }
-            });
+
+            })
+            calendar.render();
 
         });
-
-        function displayMessage(message) {
-            toastr.success(message, 'Event');
-        }
     </script>
-</body>
-
-</html>
+@endsection

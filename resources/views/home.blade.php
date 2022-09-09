@@ -250,6 +250,15 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item ">
+                            <a href="/calendar-event" class="nav-link {{ $active == 'calendar-event' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Calendar
+                                </p>
+                            </a>
+                        </li>
+                        
                         <?php 
                         foreach($page as $value){
                           ?>
@@ -328,6 +337,7 @@
 
                             </ul>
                         </li>
+                        
 
                         {{-- <li class="nav-item ">
             <a href="#" class="nav-link ">

@@ -10,18 +10,20 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use App;
 use App\Models\Event;
+use App\Models\User;
 
 class CalendarController extends BaseController
 {
     public function index(Request $request)
     {
+        $user = User::get(['id','name as title']);
         if($request->ajax()) {  
             $data = Event::whereDate('start', '>=', $request->start)
                 ->whereDate('end',   '<=', $request->end)
-                ->get(['id', 'title', 'start', 'end']);
+                ->get(['user_id as id', 'title', 'start', 'end']);
             return response()->json($data);
         }
-        return view('fullcalendar');
+        return $this->renderView('fullcalendar',['user'=>$user,'active'=>'calendar-event']);
     }
  
     public function calendarEvents(Request $request)

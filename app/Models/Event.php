@@ -13,6 +13,7 @@ class Event extends Model
         'title',
         'start',
         'end',
+        "user_id"
         
     ];
 }
