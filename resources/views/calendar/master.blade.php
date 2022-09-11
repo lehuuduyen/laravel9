@@ -33,11 +33,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-
-                    <div id='full_calendar_events'></div>
-
-                    <input type="hidden" name="user" id="user" value="{{ $user }}">
-
+                    @yield('content_calendar')
                 </div>
                 <!-- /.col -->
             </div>
@@ -98,7 +94,7 @@
                     const nextState = {
                         additionalInformation: 'Updated the URL with JS'
                     };
-                    window.history.pushState(nextState, nextTitle, nextURL);
+                    window.history.pushState({urlPath:nextURL}, nextTitle, nextURL);
 
 
                 },

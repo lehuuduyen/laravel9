@@ -23,9 +23,14 @@ class CalendarController extends BaseController
                 ->get(['user_id as id', 'title', 'start', 'end']);
             return response()->json($data);
         }
-        return $this->renderView('fullcalendar',['user'=>$user,'active'=>'calendar-event']);
+        return $this->renderView('calendar/index',['user'=>$user,'active'=>'calendar-event']);
     }
- 
+    public function detail(Request $request)
+    {
+        $user = User::get(['id','name as title']);
+        
+        return $this->renderView('calendar/detail',['active'=>'calendar-event']);
+    }
     public function calendarEvents(Request $request)
     {
  
