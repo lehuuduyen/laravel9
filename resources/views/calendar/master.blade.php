@@ -75,8 +75,6 @@
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 allDaySlot: false,
-                editable: true,
-
                 initialView: 'resourceTimeGridFourDay',
                 headerToolbar: {
                     left: 'prev,next',
@@ -118,16 +116,18 @@
                     document.title = nextTitle
 
                 },
+             
+                editable: true,
+                selectable: true,
+                selectHelper: true,
+                selectMirror:   true,
+                slotDuration: '00:30',
+                // snapDuration: '00:15',
 
-                eventDrop: function(event, delta) {
-                    alert(event.title + ' was moved ' + delta + ' days\n' +
-                        '(should probably update your database)');
-                },
-                snapDuration: '00:15:00',
                 locale: 'en-GB',
 
                 slotLabelFormat: {
-                    hour: 'numeric',
+                    hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
                 }
