@@ -16,6 +16,23 @@
             max-width: 1100px;
             margin: 40px auto;
         }
+
+        .modal-dialog {
+            width: 100%;
+            max-width: none;
+            height: 100%;
+            margin: 0;
+        }
+
+        .modal-content {
+            height: 100%;
+            border: 0;
+            border-radius: 0;
+        }
+
+        .modal-body {
+            overflow-y: auto;
+        }
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -32,7 +49,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
+                <div class="col-12" id="duyen">
                     @yield('content_calendar')
                 </div>
                 <!-- /.col -->
@@ -87,15 +104,18 @@
                     let date = moment(info.dateStr).format('YYYY-MM-DD');
                     let hour = moment(info.dateStr).format('HH');
                     let minute = moment(info.dateStr).format('mm');
-                    let startTime = (hour * 3600) + (minute * 60) 
-                  
-                    const nextURL = SITEURL + `/calendar-detail?startDate=${date}&startTime=${startTime}&employeeId=${info.resource.id}`;
+                    let startTime = (hour * 3600) + (minute * 60)
+
+                    const nextURL = SITEURL +
+                        `/calendar-detail?startDate=${date}&startTime=${startTime}&employeeId=${info.resource.id}`;
                     const nextTitle = 'My new page title';
                     const nextState = {
                         additionalInformation: 'Updated the URL with JS'
                     };
-                    window.history.pushState({urlPath:nextURL}, nextTitle, nextURL);
-
+                    window.history.pushState({
+                        urlPath: window.location.href
+                    }, nextTitle, nextURL);
+                    document.title = nextTitle
 
                 },
 

@@ -432,7 +432,7 @@
     <script src="{{ asset('/js/sweetalert2.min.js') }}"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
     <script src="{{ asset('/js/filemanager.js') }}"></script>
-    <script src="{{ asset('/js/custom.min.js') }}"></script>
+    {{-- <script src="{{ asset('/js/custom.min.js') }}"></script> --}}
     <script type="text/javascript">
         /**
          * JUZAWEB CMS - THE BEST CMS FOR LARAVEL PROJECT
