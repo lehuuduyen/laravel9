@@ -8,194 +8,19 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="robots" content="index">
     <title>Fresha - Partner Account</title>
-    {{-- <script type="text/javascript" async="" src="https://bat.bing.com/bat.js"></script>
-    <script type="text/javascript" async="" src="https://www.googleadservices.com/pagead/conversion_async.js"></script>
-    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script>
-    <script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-MWZLXD"></script>
-    <script async="" src="https://www.google-analytics.com/analytics.js"></script> --}}
-    <script>
-        window.SHEDUL_VARS = {
-            "LEGACY_API_URL": "https://partners-app.fresha.com",
-            "API_URL": "https://partners-api.fresha.com",
-            "CUSTOMERS_API_URL": "https://customers-api.fresha.com",
-            "FINANCIAL_STATEMENT_API_URL": "https://financial-statement-api.fresha.com",
-            "INVENTORY_API_URL": "https://inventory-api.fresha.com",
-            "SHOPKEEPER_API_URL": "https://shopkeeper-api.fresha.com",
-            "BOOKKEEPER_URL": "https://bookkeeper.fresha.com",
-            "FRESHA_SPA_URL": "https://www.fresha.com",
-            "REFRESH_API_URL": "https://refresh.fresha.com",
-            "DEPOSITS_API_URL": "https://deposits.fresha.com",
-            "REPORTS_URL": "https://reports.fresha.com",
-            "PARTNERS_REPORTING_URL": "https://partners-reporting-api.fresha.com",
-            "SHEDUL_IFRAME_URL": "https://partners-iframe.fresha.com",
-            "WAREHOUSE_URL": "https://warehouse.fresha.com",
-            "APPOINTMENT_HISTORY_LOG_URL": "https://appointment-history-log.fresha.com",
-            "MESSAGE_ACCOUNTING_API_URL": "https://message-accounting-api.fresha.com",
-            "REFERRALS_API_URL": "https://referrals-api.fresha.com",
-            "ONBOARDING_API_URL": "https://onboarding-api.fresha.com",
-            "ROSTER_API_URL": "https://roster-api.fresha.com",
-            "STAFF_NOTIFICATIONS_URL": "https://staff-notifications.fresha.com",
-            "CLIENT_NOTIFICATIONS_URL": "https://partners-client-notifications.fresha.com",
-            "SHEDUL_LIVE_URL": "https://staff-notifications-ws.fresha.com",
-            "APP_URL": "https://partners.fresha.com",
-            "ASSET_URL": "https://cdn-partners.fresha.com",
-            "AWS_S3_ROOT": "https://cdn-uploads.fresha.com",
-            "GMAPS_API_KEY": "AIzaSyAdVoQEbpjDI6rQ7HgI_e_DnWc6miiQ_ds",
-            "GOOGLE_TAG_MANAGER": "GTM-MWZLXD",
-            "GOOGLE_ANALYTICS_ID": "UA-63088265-1",
-            "GOOGLE_APP_CLIENT_ID": "392785386469-68b84onrl818obteijg2p3mpi94pppmn.apps.googleusercontent.com",
-            "FACEBOOK_APP_ID": "1329241187447816",
-            "SIGN_IN_WITH_APPLE_CLIENT_ID": "com.fresha.Business.Web",
-            "SOURCE_VERSION": "v6.8.1535",
-            "SENTRY_PUBLIC_DSN": "https://fcb22a32dd5340db9650553fe05439cd@sentry.io/1884388",
-            "SENTRY_ENVIRONMENT": "production",
-            "SENTRY_SAMPLE_RATE": "1",
-            "SENTRY_TAGS": "{\"cluster_name\": \"production-01\"}",
-            "SENTRY_SESSION_REPLAYS": "1",
-            "CHECKOUT_API_KEY": "pk_8173a941-c6d0-4e35-acdc-6bf9ea87d178",
-            "CHECKOUT_PUBLIC_KEY": "",
-            "ZENDESK_SUBDOMAIN": "shedul",
-            "CAPTERRA_TRACKING": "1",
-            "NOTIFICATIONS_POLLING_INTERVAL_MS": "60000",
-            "PROVIDER_BADGE_POLLING_INTERVAL_MS": "1.8e+06",
-            "MAINTENANCE_STATUS_URL": "https://shedul-api-uploads.s3.amazonaws.com/maintenance.json",
-            "FACEBOOK_FRESHA_APP_ID": "1224875000951200",
-            "PAYMENTS_API_URL": "https://payments.fresha.com",
-            "ADYEN_PAYMENTS_ENVIRONMENT": "live",
-            "CURRENT_NAMESPACE": "production",
-            "DATADOG_APPLICATION_ID": "d0444910-7c02-4c93-9a12-96408e5634fb",
-            "DATADOG_CLIENT_TOKEN": "pub4a66d364062c29bb9a3a29f9543da753",
-            "DATADOG_RUM_SAMPLE_RATE": "10",
-            "DATADOG_ENV": "production-web",
-            "LIVETRANS_POLL_ENABLED": "1",
-            "LIVETRANS_POLL_URL": "https://live-translations.fresha.com/partners-spa",
-            "LIVETRANS_POLL_INTERVAL": "600000",
-            "ANALYTICS_API_URL": "https://analytics-api.fresha.com",
-            "CALENDAR_SYNC_API_URL": "https://calendar-sync-api.fresha.com",
-            "DEALS_API_URL": "https://deals-api.fresha.com",
-            "BLOCKED_TIMES_API_URL": "https://blocked-times-api.fresha.com",
-            "CHECKOUT_API_URL": "https://checkout-api.fresha.com"
-        };
-    </script>
-    {{-- <link rel="shortcut icon"
-        href="https://cdn-partners.fresha.com/assets/favicons-a7262df304b6005d6ec2443275e4e1f4ece1227dbfa6fbeeca0ec25547f8870f/favicon.ico">
-    <link rel="icon" type="image/png" sizes="16x16"
-        href="https://cdn-partners.fresha.com/assets/favicons-a7262df304b6005d6ec2443275e4e1f4ece1227dbfa6fbeeca0ec25547f8870f/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="32x32"
-        href="https://cdn-partners.fresha.com/assets/favicons-a7262df304b6005d6ec2443275e4e1f4ece1227dbfa6fbeeca0ec25547f8870f/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="48x48"
-        href="https://cdn-partners.fresha.com/assets/favicons-a7262df304b6005d6ec2443275e4e1f4ece1227dbfa6fbeeca0ec25547f8870f/favicon-48x48.png">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="https://cdn-partners.fresha.com/assets/favicons-a7262df304b6005d6ec2443275e4e1f4ece1227dbfa6fbeeca0ec25547f8870f/apple-touch-icon-180x180.png"> --}}
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title">
+  
+    
    
-    <link href="https://cdn-partners.fresha.com/assets/styles.3303123502526b8ca4c9.css" rel="stylesheet">
+    <link href="{{ asset('/calendar/styles.3303123502526b8ca4c9.css') }}" rel="stylesheet">
     <meta name="apple-mobile-web-app-title" content="Fresha Partner">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="theme-color" content="#ffffff">
-    {{-- <link rel="apple-touch-icon" sizes="180x180"
-        href="https://cdn-partners.fresha.com/assets/icons/ios/icon_180x180.dc168a371e292faf737b614890908f7c.png">
-    <link rel="apple-touch-icon" sizes="167x167"
-        href="https://cdn-partners.fresha.com/assets/icons/ios/icon_167x167.3eccd83c4971487ed706402cdcb401f7.png">
-    <link rel="apple-touch-icon" sizes="152x152"
-        href="https://cdn-partners.fresha.com/assets/icons/ios/icon_152x152.da53b0e691be10f475ae6bc3ff31d4e4.png">
-    <link rel="apple-touch-icon" sizes="120x120"
-        href="https://cdn-partners.fresha.com/assets/icons/ios/icon_120x120.249d8cdf5102ecb2d954b1cb531f10d7.png">
-    <link rel="manifest" href="/assets/manifest.41ae3f0d1392d75181f94fea3dd4f03a.json"> --}}
-    <link rel="prefetch" as="script" href="https://cdn-partners.fresha.com/assets/modules.1b1c3cacb46f338c6d15.js">
-    <link rel="prefetch" as="script" href="https://cdn-partners.fresha.com/assets/icons.6798061a974b1ef29ff2.js">
-    <link rel="prefetch" as="script"
-        href="https://cdn-partners.fresha.com/assets/partners-main.876ff0f87612a6fb6987.js">
-    <link rel="prefetch" as="script" href="https://cdn-partners.fresha.com/assets/ltcache.932470b7f64a6baa5ff5.js">
+  
     <link rel="stylesheet" type="text/css"
-        href="https://cdn-partners.fresha.com/assets/modules.e35b0e935d22574b4b3a.css">
-    {{-- <meta http-equiv="origin-trial"
-        content="A7bG5hJ4XpMV5a3V1wwAR0PalkFSxLOZeL9D/YBYdupYUIgUgGhfVJ1zBFOqGybb7gRhswfJ+AmO7S2rNK2IOwkAAAB7eyJvcmlnaW4iOiJodHRwczovL3d3dy5nb29nbGV0YWdtYW5hZ2VyLmNvbTo0NDMiLCJmZWF0dXJlIjoiUHJpdmFjeVNhbmRib3hBZHNBUElzIiwiZXhwaXJ5IjoxNjY5NzY2Mzk5LCJpc1RoaXJkUGFydHkiOnRydWV9">
-    <script src="https://bat.bing.com/p/action/26040014.js" type="text/javascript" async="" data-ueto="ueto_e30ee56c6d">
-    </script>
-    <script type="text/javascript" async=""
-        src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/952794111/?random=1662965656788&amp;cv=9&amp;fst=1662965656788&amp;num=1&amp;bg=ffffff&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;u_h=1080&amp;u_w=1920&amp;u_ah=1080&amp;u_aw=1920&amp;u_cd=24&amp;u_his=2&amp;u_tz=420&amp;u_java=false&amp;u_nplug=5&amp;u_nmime=2&amp;gtm=2wg970&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=https%3A%2F%2Fpartners.fresha.com%2Fappointments%2Fnew%3FstartDate%3D2022-09-07%26startTime%3D43200%26employeeId%3D2004472%26locationId%3D767949&amp;ref=https%3A%2F%2Fpartners.fresha.com%2Fcalendar%3Fview%3Dday%26location_id%3D767949%26resource%3Demployee%26employee_id%3Dworking%26room_id%3D%26date%3D2022-09-07&amp;tiba=Fresha%20-%20Partner%20Account&amp;auid=605941423.1662533497&amp;hn=www.googleadservices.com&amp;async=1&amp;rfmt=3&amp;fmt=4">
-    </script>
-    <script type="text/javascript" async=""
-        src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/656269267/?random=1662965656790&amp;cv=9&amp;fst=1662965656790&amp;num=1&amp;bg=ffffff&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;eid=376635471&amp;u_h=1080&amp;u_w=1920&amp;u_ah=1080&amp;u_aw=1920&amp;u_cd=24&amp;u_his=2&amp;u_tz=420&amp;u_java=false&amp;u_nplug=5&amp;u_nmime=2&amp;gtm=2wg970&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=https%3A%2F%2Fpartners.fresha.com%2Fappointments%2Fnew%3FstartDate%3D2022-09-07%26startTime%3D43200%26employeeId%3D2004472%26locationId%3D767949&amp;ref=https%3A%2F%2Fpartners.fresha.com%2Fcalendar%3Fview%3Dday%26location_id%3D767949%26resource%3Demployee%26employee_id%3Dworking%26room_id%3D%26date%3D2022-09-07&amp;tiba=Fresha%20-%20Partner%20Account&amp;auid=605941423.1662533497&amp;hn=www.googleadservices.com&amp;async=1&amp;rfmt=3&amp;fmt=4">
-    </script> --}}
-    <style data-react-tooltip="true">
-        .__react_component_tooltip {
-            border-radius: 3px;
-            display: inline-block;
-            font-size: 13px;
-            left: -999em;
-            opacity: 0;
-            padding: 8px 21px;
-            position: fixed;
-            pointer-events: none;
-            transition: opacity 0.3s ease-out;
-            top: -999em;
-            visibility: hidden;
-            z-index: 999;
-        }
-
-        .__react_component_tooltip.allow_hover,
-        .__react_component_tooltip.allow_click {
-            pointer-events: auto;
-        }
-
-        .__react_component_tooltip::before,
-        .__react_component_tooltip::after {
-            content: "";
-            width: 0;
-            height: 0;
-            position: absolute;
-        }
-
-        .__react_component_tooltip.show {
-            opacity: 0.9;
-            margin-top: 0;
-            margin-left: 0;
-            visibility: visible;
-        }
-
-        .__react_component_tooltip.place-top::before {
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            bottom: -8px;
-            left: 50%;
-            margin-left: -10px;
-        }
-
-        .__react_component_tooltip.place-bottom::before {
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            top: -8px;
-            left: 50%;
-            margin-left: -10px;
-        }
-
-        .__react_component_tooltip.place-left::before {
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            right: -8px;
-            top: 50%;
-            margin-top: -5px;
-        }
-
-        .__react_component_tooltip.place-right::before {
-            border-top: 6px solid transparent;
-            border-bottom: 6px solid transparent;
-            left: -8px;
-            top: 50%;
-            margin-top: -5px;
-        }
-
-        .__react_component_tooltip .multi-line {
-            display: block;
-            padding: 2px 0;
-            text-align: center;
-        }
-    </style>
+        href="{{ asset('/calendar/modules.e35b0e935d22574b4b3a.css') }}">
+   
+  
 </head>
 
 <div class="modal fade modal-fullscreen show" style="display: block;" id="exampleModal" tabindex="-1"
@@ -207,7 +32,7 @@
                     <h2 class="modal-title" id="exampleModalLabel">New Appointment</h2>
 
                 </div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" onclick="history.back(-1);$('#duyen').load('/calendar-event');" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>

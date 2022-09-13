@@ -14,15 +14,10 @@ use App\Models\User;
 
 class CalendarController extends BaseController
 {
-    public function index(Request $request)
+    public function index()
     {
         $user = User::get(['id','name as title']);
-        if($request->ajax()) {  
-            $data = Event::whereDate('start', '>=', $request->start)
-                ->whereDate('end',   '<=', $request->end)
-                ->get(['user_id as id', 'title', 'start', 'end']);
-            return response()->json($data);
-        }
+       
         return $this->renderView('calendar/index',['user'=>$user,'active'=>'calendar-event']);
     }
     public function detail(Request $request)

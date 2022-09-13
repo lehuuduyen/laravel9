@@ -33,6 +33,9 @@
         .modal-body {
             overflow-y: auto;
         }
+
+
+        
     </style>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -59,82 +62,4 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-@endsection
-
-@section('javascript')
-    <script>
-        var SITEURL = "{{ url('/') }}";
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('full_calendar_events');
-            var user = JSON.parse(document.getElementById('user').value);
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                allDaySlot: false,
-                initialView: 'resourceTimeGridFourDay',
-                headerToolbar: {
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'resourceTimeGridDay,resourceTimeGridFourDay'
-                },
-                views: {
-                    resourceTimeGridFourDay: {
-                        type: 'resourceTimeGrid',
-
-                        buttonText: 'All days'
-                    }
-                },
-                resources: user,
-                events: {
-                    url: SITEURL + "/calendar-event",
-                },
-                selectHelper: true,
-
-                //hien thi hover https://fullcalendar.io/docs/date-clicking-selecting
-                selectable: true,
-                //ko dc dung lap
-                selectOverlap: false,
-                dateClick: function(info) {
-                    let date = moment(info.dateStr).format('YYYY-MM-DD');
-                    let hour = moment(info.dateStr).format('HH');
-                    let minute = moment(info.dateStr).format('mm');
-                    let startTime = (hour * 3600) + (minute * 60)
-
-                    const nextURL = SITEURL +
-                        `/calendar-detail?startDate=${date}&startTime=${startTime}&employeeId=${info.resource.id}`;
-                    const nextTitle = 'My new page title';
-                    const nextState = {
-                        additionalInformation: 'Updated the URL with JS'
-                    };
-                    window.history.pushState({
-                        urlPath: window.location.href
-                    }, nextTitle, nextURL);
-                    document.title = nextTitle
-
-                },
-             
-                editable: true,
-                selectable: true,
-                selectHelper: true,
-                selectMirror:   true,
-                slotDuration: '00:30',
-                // snapDuration: '00:15',
-
-                locale: 'en-GB',
-
-                slotLabelFormat: {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    hour12: false
-                }
-
-            })
-            calendar.render();
-
-        });
-    </script>
 @endsection

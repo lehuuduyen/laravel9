@@ -449,7 +449,7 @@
     </script>
 
     <script>
-        const slugLanguage = $("#slugLanguage").val()
+        var slugLanguage = $("#slugLanguage").val()
 
         function BtnLoading(elem) {
             $(elem).attr("data-original-text", $(elem).html());
