@@ -26,6 +26,7 @@ class CalendarController extends BaseController
             foreach($data as $key => $val){
                 $data[$key]['start'] = date(DATE_ATOM,strtotime($val['start']));
                 $data[$key]['end'] = date(DATE_ATOM,strtotime($val['end']));
+                $data[$key]['color'] = '#a5dff8';
             }
         }
         return response()->json($data);

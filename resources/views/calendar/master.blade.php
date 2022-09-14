@@ -34,13 +34,14 @@
             overflow-y: auto;
         }
 
-
-        
+      
     </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/calendar/modules.e35b0e935d22574b4b3a.css') }}">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.css" rel="stylesheet">
+    <link href="{{ asset('/calendar/styles.3303123502526b8ca4c9.css') }}" rel="stylesheet">
+
+
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.js"></script>
 
 @endsection

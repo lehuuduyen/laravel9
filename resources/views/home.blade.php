@@ -203,7 +203,7 @@
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar elevation-4 sidebar-dark-primary">
+        <aside class="main-sidebar elevation-4 sidebar-dark-primary" id="sidebar">
             <!-- Brand Logo -->
             <a href="index3.html" class="brand-link text-black navbar-light">
                 <img src="{{ asset('/adminlte/dist/img/icdLogo.png') }}" alt="ICD Logo"

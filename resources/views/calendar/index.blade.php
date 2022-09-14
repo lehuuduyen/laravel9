@@ -36,10 +36,22 @@
                 events: {
                     url: SITEURL + "/api/calendar",
                 },
-                dayRender: function(date, cell) {
-                    alert(1)
-                    if (moment(date).format('x') < moment().subtract(1, 'days').format('x')) {
-                        $(cell).addClass('disabled');
+                eventContent: function(arg) {
+                    var event = arg.event;
+                    var customHtml =
+                        `<div class ="VoOe8c BvZth5" > 
+                            <div class ="LuQ1Ve" > 
+                                <div class ="HYN1Wg" > 
+                                    <div class="Y-BcB3" > ${arg.timeText} </div>
+                                    <div class="Wp8yiJ">${event.title}</div> 
+                                </div>
+                                <div class="+uhSCd" >Manucure</div> 
+                            </div>
+                        </div>`
+
+
+                    return {
+                        html: customHtml
                     }
                 },
                 //hien thi hover https://fullcalendar.io/docs/date-clicking-selecting
@@ -68,7 +80,7 @@
                 editable: true,
                 selectable: true,
                 selectHelper: true,
-                selectMirror: true,
+                // selectMirror: true,
                 slotDuration: '00:30',
                 snapDuration: '00:05',
                 timeZone: 'UTC',
@@ -79,39 +91,120 @@
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: false
-                }
+                },
 
             })
             calendar.render();
 
         });
+        document.addEventListener('mousemove', e => {
+            mX = e.pageX;
+            mY = e.pageY;
+
+            let eleCursor = document.elementFromPoint(e.clientX, e.clientY);
+
+
+            if ($(eleCursor).hasClass('fc-timegrid-slot')) {
+
+                var cellWidth = $('th.fc-col-header-cell').width();
+                var cellHeight = $(eleCursor).height();
+                var distanceLeft = $(eleCursor).position().left;
+                var distanceRight = distanceLeft + cellWidth
+                var distanceLeftToCalendar = $('#duyen').offset().left; //second element distance from top
+                
+                var time = $(eleCursor).attr('data-time')
+                time = time.split(":");
+                time = time[0]+":"+time[1];
+                if (mX >= distanceLeftToCalendar + distanceRight) {
+                    $('.temp-cell').remove();
+
+                    $(eleCursor).append(
+                        `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distanceRight}px;"> ${time} </div>`
+                    );
+                } else {
+                    $('.temp-cell').remove();
+
+                    $(eleCursor).append(
+                        `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distanceLeft}px;"> ${time} </div>`
+                    );
+                }
+
+
+
+                $(eleCursor).children('td').each(function() {
+                    $(eleCursor).hover(function() {
+                        // $(eleCursor).html('<div class="current-time"></div>');
+                        $(eleCursor).html('<div class="current-time">' + $(eleCursor).parent()
+                            .parent()
+                            .data('time').substring(0, 5) + '</div>');
+
+                    }, function() {
+                        $(eleCursor).html('');
+                    });
+                });
+            } else {
+                $('.temp-cell').remove();
+            }
+
+        }, {
+            passive: true
+        })
+
+        $(document).on({
+            mouseleave: function() {
+                // $(this).children('.temp-cell').remove();
+
+            }
+        }, '.fc-timegrid-slot');
         // $(document).on({
-        //     mouseenter: function() {
-        //         //stuff to do on mouse enter
-        //         console.log($(this).html());
+        //     mouseenter: function(e) {
+        // var cellWidth = $('th.fc-col-header-cell').width();
+        // var cellHeight = $(this).height();
 
-        //         if (!$(this).html()) {
-        //             for (i = 0; i < 7; i++) {
-        //                 $(this).append('<td class="temp_cell" style="background-color:#ffef8f;border: 0px; width:' + (Number($('.fc-day')
-        //                     .width()) + 2) + 'px">ssssssssssss</td>');
-        //             }
+        //         var columnCount = $('th.fc-col-header-cell').children().length;
 
-        //             // $(this).children('td').each(function() {
-        //             //     $(this).hover(function() {
-        //             //         $(this).css({
-        //             //             'background-color': '#ffef8f',
-        //             //             'cursor': 'pointer'
-        //             //         });
-        //             //     }, function() {
-        //             //         $(this).prop('style').removeProperty('background-color');
-        //             //     });
-        //             // });
-        //         }
+        // if (!$(this).html()) {
+        //     $element = $('#duyen');
+        //     mX = e.pageX;
+        //     mY = e.pageY;
+        //     console.log(mX);
+        //     console.log(mY);
+
+        //     var distance = calculateDistance($element, mX, mY);
+        //     console.log(distance);
+
+        //     // $(this).append(
+        //     //         '<td class="temp-cell" style="background-color:#ffef8f;border:0px; height:' + (
+        //     //             cellHeight - 1) +
+        //     //         'px;width:' + (cellWidth + 1) + 'px"></td>');
+        //     $(this).append(
+        //         `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distance*2}px;"> 15:45 </div>`
+        //     );
+
+
+        // }
+        // $(this).children('td').each(function() {
+        //     $(this).hover(function() {
+        //         // $(this).html('<div class="current-time"></div>');
+        //         $(this).html('<div class="current-time">' + $(this).parent().parent()
+        //             .data('time').substring(0, 5) + '</div>');
+
+        //     }, function() {
+        //         $(this).html('');
+        //     });
+        // });
+
         //     },
+
         //     mouseleave: function() {
-        //         // $(this).children('.temp_cell').remove();
+        //         $(this).children('.temp-cell').remove();
 
         //     }
-        // }, ".fc-timegrid-slot-lane");
+        // },'.fc-timegrid-slot-lane');
+
+        function calculateDistance(elem, mouseX, mouseY) {
+            return Math.floor(Math.sqrt(Math.pow(mouseX - (elem.offset().left + (elem.width() / 2)), 2) + Math.pow(
+                mouseY - (elem.offset().top + (elem.height() / 2)), 2)));
+        }
     </script>
 @endsection
