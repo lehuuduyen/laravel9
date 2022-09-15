@@ -17,18 +17,21 @@ class CalendarController extends BaseController
     public function index()
     {
         $user = User::get(['id','name as title']);
-       
+        foreach($user as $key => $val){
+            $user[$key]['width'] = "50px";
+            
+        }
         return $this->renderView('calendar/index',['user'=>$user,'active'=>'calendar-event']);
     }
     public function detail(Request $request)
     {
         $user = User::get(['id','name as title']);
-        
+       
         return $this->renderView('calendar/detail',['active'=>'calendar-event']);
     }
     public function calendarEvents(Request $request)
     {
- 
+        
         switch ($request->type) {
            case 'create':
               $event = Event::create([
@@ -42,9 +45,10 @@ class CalendarController extends BaseController
   
            case 'edit':
               $event = Event::find($request->id)->update([
-                  'title' => $request->event_name,
-                  'start' => $request->event_start,
-                  'end' => $request->event_end,
+                  'start' => $request->start,
+                  'end' => $request->end,
+                  'user_id' => $request->staff_id,
+                  
               ]);
  
               return response()->json($event);

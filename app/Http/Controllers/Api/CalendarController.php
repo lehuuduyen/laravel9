@@ -22,7 +22,7 @@ class CalendarController extends BaseController
         if(isset($request->start)) {  
             $data = Event::whereDate('start', '>=', $request->start)
                 ->whereDate('end',   '<=', $request->end)
-                ->get(['user_id as resourceId', 'title', 'start', 'end']);
+                ->get(['user_id as resourceId', 'title', 'start', 'end','id']);
             foreach($data as $key => $val){
                 $data[$key]['start'] = date(DATE_ATOM,strtotime($val['start']));
                 $data[$key]['end'] = date(DATE_ATOM,strtotime($val['end']));
