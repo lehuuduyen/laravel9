@@ -116,7 +116,7 @@
                 },
                 eventContent: function(arg) {
                     var event = arg.event;
-                    
+
                     var customHtml =
                         `<div class ="VoOe8c BvZth5" id="card-${event.id}" > 
                             <div class ="LuQ1Ve" > 
@@ -133,91 +133,163 @@
                         html: customHtml
                     }
                 },
-                eventMouseEnter: function(arg,element) {
+                eventMouseEnter: function(arg, element, jsEvent, view) {
                     var event = arg.event;
-                  
-                    
-                    var html = `<div class="card" data-state="#about">
-                                <div class="card-header">
-                                    <div class="card-cover" style="background-image: url('https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80')"></div>
-                                    <img class="card-avatar" src="https://images.unsplash.com/photo-1549068106-b024baf5062d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80" alt="avatar" />
-                                    <h1 class="card-fullname">William Rocheald</h1>
-                                    <h2 class="card-jobtitle">UI Developer</h2>
-                                </div>
-                                <div class="card-main">
-                                    <div class="card-section is-active" id="about">
-                                    <div class="card-content">
-                                        <div class="card-subtitle">ABOUT</div>
-                                        <p class="card-desc">Whatever tattooed stumptown art party sriracha gentrify hashtag intelligentsia readymade schlitz brooklyn disrupt.
-                                        </p>
-                                    </div>
-                                    <div class="card-social">
-                                        <a href="#"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15.997 3.985h2.191V.169C17.81.117 16.51 0 14.996 0c-3.159 0-5.323 1.987-5.323 5.639V9H6.187v4.266h3.486V24h4.274V13.267h3.345l.531-4.266h-3.877V6.062c.001-1.233.333-2.077 2.051-2.077z" /></svg></a>
-                                        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path d="M512 97.248c-19.04 8.352-39.328 13.888-60.48 16.576 21.76-12.992 38.368-33.408 46.176-58.016-20.288 12.096-42.688 20.64-66.56 25.408C411.872 60.704 384.416 48 354.464 48c-58.112 0-104.896 47.168-104.896 104.992 0 8.32.704 16.32 2.432 23.936-87.264-4.256-164.48-46.08-216.352-109.792-9.056 15.712-14.368 33.696-14.368 53.056 0 36.352 18.72 68.576 46.624 87.232-16.864-.32-33.408-5.216-47.424-12.928v1.152c0 51.008 36.384 93.376 84.096 103.136-8.544 2.336-17.856 3.456-27.52 3.456-6.72 0-13.504-.384-19.872-1.792 13.6 41.568 52.192 72.128 98.08 73.12-35.712 27.936-81.056 44.768-130.144 44.768-8.608 0-16.864-.384-25.12-1.44C46.496 446.88 101.6 464 161.024 464c193.152 0 298.752-160 298.752-298.688 0-4.64-.16-9.12-.384-13.568 20.832-14.784 38.336-33.248 52.608-54.496z" /></svg></a>
-                                        <a href="#"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M301 256c0 24.852-20.148 45-45 45s-45-20.148-45-45 20.148-45 45-45 45 20.148 45 45zm0 0" />
-                                            <path d="M332 120H180c-33.086 0-60 26.914-60 60v152c0 33.086 26.914 60 60 60h152c33.086 0 60-26.914 60-60V180c0-33.086-26.914-60-60-60zm-76 211c-41.355 0-75-33.645-75-75s33.645-75 75-75 75 33.645 75 75-33.645 75-75 75zm86-146c-8.285 0-15-6.715-15-15s6.715-15 15-15 15 6.715 15 15-6.715 15-15 15zm0 0" />
-                                            <path d="M377 0H135C60.562 0 0 60.563 0 135v242c0 74.438 60.563 135 135 135h242c74.438 0 135-60.563 135-135V135C512 60.562 451.437 0 377 0zm45 332c0 49.625-40.375 90-90 90H180c-49.625 0-90-40.375-90-90V180c0-49.625 40.375-90 90-90h152c49.625 0 90 40.375 90 90zm0 0" /></svg></a>
-                                        <a href="#"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M23.994 24v-.001H24v-8.802c0-4.306-.927-7.623-5.961-7.623-2.42 0-4.044 1.328-4.707 2.587h-.07V7.976H8.489v16.023h4.97v-7.934c0-2.089.396-4.109 2.983-4.109 2.549 0 2.587 2.384 2.587 4.243V24zM.396 7.977h4.976V24H.396zM2.882 0C1.291 0 0 1.291 0 2.882s1.291 2.909 2.882 2.909 2.882-1.318 2.882-2.909A2.884 2.884 0 002.882 0z" /></svg></a>
-                                    </div>
-                                    </div>
-                                    <div class="card-section" id="experience">
-                                    <div class="card-content">
-                                        <div class="card-subtitle">WORK EXPERIENCE</div>
-                                        <div class="card-timeline">
-                                        <div class="card-item" data-year="2014">
-                                            <div class="card-item-title">Front-end Developer at <span>JotForm</span></div>
-                                            <div class="card-item-desc">Disrupt stumptown retro everyday carry unicorn.</div>
-                                        </div>
-                                        <div class="card-item" data-year="2016">
-                                            <div class="card-item-title">UI Developer at <span>GitHub</span></div>
-                                            <div class="card-item-desc">Developed new conversion funnels and disrupt.</div>
-                                        </div>
-                                        <div class="card-item" data-year="2018">
-                                            <div class="card-item-title">Illustrator at <span>Google</span></div>
-                                            <div class="card-item-desc">Onboarding illustrations for App.</div>
-                                        </div>
-                                        <div class="card-item" data-year="2020">
-                                            <div class="card-item-title">Full-Stack Developer at <span>CodePen</span></div>
-                                            <div class="card-item-desc">Responsible for the encomposing brand expreience.</div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="card-section" id="contact">
-                                    <div class="card-content">
-                                        <div class="card-subtitle">CONTACT</div>
-                                        <div class="card-contact-wrapper">
-                                        <div class="card-contact">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                                            <circle cx="12" cy="10" r="3" /></svg>
-                                            Algonquin Rd, Three Oaks Vintage, MI, 49128
-                                        </div>
-                                        <div class="card-contact">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" /></svg>(269) 756-9809</div>
-                                        <div class="card-contact">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                            <path d="M22 6l-10 7L2 6" /></svg>
-                                            william@rocheald.com
-                                        </div>
-                                        <button class="contact-me">WORK TOGETHER</button>
-                                        </div>
-                                    </div>
-                                    </div>
-                                    <div class="card-buttons">
-                                    <button data-section="#about" class="is-active">ABOUT</button>
-                                    <button data-section="#experience">EXPERIENCE</button>
-                                    <button data-section="#contact">CONTACT</button>
-                                    </div>
-                                </div>
-                                </div>`;
-                                $("#card-"+event.id).append(html)
+                    console.log("-------hover--------");
+                    tooltip =
+                        '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' +
+                        'title: ' + ': ' + event.title + '</br>' + 'start: ' + ': ' + event.start + '</div>';
+                    console.log("#card-"+event.id);
+
+                    $("body").append(tooltip);
+                    $("#card-"+event.id).mouseover(function(e) {
+                        $(this).css('z-index', 10000);
+                        $('.tooltiptopicevent').fadeIn('500');
+                        $('.tooltiptopicevent').fadeTo('10', 1.9);
+                    }).mousemove(function(e) {
+                        $('.tooltiptopicevent').css('top', e.pageY + 10);
+                        $('.tooltiptopicevent').css('left', e.pageX + 20);
+                    });
+                    var htmlRight =
+                        `<div class="fresha-partner-react-portal-wrapper"><div><div class="__react_component_tooltip show t3ca56e8d-e00a-4504-9848-d954f7810af4 place-right type-light _3iFzxb Ww-ky8 MQJT9J R+efxS" id="event:booking:564954464" data-id="tooltip" style="left: 789px; top: 489px;"><style>
+  	.t3ca56e8d-e00a-4504-9848-d954f7810af4 {
+	    color: #222;
+	    background: #fff;
+	    border: 1px solid transparent;
+  	}
+
+  	.t3ca56e8d-e00a-4504-9848-d954f7810af4.place-top {
+        margin-top: -10px;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-top::before {
+        border-top: 8px solid transparent;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-top::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        bottom: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-top-color: #fff;
+        border-top-style: solid;
+        border-top-width: 6px;
+    }
+
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-bottom {
+        margin-top: 10px;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-bottom::before {
+        border-bottom: 8px solid transparent;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-bottom::after {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        top: -6px;
+        left: 50%;
+        margin-left: -8px;
+        border-bottom-color: #fff;
+        border-bottom-style: solid;
+        border-bottom-width: 6px;
+    }
+
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-left {
+        margin-left: -10px;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-left::before {
+        border-left: 8px solid transparent;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-left::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        right: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-left-color: #fff;
+        border-left-style: solid;
+        border-left-width: 6px;
+    }
+
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-right {
+        margin-left: 10px;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-right::before {
+        border-right: 8px solid transparent;
+    }
+    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-right::after {
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        left: -6px;
+        top: 50%;
+        margin-top: -4px;
+        border-right-color: #fff;
+        border-right-style: solid;
+        border-right-width: 6px;
+    }
+  </style>
+  <div class="TX48NX" data-qa="calendar-event-popover-564954464"><div class="_0TvLLS seceHd PFNv8o N32lJl" style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;"><div class="Rmj0sK r8arb5" style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;"><div class="KZUYM7" data-qa="row-button-image" style="align-self: flex-start;"><div class="Avatar_self__38e78c9c Avatar_shapeRound__38e78c9c Avatar_size64__38e78c9c Avatar_placeholder__38e78c9c"><div class="Avatar_content__38e78c9c">J</div></div></div><div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;"><div class="_06rxAz" style="display: flex; flex-direction: row; flex-grow: 1;"><div class="fM7L52" style="display: flex; flex-direction: column; flex-grow: 1;"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045" data-qa="row-button-primary">Jane Doe</p><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045" data-qa="row-button-secondary"><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">jane@example.com</p></p></div></div></div></div></div><div class="Content_self__76ab3680 NnI-5+ cssCore_flexRow__33cdafe8 cssCore_flexGrow1__33cdafe8" data-qa="customer-badges"><div class="BadgeContainer_self__bcb321f0 BadgeContainer_margin4__bcb321f0" data-qa="customer-badges-container"><span class="Text_self__32440045 Text_typeTypefaceBadge13__32440045 Text_noWrap__32440045 Badge_self__a0fb2f98 Badge_variantDefault__a0fb2f98 Badge_colorBlue__a0fb2f98" data-qa="badge-new_customer"><div class="Content_self__76ab3680 CgNE3E Content_spaceX8__76ab3680 cssCore_flexRow__33cdafe8"><span class="TextEllipsis_self__862cb03d">New Client</span></div></span></div></div><div class="Ol4EMJ"><div class="_5inCaP"></div></div><div class="Content_self__76ab3680 Content_spaceY8__76ab3680 cssCore_padding16161616__33cdafe8 cssCore_flexColumn__33cdafe8"><div class="Content_self__76ab3680 cssCore_flexRow__33cdafe8"><div class="Content_self__76ab3680 Content_spaceY2__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8" data-qa="row-button-primary"><span><span class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">13:25 - 14:40</span><span class="fNyHBS DfgYL+" style="color: rgb(0, 163, 109);">Started</span></span><div class="Content_self__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">Pédicure</p><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">1h 15min with duyen le</p></div></div><div class="Content_self__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8 cssCore_flexAlignItemsFlexEnd__33cdafe8 cssCore_flexJustifyContentCenter__33cdafe8"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_noWrap__32440045" data-qa="right-row-primary"><span data-qa="retail-price">₫27</span></p></div></div></div></div></div></div>
+  <style data-react-tooltip="true">.__react_component_tooltip {
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 13px;
+  left: -999em;
+  opacity: 0;
+  padding: 8px 21px;
+  position: fixed;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+  top: -999em;
+  visibility: hidden;
+  z-index: 999;
+}
+.__react_component_tooltip.allow_hover, .__react_component_tooltip.allow_click {
+  pointer-events: auto;
+}
+.__react_component_tooltip::before, .__react_component_tooltip::after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.__react_component_tooltip.show {
+  opacity: 0.9;
+  margin-top: 0;
+  margin-left: 0;
+  visibility: visible;
+}
+.__react_component_tooltip.place-top::before {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  bottom: -8px;
+  left: 50%;
+  margin-left: -10px;
+}
+.__react_component_tooltip.place-bottom::before {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  top: -8px;
+  left: 50%;
+  margin-left: -10px;
+}
+.__react_component_tooltip.place-left::before {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  right: -8px;
+  top: 50%;
+  margin-top: -5px;
+}
+.__react_component_tooltip.place-right::before {
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  left: -8px;
+  top: 50%;
+  margin-top: -5px;
+}
+.__react_component_tooltip .multi-line {
+  display: block;
+  padding: 2px 0;
+  text-align: center;
+}</style></div>`;
+                    // $('body').append(htmlRight)
 
                 },
                 eventMouseLeave: function(event) {
@@ -259,7 +331,7 @@
             let eleCursor = document.elementFromPoint(e.clientX, e.clientY);
 
 
-            if ($(eleCursor).hasClass('fc-timegrid-slot')) {
+            if ($(eleCursor).hasClass('fc-timegrid-slot-lane')) {
 
                 var cellWidth = $('th.fc-col-header-cell').width();
                 var cellHeight = $(eleCursor).height();

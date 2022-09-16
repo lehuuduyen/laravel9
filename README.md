@@ -29,3 +29,14 @@ Feel free to use and re-use any way you want.
 - đa ngôn ngữ trang admin
 - lưu file s3
 - đa ngôn ngữ theo db
+
+for (var eventType in getEventListeners(document)) {
+  getEventListeners(document)[eventType].forEach(function (o) {
+    
+    if(eventType =="mouseout"){
+        document.removeEventListener(eventType, o.listener);
+
+    }
+    
+  });
+}
