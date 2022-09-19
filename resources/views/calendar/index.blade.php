@@ -133,101 +133,15 @@
                         html: customHtml
                     }
                 },
+
                 eventMouseEnter: function(arg, element, jsEvent, view) {
+
                     var event = arg.event;
+
                     console.log("-------hover--------");
                     tooltip =
-                        '<div class="tooltiptopicevent" style="width:auto;height:auto;background:#feb811;position:absolute;z-index:10001;padding:10px 10px 10px 10px ;  line-height: 200%;">' +
-                        'title: ' + ': ' + event.title + '</br>' + 'start: ' + ': ' + event.start + '</div>';
-                    console.log("#card-"+event.id);
-
-                    $("body").append(tooltip);
-                    $("#card-"+event.id).mouseover(function(e) {
-                        $(this).css('z-index', 10000);
-                        $('.tooltiptopicevent').fadeIn('500');
-                        $('.tooltiptopicevent').fadeTo('10', 1.9);
-                    }).mousemove(function(e) {
-                        $('.tooltiptopicevent').css('top', e.pageY + 10);
-                        $('.tooltiptopicevent').css('left', e.pageX + 20);
-                    });
-                    var htmlRight =
-                        `<div class="fresha-partner-react-portal-wrapper"><div><div class="__react_component_tooltip show t3ca56e8d-e00a-4504-9848-d954f7810af4 place-right type-light _3iFzxb Ww-ky8 MQJT9J R+efxS" id="event:booking:564954464" data-id="tooltip" style="left: 789px; top: 489px;"><style>
-  	.t3ca56e8d-e00a-4504-9848-d954f7810af4 {
-	    color: #222;
-	    background: #fff;
-	    border: 1px solid transparent;
-  	}
-
-  	.t3ca56e8d-e00a-4504-9848-d954f7810af4.place-top {
-        margin-top: -10px;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-top::before {
-        border-top: 8px solid transparent;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-top::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        bottom: -6px;
-        left: 50%;
-        margin-left: -8px;
-        border-top-color: #fff;
-        border-top-style: solid;
-        border-top-width: 6px;
-    }
-
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-bottom {
-        margin-top: 10px;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-bottom::before {
-        border-bottom: 8px solid transparent;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-bottom::after {
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        top: -6px;
-        left: 50%;
-        margin-left: -8px;
-        border-bottom-color: #fff;
-        border-bottom-style: solid;
-        border-bottom-width: 6px;
-    }
-
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-left {
-        margin-left: -10px;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-left::before {
-        border-left: 8px solid transparent;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-left::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
-        right: -6px;
-        top: 50%;
-        margin-top: -4px;
-        border-left-color: #fff;
-        border-left-style: solid;
-        border-left-width: 6px;
-    }
-
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-right {
-        margin-left: 10px;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-right::before {
-        border-right: 8px solid transparent;
-    }
-    .t3ca56e8d-e00a-4504-9848-d954f7810af4.place-right::after {
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
-        left: -6px;
-        top: 50%;
-        margin-top: -4px;
-        border-right-color: #fff;
-        border-right-style: solid;
-        border-right-width: 6px;
-    }
-  </style>
-  <div class="TX48NX" data-qa="calendar-event-popover-564954464"><div class="_0TvLLS seceHd PFNv8o N32lJl" style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;"><div class="Rmj0sK r8arb5" style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;"><div class="KZUYM7" data-qa="row-button-image" style="align-self: flex-start;"><div class="Avatar_self__38e78c9c Avatar_shapeRound__38e78c9c Avatar_size64__38e78c9c Avatar_placeholder__38e78c9c"><div class="Avatar_content__38e78c9c">J</div></div></div><div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;"><div class="_06rxAz" style="display: flex; flex-direction: row; flex-grow: 1;"><div class="fM7L52" style="display: flex; flex-direction: column; flex-grow: 1;"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045" data-qa="row-button-primary">Jane Doe</p><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045" data-qa="row-button-secondary"><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">jane@example.com</p></p></div></div></div></div></div><div class="Content_self__76ab3680 NnI-5+ cssCore_flexRow__33cdafe8 cssCore_flexGrow1__33cdafe8" data-qa="customer-badges"><div class="BadgeContainer_self__bcb321f0 BadgeContainer_margin4__bcb321f0" data-qa="customer-badges-container"><span class="Text_self__32440045 Text_typeTypefaceBadge13__32440045 Text_noWrap__32440045 Badge_self__a0fb2f98 Badge_variantDefault__a0fb2f98 Badge_colorBlue__a0fb2f98" data-qa="badge-new_customer"><div class="Content_self__76ab3680 CgNE3E Content_spaceX8__76ab3680 cssCore_flexRow__33cdafe8"><span class="TextEllipsis_self__862cb03d">New Client</span></div></span></div></div><div class="Ol4EMJ"><div class="_5inCaP"></div></div><div class="Content_self__76ab3680 Content_spaceY8__76ab3680 cssCore_padding16161616__33cdafe8 cssCore_flexColumn__33cdafe8"><div class="Content_self__76ab3680 cssCore_flexRow__33cdafe8"><div class="Content_self__76ab3680 Content_spaceY2__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8" data-qa="row-button-primary"><span><span class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">13:25 - 14:40</span><span class="fNyHBS DfgYL+" style="color: rgb(0, 163, 109);">Started</span></span><div class="Content_self__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">Pédicure</p><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">1h 15min with duyen le</p></div></div><div class="Content_self__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8 cssCore_flexAlignItemsFlexEnd__33cdafe8 cssCore_flexJustifyContentCenter__33cdafe8"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_noWrap__32440045" data-qa="right-row-primary"><span data-qa="retail-price">₫27</span></p></div></div></div></div></div></div>
-  <style data-react-tooltip="true">.__react_component_tooltip {
+                        `<div class="fresha-partner-react-portal-wrapper"><div><div class="show __react_component_tooltip td0ce21d6-6176-472b-a49e-1328f0e25daf place-right type-light _3iFzxb Ww-ky8 MQJT9J R+efxS" id="event:booking:571612105" data-id="tooltip" style="left: 374px; top: 256px;">
+                            <div class="TX48NX" data-qa="calendar-event-popover-571612105"><div class="_0TvLLS seceHd PFNv8o N32lJl" style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;"><div class="Rmj0sK r8arb5" style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;"><div class="KZUYM7" data-qa="row-button-image" style="align-self: flex-start;"><div class="Avatar_self__38e78c9c Avatar_shapeRound__38e78c9c Avatar_size64__38e78c9c Avatar_placeholder__38e78c9c"><div class="Avatar_content__38e78c9c"><span class="Icon_self__7a585911 Icon_size28__7a585911 Icon_colorBlue600__7a585911"><svg viewBox="0 0 20 21" xmlns="http://www.w3.org/2000/svg"><path d="M18.1442122 17.4191984c.0969062-.0626465.1793254-.1188398.2474255-.1673564-.1171291-1.9985543-1.4569865-3.806594-3.5322974-4.700818-.3043222-.1311284-.4447235-.4841308-.3135951-.7884529.1311284-.3043222.4841308-.4447235.788453-.3135951 2.6010538 1.1207596 4.2662422 3.4835669 4.2658017 6.089587-.000029.1713473-.0733151.3345071-.2013817.4483441-.3939269.3501573-1.1635676.8477028-2.3305401 1.3358481C15.1562347 20.1224806 12.805944 20.6 10 20.6c-2.80594396 0-5.1562346-.4775194-7.06807795-1.2772448-1.16697251-.4881453-1.93661322-.9856908-2.33054012-1.3358481-.12804953-.1138218-.20133401-.2769542-.20138166-.4482787-.0007247-2.6057181 1.66382498-4.9684572 4.26430371-6.0896035.30429517-.131191.65732646.0091376.78851746.3134328.131191.3042951-.00913765.6573264-.31343281.7885174-2.07483383.8945247-3.4141797 2.7025125-3.53105991 4.7008429.06810665.0485221.15053702.1047236.24745925.1673804.4168128.2694547.92893818.5412294 1.53921339.7965079C5.16104255 18.9544425 7.35402103 19.4 10 19.4c2.645979 0 4.8389575-.4455575 6.6049988-1.1842937.6102752-.2552785 1.1224006-.5270532 1.5392134-.7965079zM14.6 5.375c0 2.9460693-2.1494631 6.225-4.6 6.225-2.45053694 0-4.59999996-3.2789307-4.59999996-6.225C5.40000004 2.63878867 7.4468925.40000004 10 .40000004S14.6 2.63878867 14.6 5.375zm-1.2 0c0-2.09628023-1.5348295-3.77500004-3.4-3.77500004-1.8651705 0-3.40000004 1.67871981-3.40000004 3.77500004C6.59999996 7.73829076 8.344851 10.4 10 10.4c1.655149 0 3.4-2.66170924 3.4-5.025z"></path></svg></span></div></div></div><div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;"><div class="_06rxAz" style="display: flex; flex-direction: row; flex-grow: 1;"><div class="fM7L52" style="display: flex; flex-direction: column; flex-grow: 1;"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045" data-qa="row-button-primary">Walk-In</p><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045" data-qa="row-button-secondary"><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"></p></p></div></div></div></div></div><div class="Ol4EMJ"><div class="_5inCaP"></div></div><div class="Content_self__76ab3680 Content_spaceY8__76ab3680 cssCore_padding16161616__33cdafe8 cssCore_flexColumn__33cdafe8"><div class="Content_self__76ab3680 cssCore_flexRow__33cdafe8"><div class="Content_self__76ab3680 Content_spaceY2__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8" data-qa="row-button-primary"><span><span class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">15:30 - 16:45</span><span class="fNyHBS DfgYL+" style="color: rgb(3, 122, 255);">New</span></span><div class="Content_self__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">Manicure &amp; Pedicure</p><p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045">1h 15min with duyen le</p></div></div><div class="Content_self__76ab3680 cssCore_flexColumn__33cdafe8 cssCore_flexGrow1__33cdafe8 cssCore_flexAlignItemsFlexEnd__33cdafe8 cssCore_flexJustifyContentCenter__33cdafe8"><p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_noWrap__32440045" data-qa="right-row-primary"><span data-qa="retail-price">₫45</span></p></div></div></div></div></div></div><style data-react-tooltip="true">.__react_component_tooltip {
   border-radius: 3px;
   display: inline-block;
   font-size: 13px;
@@ -289,11 +203,37 @@
   padding: 2px 0;
   text-align: center;
 }</style></div>`;
-                    // $('body').append(htmlRight)
+                    console.log("#card-" + event.id);
+                    mX = arg.jsEvent.pageX;
+                    mY = arg.jsEvent.pageY;
+                    console.log(mX)
+                    console.log(mY)
+                    let eleCursor = document.elementFromPoint(arg.jsEvent.clientX, arg.jsEvent.clientY);
+                    console.log(eleCursor)
+                    var cellWidth = $('th.fc-col-header-cell').width();
+                    var distanceLeft = $(eleCursor).position().left;
+                    var distanceRight = distanceLeft + cellWidth
+                    console.log(distanceLeft)
+                    console.log(distanceRight)
+
+                    if ($(eleCursor).hasClass('fc-timegrid-slot-lane') || $(eleCursor).hasClass('fc-event-resizer') || $(eleCursor).hasClass('fc-timegrid-event') || $(eleCursor).hasClass('fc-event-main') || $(eleCursor).hasClass('VoOe8c') ) {
+                        var distanceLeftToCalendar = $('#duyen').offset().left;
+                        $("body").append(tooltip);
+                        $('.fresha-partner-react-portal-wrapper').fadeIn('500');
+                        $('.fresha-partner-react-portal-wrapper').fadeTo('10', 1.9);
+                        if (mX >= distanceLeftToCalendar + distanceRight) {
+                            $('.__react_component_tooltip').css('top', mY);
+                            $('.__react_component_tooltip').css('left', distanceRight);
+                        } else {
+                            $('.__react_component_tooltip').css('top', mY);
+                            $('.__react_component_tooltip').css('left', distanceLeft);
+                        }
+                    }
+
 
                 },
                 eventMouseLeave: function(event) {
-                    console.log(event);
+                    $('.fresha-partner-react-portal-wrapper').remove();
 
                 },
                 //hien thi hover https://fullcalendar.io/docs/date-clicking-selecting
