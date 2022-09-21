@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/staff_service', 'App\Http\Controllers\Api\StaffController@index');
+
 
 Route::group(['middleware' => 'api'], function() {
     Route::apiResource('config', 'App\Http\Controllers\Api\ConfigFieldController');

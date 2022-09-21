@@ -3,16 +3,115 @@
 
 
 @section('javascript')
-<script>
-function getParam(){
-    const queryString = window.location.search;
-    console.log(queryString);
-    
-}
-getParam()
-</script>
+    <script src="{{ asset('/adminlte/plugins/select2/js/select2.min.js') }}"></script>
 
+    <script>
+        function findGetParameter(parameterName) {
+            var result = null,
+                tmp = [];
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function(item) {
+                    tmp = item.split("=");
+                    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                });
+            return result;
+        }
 
+        function setView2(startTime = 0) {
+            let html = `<div class="YgIysy" style="transform-origin: center top;">
+                            <div class="fgulPZ -l3rLl +J3zJ1 +MhXeZ"
+                                style="display: flex; flex-flow: row wrap;">
+                                <div
+                                    class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b Jj5n6Z">
+                                    <div class="Field_top__b22a9f75"><label
+                                            class="Label_self__97ecaa1e"
+                                            data-qa="start-label">Start Time</label></div>
+                                    <div
+                                        class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd">
+                                        <select class="Select_select__eeee3dfd"
+                                            name="start">`
+            for ($i = 0; $i <= 86100; $i = $i + 300) {
+                selected = "";
+
+                if ($i == startTime) {
+                    selected = "selected";
+                }
+                html +=
+                    `<option ${selected} value="${$i}">${moment("00:00", "hh:mm H").add($i, 'seconds').format('HH:mm')}</option>`
+
+            }
+
+            html += `                                
+                                        </select><span
+                                            class="Icon_self__7a585911 Icon_size16__7a585911 Select_suffix__eeee3dfd Select_suffixIcon__eeee3dfd"><svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24">
+                                                <path
+                                                    d="M12 14.481l6.247-7.14a1 1 0 011.506 1.318l-7 8a1 1 0 01-1.506 0l-7-8a1 1 0 111.506-1.317L12 14.482z">
+                                                </path>
+                                            </svg></span>
+                                    </div>
+                                </div>
+                                <div class="UjyuCR pzB7+h">
+                                    <div class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b pAfbFK"
+                                        data-qa="service-input">
+                                        <div class="Field_top__b22a9f75"><label
+                                                class="Label_self__97ecaa1e"
+                                                data-qa="label-name">Service</label></div>
+                                        <div class="Input_self__03800786 Input_sizeDefault__03800786 Input_inlineSuffix__03800786 Input_readOnly__03800786">
+                                            <input autocomplete="off"
+                                                class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
+                                                data-qa="selected-service" name="bookedItem"
+                                                placeholder="Choose a service" value=""
+                                                readonly="">
+                                            <div class="Input_suffix__03800786 APXB8m"><span
+                                                    class="Icon_self__7a585911 Icon_size16__7a585911"><svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        viewBox="0 0 24 24">
+                                                        <path
+                                                            d="M12 14.481l6.247-7.14a1 1 0 011.506 1.318l-7 8a1 1 0 01-1.506 0l-7-8a1 1 0 111.506-1.317L12 14.482z">
+                                                        </path>
+                                                    </svg></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+            $("#view-item").append(html)
+
+            $('.select2').select2()
+        }
+
+        function getViewService(serviceId = "") {
+            let services = JSON.parse(localStorage.getItem('sta'))['service'];
+
+            html = "";
+            $.each(services, function(key, val) {
+                selected = "";
+
+                if (val.id == serviceId) {
+                    selected = "selected";
+                }
+                html += `<option ${selected} value="${val.id}">${val.title}</option>`
+            })
+
+            return html
+        }
+
+        function getUser() {
+            $.ajax({
+                type: 'GET',
+                url: 'api/staff_service',
+                success: function(msg) {
+                    localStorage.setItem('sta', JSON.stringify(msg));
+                }
+            });
+        }
+        getUser()
+        setView2()
+    </script>
 @endsection
 @section('content_calendar')
     <div class="modal fade modal-fullscreen show" style="display: block;" id="exampleModal" tabindex="-1"
@@ -169,10 +268,19 @@ getParam()
                                             </div>
                                         </div>
                                         <div>
+
+
+
+
+
+
+
+
                                             <div class="o5xhhv" data-qa="service-list">
                                                 <div class="OCRPjL kHR-+9"></div>
                                                 <div class="OCRPjL IFX6O1"></div>
-                                                <div style="position: relative;">
+                                                <div id="view-item" style="position: relative;">
+
                                                     <div data-qa="appointment-item-section">
                                                         <div class="kmKtqs" currencycode="VND">
                                                             <div class="YgIysy">
@@ -181,6 +289,19 @@ getParam()
                                                                 <div class="fgulPZ -l3rLl -v8jU+"
                                                                     data-qa="appointment-item-card"
                                                                     style="display: flex; flex-flow: row wrap; align-items: flex-start;">
+                                                                    <div role="button" class="Ne3Sw- ccozoh p8KH04"
+                                                                        data-qa="delete-appointment-item-action-icon">
+                                                                        <div class="WTZV0a">
+                                                                            <div><span
+                                                                                    class="Icon_self__7a585911 Icon_size12__7a585911 Icon_colorRed400__7a585911"><svg
+                                                                                        viewBox="0 0 18 18"
+                                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                                                        <path
+                                                                                            d="M17 1.914L16.086 1 9 8.086 1.914 1 1 1.914 8.086 9 1 16.086l.914.914L9 9.914 16.086 17l.914-.914L9.914 9z">
+                                                                                        </path>
+                                                                                    </svg></span></div>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="UjyuCR pzB7+h"
                                                                         data-qa="add-new-service-select-btn">
                                                                         <div class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b pAfbFK"
@@ -194,10 +315,11 @@ getParam()
                                                                                 <input autocomplete="off"
                                                                                     class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
                                                                                     data-qa="selected-service"
-                                                                                    readonly=""
                                                                                     name="items[0].bookedItem"
                                                                                     placeholder="Choose a service"
-                                                                                    warning="" value="">
+                                                                                    warning="duyen le has another booking at 11:00, but your team member can still double-book appointments for them."
+                                                                                    value="Manucure (45min, ₫25)"
+                                                                                    readonly="">
                                                                                 <div class="Input_suffix__03800786 APXB8m">
                                                                                     <span
                                                                                         class="Icon_self__7a585911 Icon_size16__7a585911"><svg
@@ -208,6 +330,11 @@ getParam()
                                                                                             </path>
                                                                                         </svg></span>
                                                                                 </div>
+                                                                            </div>
+                                                                            <div class="Field_helperText__b22a9f75"
+                                                                                data-qa="input-hint">duyen le has another
+                                                                                booking at 11:00, but your team member can
+                                                                                still double-book appointments for them.
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -567,18 +694,15 @@ getParam()
                                                                         </div>
                                                                     </div>
                                                                     <div
-                                                                        class="Field_self__b22a9f75 Field_padding__b22a9f75 Field_disabled__b22a9f75 cssGrid_colspan12__436c4c8b _884ofg">
+                                                                        class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b _884ofg">
                                                                         <div class="Field_top__b22a9f75"><label
                                                                                 class="Label_self__97ecaa1e"
                                                                                 data-qa="items[0].duration-label">Duration</label>
                                                                         </div>
                                                                         <div
-                                                                            class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd Select_disabled__eeee3dfd">
-                                                                            <select
-                                                                                class="Select_select__eeee3dfd Select_placeholder__eeee3dfd"
-                                                                                disabled="" name="items[0].duration">
-                                                                                <option disabled="" value="">
-                                                                                </option>
+                                                                            class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd">
+                                                                            <select class="Select_select__eeee3dfd"
+                                                                                name="items[0].duration">
                                                                                 <option value="300">5min</option>
                                                                                 <option value="600">10min</option>
                                                                                 <option value="900">15min</option>
@@ -637,8 +761,34 @@ getParam()
                                                             </div>
                                                         </div>
                                                     </div>
+
+
+
+
+                                                    {{-- ADD new --}}
+
+                                                    {{-- ADD new --}}
+
                                                 </div>
                                             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         </div>
                                         <div class="YgIysy sYPIEA">
                                             <div class="Field_self__b22a9f75 cssGrid_colspan12__436c4c8b">
@@ -670,7 +820,254 @@ getParam()
 
                 </div>
                 <div class="modal-footer">
-                    
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="fresha-partner-react-portal-wrapper">
+        <div>
+            <div class="jbOD0b wLxfd8" anchorel="[object Object]"
+                style="left: 545.5px; top: 30px; opacity: 1; transform: translateY(0px); transition: opacity 250ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 250ms cubic-bezier(0, 0, 0.2, 1) 0ms; width: 566px; height: 307px;">
+                <div class="qcaxwe PhKPrN" style="display: flex; flex-direction: column; flex-grow: 1;">
+                    <div class="_1yyyTz" style="opacity: 0;"></div>
+                    <div class="+ME8JR" data-qa="service-pricing-level-select-results"
+                        style="display: flex; flex-direction: column; flex-grow: 1;">
+                        <div class="_1Z5s3b" id="1917698">
+                            <p class="Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_colorGreyDark600__32440045 GWrsvp"
+                                data-qa="nails">Nails</p>
+                            <ul class="BvzVBL yyapjb">
+                                <div class="JlRnJN xgR9V2" style="background-color: rgb(165, 223, 248);"></div>
+                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-manucure"
+                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                    <div class="Rmj0sK"
+                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="_06rxAz"
+                                                style="display: flex; flex-direction: row; flex-grow: 1;">
+                                                <div class="fM7L52"
+                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
+                                                        data-qa="row-button-primary">
+                                                    <div>
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
+                                                            data-qa="item-name">Manucure</p>
+                                                    </div>
+                                                    </p>
+                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
+                                                        data-qa="row-button-secondary">
+                                                    <div>45min</div>
+                                                    </p>
+                                                </div>
+                                                <div class="P5mq63"
+                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
+                                                        data-qa="right-row-primary">
+                                                    <p
+                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
+                                                        <span data-qa="item-retail-price">₫25</span></p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-pedicure"
+                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                    <div class="Rmj0sK"
+                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="_06rxAz"
+                                                style="display: flex; flex-direction: row; flex-grow: 1;">
+                                                <div class="fM7L52"
+                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
+                                                        data-qa="row-button-primary">
+                                                    <div>
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
+                                                            data-qa="item-name">Pédicure</p>
+                                                    </div>
+                                                    </p>
+                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
+                                                        data-qa="row-button-secondary">
+                                                    <div>55min</div>
+                                                    </p>
+                                                </div>
+                                                <div class="P5mq63"
+                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
+                                                        data-qa="right-row-primary">
+                                                    <p
+                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
+                                                        <span data-qa="item-retail-price">₫27</span></p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-manicure-pedicure"
+                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                    <div class="Rmj0sK"
+                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="_06rxAz"
+                                                style="display: flex; flex-direction: row; flex-grow: 1;">
+                                                <div class="fM7L52"
+                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
+                                                        data-qa="row-button-primary">
+                                                    <div>
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
+                                                            data-qa="item-name">Manicure &amp; Pedicure</p>
+                                                    </div>
+                                                    </p>
+                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
+                                                        data-qa="row-button-secondary">
+                                                    <div>1h 15min</div>
+                                                    </p>
+                                                </div>
+                                                <div class="P5mq63"
+                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
+                                                        data-qa="right-row-primary">
+                                                    <p
+                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
+                                                        <span data-qa="item-retail-price">₫45</span></p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-gel-manicure"
+                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                    <div class="Rmj0sK"
+                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="_06rxAz"
+                                                style="display: flex; flex-direction: row; flex-grow: 1;">
+                                                <div class="fM7L52"
+                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
+                                                        data-qa="row-button-primary">
+                                                    <div>
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
+                                                            data-qa="item-name">Gel Manicure</p>
+                                                    </div>
+                                                    </p>
+                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
+                                                        data-qa="row-button-secondary">
+                                                    <div>55min</div>
+                                                    </p>
+                                                </div>
+                                                <div class="P5mq63"
+                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
+                                                        data-qa="right-row-primary">
+                                                    <p
+                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
+                                                        <span data-qa="item-retail-price">₫32</span></p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-gel-pedicure"
+                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                    <div class="Rmj0sK"
+                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="_06rxAz"
+                                                style="display: flex; flex-direction: row; flex-grow: 1;">
+                                                <div class="fM7L52"
+                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
+                                                        data-qa="row-button-primary">
+                                                    <div>
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
+                                                            data-qa="item-name">Gel Pedicure</p>
+                                                    </div>
+                                                    </p>
+                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
+                                                        data-qa="row-button-secondary">
+                                                    <div>55min</div>
+                                                    </p>
+                                                </div>
+                                                <div class="P5mq63"
+                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
+                                                        data-qa="right-row-primary">
+                                                    <p
+                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
+                                                        <span data-qa="item-retail-price">₫45</span></p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="_1Z5s3b" id="1917697">
+                            <p class="Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_colorGreyDark600__32440045 GWrsvp"
+                                data-qa="hair">Hair</p>
+                            <ul class="BvzVBL yyapjb">
+                                <div class="JlRnJN xgR9V2" style="background-color: rgb(165, 223, 248);"></div>
+                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-haircut"
+                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                    <div class="Rmj0sK"
+                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="_06rxAz"
+                                                style="display: flex; flex-direction: row; flex-grow: 1;">
+                                                <div class="fM7L52"
+                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
+                                                        data-qa="row-button-primary">
+                                                    <div>
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
+                                                            data-qa="item-name">Haircut</p>
+                                                    </div>
+                                                    </p>
+                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
+                                                        data-qa="row-button-secondary">
+                                                    <div>45min</div>
+                                                    </p>
+                                                </div>
+                                                <div class="P5mq63"
+                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
+                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
+                                                        data-qa="right-row-primary">
+                                                    <p
+                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
+                                                        <span data-qa="item-retail-price">₫40</span></p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="_50W3uq UKgewO f3gB-f" data-qa="spinner"
+                            style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;">
+                            <div class="Jrxrsm"></div>
+                        </div>
+                    </div>
+                    <div class="_1FPrf5" style="opacity: 1;"></div>
                 </div>
             </div>
         </div>

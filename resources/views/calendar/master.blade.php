@@ -48,7 +48,7 @@
             box-sizing: border-box;
         }
 
-      
+
 
         .card {
             max-width: 340px;
@@ -398,19 +398,21 @@
             font-family: "Jost", sans-serif;
             transition: 0.3s;
         }
-        .fc-theme-standard .fc-scrollgrid{
-            border:0px !important
+
+        .fc-theme-standard .fc-scrollgrid {
+            border: 0px !important
         }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('/calendar/modules.e35b0e935d22574b4b3a.css') }}">
 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.css" rel="stylesheet">
     <link href="{{ asset('/calendar/styles.3303123502526b8ca4c9.css') }}" rel="stylesheet">
-
-
+    <link href="{{ asset('/adminlte/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.js"></script>
 
+
 @endsection
+
 
 @section('content')
 
