@@ -314,7 +314,7 @@
                         ?>
                         <li class="nav-item">
                             <a href="#"
-                                class="nav-link {{ $active == 'page' || $active == 'config' ? 'active' : '' }}">
+                                class="nav-link {{ $active == 'option' || $active == 'page' || $active == 'config' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-cog"></i>
                                 <p>
                                     Setting
@@ -332,6 +332,12 @@
                                     <a href="/page" class="nav-link {{ $active == 'page' ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Page</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/option" class="nav-link {{ $active == 'option' ? 'active' : '' }}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Options</p>
                                     </a>
                                 </li>
 

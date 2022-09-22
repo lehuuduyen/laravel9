@@ -37,6 +37,7 @@ Route::group(['middleware' => 'web'], function () {
         'category'  => App\Http\Controllers\CategoryController::class,
         'config'    => App\Http\Controllers\ConfigFieldController::class,
         'post'    => App\Http\Controllers\PostController::class,
+        'option'    => App\Http\Controllers\OptionController::class,
     ]);
     Route::get('change-language/{language}', 'App\Http\Controllers\HomeController@changeLanguage')
         ->name('user.change-language');

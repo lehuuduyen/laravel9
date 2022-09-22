@@ -84,22 +84,71 @@
             $('.select2').select2()
         }
 
-        function getViewService(serviceId = "") {
+        function getViewService(_element) {
+            var rect = _element.getBoundingClientRect();
+            var width = _element.clientWidth
+            var height = _element.clientHeight
+            var left = rect.left
+            var top = rect.top + height +10
+           
             let services = JSON.parse(localStorage.getItem('sta'))['service'];
-
-            html = "";
+            var html = ``;
             $.each(services, function(key, val) {
-                selected = "";
+                html += `<div class="_1Z5s3b" id="1917698">
+                            <p class="Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_colorGreyDark600__32440045 GWrsvp"
+                                data-qa="nails">${val.name}</p>
+                            <ul class="BvzVBL yyapjb">
+                                <div class="JlRnJN xgR9V2" style="background-color: rgb(165, 223, 248);"></div>
+                            `
+                $.each(val.category_child, function(keyChild, valChild) {
+                    html += `<div class="_0TvLLS p8KH04" data-qa="spl-result-item-manucure"
+                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                    <div class="Rmj0sK"
+                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
+                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                            <div class="_06rxAz"
+                                                style="display: flex; flex-direction: row; flex-grow: 1;">
+                                                <div class="fM7L52"
+                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
+                                                    <div>
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
+                                                            data-qa="item-name">${valChild.name}</p>
+                                                    </div>
+                                                    <div>${valChild.duration}</div>
+                                                </div>
+                                                <div class="P5mq63"
+                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
+                                                    
+                                                    <p
+                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
+                                                        <span data-qa="item-retail-price">₫${valChild.price}</span></p>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                })
 
-                if (val.id == serviceId) {
-                    selected = "selected";
-                }
-                html += `<option ${selected} value="${val.id}">${val.title}</option>`
+
+                html += `</ul>
+                        </div>`;
+
+                
             })
-
-            return html
+            $(".jbOD0b").css('left',left)
+            $(".jbOD0b").css('top',top)
+            $(".jbOD0b").css('width',width)
+            $('.UjyuCR').append(`<div><div class="DP71MP p8KH04 x9kGst" data-qa="overlay"></div></div>`)
+            $(".fresha-partner-react-portal-wrapper").css('display','block')
+            
+            $("#list-service").html(html)
         }
-
+        //click input all service
+        $(document).on('click','.sLSoAL',function(e){
+            
+            getViewService(this)
+        })
         function getUser() {
             $.ajax({
                 type: 'GET',
@@ -239,8 +288,7 @@
                                                 </div>
                                                 <div style="display: flex; flex-direction: row; align-items: center;"><a
                                                         class="wyvXUg p8KH04 jX3mzZ " data-qa="repeat-button">
-                                                        <p class="Text_self__32440045 Text_typeTypefaceParagraph17__32440045"
-                                                            data-qa="repeat-text-lbl">
+                                                        
                                                             <div
                                                                 class="Content_self__76ab3680 Content_spaceX8__76ab3680 cssCore_flexRow__33cdafe8 cssCore_flexAlignItemsCenter__33cdafe8">
                                                                 <span
@@ -836,232 +884,18 @@
 
 
 
-    <div class="fresha-partner-react-portal-wrapper">
+    <div class="fresha-partner-react-portal-wrapper" style="display: none">
         <div>
             <div class="jbOD0b wLxfd8" anchorel="[object Object]"
                 style="left: 545.5px; top: 30px; opacity: 1; transform: translateY(0px); transition: opacity 250ms cubic-bezier(0, 0, 0.2, 1) 0ms, transform 250ms cubic-bezier(0, 0, 0.2, 1) 0ms; width: 566px; height: 307px;">
                 <div class="qcaxwe PhKPrN" style="display: flex; flex-direction: column; flex-grow: 1;">
                     <div class="_1yyyTz" style="opacity: 0;"></div>
-                    <div class="+ME8JR" data-qa="service-pricing-level-select-results"
+                    <div class="+ME8JR" id="list-service" data-qa="service-pricing-level-select-results"
                         style="display: flex; flex-direction: column; flex-grow: 1;">
-                        <div class="_1Z5s3b" id="1917698">
-                            <p class="Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_colorGreyDark600__32440045 GWrsvp"
-                                data-qa="nails">Nails</p>
-                            <ul class="BvzVBL yyapjb">
-                                <div class="JlRnJN xgR9V2" style="background-color: rgb(165, 223, 248);"></div>
-                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-manucure"
-                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                    <div class="Rmj0sK"
-                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
-                                            <div class="_06rxAz"
-                                                style="display: flex; flex-direction: row; flex-grow: 1;">
-                                                <div class="fM7L52"
-                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
-                                                        data-qa="row-button-primary">
-                                                    <div>
-                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
-                                                            data-qa="item-name">Manucure</p>
-                                                    </div>
-                                                    </p>
-                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
-                                                        data-qa="row-button-secondary">
-                                                    <div>45min</div>
-                                                    </p>
-                                                </div>
-                                                <div class="P5mq63"
-                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
-                                                        data-qa="right-row-primary">
-                                                    <p
-                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
-                                                        <span data-qa="item-retail-price">₫25</span></p>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-pedicure"
-                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                    <div class="Rmj0sK"
-                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
-                                            <div class="_06rxAz"
-                                                style="display: flex; flex-direction: row; flex-grow: 1;">
-                                                <div class="fM7L52"
-                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
-                                                        data-qa="row-button-primary">
-                                                    <div>
-                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
-                                                            data-qa="item-name">Pédicure</p>
-                                                    </div>
-                                                    </p>
-                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
-                                                        data-qa="row-button-secondary">
-                                                    <div>55min</div>
-                                                    </p>
-                                                </div>
-                                                <div class="P5mq63"
-                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
-                                                        data-qa="right-row-primary">
-                                                    <p
-                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
-                                                        <span data-qa="item-retail-price">₫27</span></p>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-manicure-pedicure"
-                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                    <div class="Rmj0sK"
-                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
-                                            <div class="_06rxAz"
-                                                style="display: flex; flex-direction: row; flex-grow: 1;">
-                                                <div class="fM7L52"
-                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
-                                                        data-qa="row-button-primary">
-                                                    <div>
-                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
-                                                            data-qa="item-name">Manicure &amp; Pedicure</p>
-                                                    </div>
-                                                    </p>
-                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
-                                                        data-qa="row-button-secondary">
-                                                    <div>1h 15min</div>
-                                                    </p>
-                                                </div>
-                                                <div class="P5mq63"
-                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
-                                                        data-qa="right-row-primary">
-                                                    <p
-                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
-                                                        <span data-qa="item-retail-price">₫45</span></p>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-gel-manicure"
-                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                    <div class="Rmj0sK"
-                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
-                                            <div class="_06rxAz"
-                                                style="display: flex; flex-direction: row; flex-grow: 1;">
-                                                <div class="fM7L52"
-                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
-                                                        data-qa="row-button-primary">
-                                                    <div>
-                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
-                                                            data-qa="item-name">Gel Manicure</p>
-                                                    </div>
-                                                    </p>
-                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
-                                                        data-qa="row-button-secondary">
-                                                    <div>55min</div>
-                                                    </p>
-                                                </div>
-                                                <div class="P5mq63"
-                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
-                                                        data-qa="right-row-primary">
-                                                    <p
-                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
-                                                        <span data-qa="item-retail-price">₫32</span></p>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-gel-pedicure"
-                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                    <div class="Rmj0sK"
-                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
-                                            <div class="_06rxAz"
-                                                style="display: flex; flex-direction: row; flex-grow: 1;">
-                                                <div class="fM7L52"
-                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
-                                                        data-qa="row-button-primary">
-                                                    <div>
-                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
-                                                            data-qa="item-name">Gel Pedicure</p>
-                                                    </div>
-                                                    </p>
-                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
-                                                        data-qa="row-button-secondary">
-                                                    <div>55min</div>
-                                                    </p>
-                                                </div>
-                                                <div class="P5mq63"
-                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
-                                                        data-qa="right-row-primary">
-                                                    <p
-                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
-                                                        <span data-qa="item-retail-price">₫45</span></p>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
-                        <div class="_1Z5s3b" id="1917697">
-                            <p class="Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_colorGreyDark600__32440045 GWrsvp"
-                                data-qa="hair">Hair</p>
-                            <ul class="BvzVBL yyapjb">
-                                <div class="JlRnJN xgR9V2" style="background-color: rgb(165, 223, 248);"></div>
-                                <div class="_0TvLLS p8KH04" data-qa="spl-result-item-haircut"
-                                    style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                    <div class="Rmj0sK"
-                                        style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
-                                        <div class="KrH5mo" style="display: flex; flex-direction: column; flex-grow: 1;">
-                                            <div class="_06rxAz"
-                                                style="display: flex; flex-direction: row; flex-grow: 1;">
-                                                <div class="fM7L52"
-                                                    style="display: flex; flex-direction: column; flex-grow: 1;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 Text_clamp3__32440045"
-                                                        data-qa="row-button-primary">
-                                                    <div>
-                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045"
-                                                            data-qa="item-name">Haircut</p>
-                                                    </div>
-                                                    </p>
-                                                    <p class="Text_self__32440045 Text_typeTypefaceCaption15__32440045 Text_colorGreyDark400__32440045"
-                                                        data-qa="row-button-secondary">
-                                                    <div>45min</div>
-                                                    </p>
-                                                </div>
-                                                <div class="P5mq63"
-                                                    style="display: flex; flex-direction: column; flex-shrink: 0; flex-grow: 1; justify-content: center;">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045 TFrdTP"
-                                                        data-qa="right-row-primary">
-                                                    <p
-                                                        class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045">
-                                                        <span data-qa="item-retail-price">₫40</span></p>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ul>
-                        </div>
+
+
+
+
                         <div class="_50W3uq UKgewO f3gB-f" data-qa="spinner"
                             style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;">
                             <div class="Jrxrsm"></div>

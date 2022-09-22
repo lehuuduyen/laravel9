@@ -68,6 +68,22 @@
                                 value="{{ isset($getCategory->slug) ? $getCategory->slug : '' }}" placeholder="Enter slug">
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Price</label>
+                            <input type="number" class="form-control" name="price"
+                               
+                                value="{{ isset($getCategory->price) ? $getCategory->price : '' }}" placeholder="Enter price">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Duration minute</label>
+                            <select class=" form-control" name="duration">
+                                @for($i = 0; $i <= 120; $i= $i+5)
+                                    
+                                    <option value="{{ $i }}" {{ (isset($getCategory) && $getCategory->duration == $i ) ?"selected":"" }}>{{ formatMinuteToHour($i) }}</option>
+                                    
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Parent</label>
                             <select class="select2 form-control" name="parent_id">
                                 <option value="">Choose option parent</option>

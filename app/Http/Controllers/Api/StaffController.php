@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Category;
 use App\Models\Config_field;
 use App\Models\Event;
 use App\Models\Post;
@@ -21,7 +22,13 @@ class StaffController extends BaseController
     public function index(Request $request)
     {   
         $user = User::get(['id','name']);
-        $service = Config_field::get(['id','title']);
+        $service = Category::with('category_child')->where('page_id',get_option('service'))->where('parent_id',NULL)->get(['id','name']);
+        foreach($service as $key => $value){
+            foreach($value['category_child'] as $keyChild =>$valueChild){
+                
+                $service[$key]['category_child'][$keyChild]['duration'] = formatMinuteToHour($valueChild['duration']);
+            }
+        }                             
         return response()->json( ['staff'=>$user,'service'=>$service]);
         
     }

@@ -26,7 +26,7 @@ class CalendarController extends BaseController
     public function detail(Request $request)
     {
         $user = User::get(['id','name as title']);
-       
+        
         return $this->renderView('calendar/detail',['active'=>'calendar-event']);
     }
     public function calendarEvents(Request $request)

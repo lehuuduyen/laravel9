@@ -402,6 +402,9 @@
         .fc-theme-standard .fc-scrollgrid {
             border: 0px !important
         }
+        .p8KH04:hover{
+            background-color: #f8f8fb
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('/calendar/modules.e35b0e935d22574b4b3a.css') }}">
 
