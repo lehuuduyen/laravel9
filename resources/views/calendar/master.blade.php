@@ -402,7 +402,7 @@
         .fc-theme-standard .fc-scrollgrid {
             border: 0px !important
         }
-        .p8KH04:hover{
+        ._0TvLLS:hover{
             background-color: #f8f8fb
         }
     </style>

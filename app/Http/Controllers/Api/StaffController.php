@@ -26,7 +26,7 @@ class StaffController extends BaseController
         foreach($service as $key => $value){
             foreach($value['category_child'] as $keyChild =>$valueChild){
                 
-                $service[$key]['category_child'][$keyChild]['duration'] = formatMinuteToHour($valueChild['duration']);
+                $service[$key]['category_child'][$keyChild]['duration_string'] = formatMinuteToHour($valueChild['duration']);
             }
         }                             
         return response()->json( ['staff'=>$user,'service'=>$service]);
