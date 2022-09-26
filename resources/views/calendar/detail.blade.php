@@ -57,8 +57,8 @@
                                                                                 class="Input_self__03800786 Input_sizeDefault__03800786 Input_inlineSuffix__03800786 Input_readOnly__03800786">
                                                                                 <input autocomplete="off"
                                                                                     class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
-                                                                                    data-qa="selected-service"
-                                                                                    name="items[${countView1}].bookedItem"
+                                                                                    data-qa="items[${countView1}]"
+                                                                                    name="items[${countView1}][bookedItem]"
                                                                                     placeholder="Choose a service"
                                                                                     warning=""
                                                                                     value="${serviceName}"
@@ -85,7 +85,7 @@
                                                                         class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b k3qwoY z+xzBx">
                                                                         <div class="Field_top__b22a9f75"><label
                                                                                 class="Label_self__97ecaa1e"
-                                                                                data-qa="items[${countView1}].employee-label">Team
+                                                                                data-qa="items[${countView1}][employee]-label">Team
                                                                                 member</label></div>
                                                                         <div
                                                                             class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd Select_inlinePrefix__eeee3dfd">
@@ -93,9 +93,9 @@
                                                                                 <div
                                                                                     style="display: flex; flex-direction: row; flex-grow: 1; justify-content: center; align-items: center; margin-left: 6px;">
                                                                                     <label class="RMq13K J9Mqmu M0ZaF2"
-                                                                                        data-qa="items[${countView1}].employeeIsRequested-label"><input
+                                                                                        data-qa="items[${countView1}][employeeIsRequested]-label"><input
                                                                                             class="fuKGX4" type="checkbox"
-                                                                                            name="items[${countView1}].employeeIsRequested"
+                                                                                            name="items[${countView1}][employeeIsRequested]"
                                                                                             value="false">
                                                                                         <div role="button" class="Ne3Sw-"
                                                                                             data-qa="action-icon">
@@ -114,7 +114,7 @@
                                                                                 </div>
                                                                             </div><select
                                                                                 class="Select_select__eeee3dfd HpmIxr"
-                                                                                name="items[${countView1}].employee">
+                                                                                name="items[${countView1}][employee]">
                                                                                 `
             $.each(staff, function(key, val) {
                 selected = ""
@@ -144,13 +144,12 @@
                                                                     <div
                                                                         class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b Jj5n6Z">
                                                                         <div class="Field_top__b22a9f75"><label
-                                                                                class="Label_self__97ecaa1e"
-                                                                                data-qa="items[${countView1}].start-label">Start
+                                                                                class="Label_self__97ecaa1e">Start
                                                                                 time</label></div>
                                                                         <div
                                                                             class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd">
                                                                             <select class="Select_select__eeee3dfd"
-                                            name="items[${countView1}].start">`
+                                            name="items[${countView1}][start]">`
             for ($i = 0; $i <= 86100; $i = $i + 300) {
                 selected = "";
 
@@ -177,12 +176,12 @@
                                                                         class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b _884ofg">
                                                                         <div class="Field_top__b22a9f75"><label
                                                                                 class="Label_self__97ecaa1e"
-                                                                                data-qa="items[${countView1}].duration-label">Duration</label>
+                                                                              >Duration</label>
                                                                         </div>
                                                                         <div
                                                                             class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd">
                                                                             <select class="Select_select__eeee3dfd"
-                                                                                name="items[${countView1}].duration">
+                                                                                name="items[${countView1}][duration]">
                                                                                 `
             for ($i = 0; $i <= 43200; $i = $i + 300) {
                 selected = "";
@@ -259,7 +258,7 @@
                                         <div class="Input_self__03800786 Input_sizeDefault__03800786 Input_inlineSuffix__03800786 Input_readOnly__03800786">
                                             <input autocomplete="off"
                                                 class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
-                                                data-qa="selected-service" name="bookedItem"
+                                                data-qa="bookedItem" name="bookedItem"
                                                 placeholder="Choose a service" value=""
                                                 readonly="">
                                             <div class="Input_suffix__03800786 APXB8m"><span
@@ -337,9 +336,44 @@
             $(".jbOD0b").css('width', width)
             $('.UjyuCR').append(`<div><div class="DP71MP p8KH04 x9kGst" data-qa="overlay"></div></div>`)
             $(".fresha-partner-react-portal-wrapper").css('display', 'block')
-            $(".fresha-partner-react-portal-wrapper").attr('origin-element', $(_element).attr('name').split(".")[0])
+            $(".fresha-partner-react-portal-wrapper").attr('origin-element', $(_element).attr('data-qa'))
 
             $("#list-service").html(html)
+        }
+
+        function onSubmit(_this) {
+            Swal.fire({
+                title: `Do You Want To Create?`,
+                showCancelButton: true,
+                confirmButtonText: "Create",
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    BtnLoading(_this)
+
+                    $("form").submit()
+                    // Swal.fire('Saved!', '', 'success')
+                }
+            })
+        }
+
+        function getStaff(staffs = "") {
+            if (staffs == "") {
+                staffs = JSON.parse(localStorage.getItem('sta'))['staff']
+            }
+            let staffId = findGetParameter('employeeId');
+            html = "";
+
+            $.each(staffs, function(key, val) {
+                selected = ""
+
+                if (staffId == val.id) {
+                    selected = "selected"
+                }
+                html += `<option ${selected} value="${val.id}">${val.name}</option>`
+            })
+
+            $('select[name="items[0][employee]"]').html(html)
         }
         //click input all service
         $(document).on('click', '.sLSoAL', function(e) {
@@ -348,12 +382,14 @@
         //click list all service
         $(document).on('click', '._0TvLLS', function(e) {
             let elementInput = $(this).closest('.fresha-partner-react-portal-wrapper').attr('origin-element');
+
             let elementInputBookedItem = $(this).closest('.fresha-partner-react-portal-wrapper').attr(
-                'origin-element') + ".bookedItem";
+                'origin-element') + "[bookedItem]";
+
             let elementInputStartTime = $(this).closest('.fresha-partner-react-portal-wrapper').attr(
-                'origin-element') + ".start";
+                'origin-element') + "[start]";
             let elementInputDuration = $(this).closest('.fresha-partner-react-portal-wrapper').attr(
-                'origin-element') + ".duration";
+                'origin-element') + "[duration]";
             $("input[name='" + elementInputBookedItem + "']").val($(this).data('data'))
             $(".fresha-partner-react-portal-wrapper").css('display', 'none')
             $('.DP71MP').remove()
@@ -367,36 +403,43 @@
             setView2(parseInt(startTime) + parseInt(durationFromService))
 
         })
+
+
         $(document).on('click', '.DP71MP', function(e) {
             $(".fresha-partner-react-portal-wrapper").css('display', 'none')
             $('.DP71MP').remove()
 
         })
 
-        function getUser() {
-            $.ajax({
-                type: 'GET',
-                url: 'api/staff_service',
-                success: function(msg) {
-                    html = "";
-                    let staffId = findGetParameter('employeeId');
-                    $.each(msg.staff, function(key, val) {
-                        selected = ""
-
-                        if (staffId == val.id) {
-                            selected = "selected"
-                        }
-                        html += `<option ${selected} value="${val.id}">${val.name}</option>`
-                    })
-                    $('select[name="items[0].employee"]').html(html)
-                    localStorage.setItem('sta', JSON.stringify(msg));
-
-                }
-            });
-        }
         $(document).ready(function() {
-            $('select[name="items[0].start"]').val(findGetParameter("startTime"))
-            getUser()
+            $('select[name="items[0][start]"]').val(findGetParameter("startTime"))
+            $('.Text_noWrap__32440045').html(moment(findGetParameter("startDate")).format("dddd, DD MMM YYYY"));
+            $("#datepicker").val(findGetParameter("startDate"));
+
+            if (localStorage.getItem('sta') === null) {
+                $.ajax({
+                    type: 'GET',
+                    url: 'api/staff_service',
+                    success: function(msg) {
+                        localStorage.setItem('sta', JSON.stringify(msg));
+                        getStaff(msg.staff)
+                    }
+                });
+            } else {
+                getStaff()
+            }
+            $(function() {
+                $("#datepicker").datepicker();
+            });
+
+            $('#datepicker').on('change', function() {
+                $('.Text_noWrap__32440045').html(moment($('#datepicker').val()).format("dddd, DD MMM YYYY"));
+            });
+
+            $('.datepicker').on('click', function() {
+                $('#datepicker').datepicker("show");
+            });
+
         });
     </script>
 @endsection
@@ -409,6 +452,10 @@
                     <div class="w-100 text-center font-weight-bold">
                         <h2 class="modal-title" id="exampleModalLabel">New Appointment</h2>
 
+
+
+
+
                     </div>
                     <button type="button" class="close" onclick="history.back(-1);$('#duyen').load('/calendar-event');"
                         data-dismiss="modal" aria-label="Close">
@@ -416,14 +463,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
-                    <div class="mOWLIO">
-                        <div class="aZH33U" style="display: flex; flex-direction: column;">
-                            <div class="SzmcJt" style="display: flex; flex-direction: column; flex-grow: 1;">
-                                <div class="fgulPZ hEFhKo hANl13 ABtpP+ t7dPP7"
-                                    style="display: flex; flex-direction: column; flex-shrink: 1; flex-grow: 0;">
-                                    <div class="JLuAjZ" style="flex-shrink: 0; flex-grow: 0;">
-                                        <form novalidate="" data-qa="form-">
+                    <form action="/calendar-crud-ajax" method="POST" novalidate="" data-qa="form-appointment-form">
+                        @csrf
+                        <input type="hidden" name="type" value="create">
+                        <div class="mOWLIO">
+                            <div class="aZH33U" style="display: flex; flex-direction: column;">
+                                <div class="SzmcJt" style="display: flex; flex-direction: column; flex-grow: 1;">
+                                    <div class="fgulPZ hEFhKo hANl13 ABtpP+ t7dPP7"
+                                        style="display: flex; flex-direction: column; flex-shrink: 1; flex-grow: 0;">
+                                        <div class="JLuAjZ" style="flex-shrink: 0; flex-grow: 0;">
                                             <div class="nz9VBK" data-qa="customer-input"
                                                 style="display: flex; flex-direction: row; align-items: center;">
                                                 <div
@@ -444,77 +492,79 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="TZ-mYB"
-                                    style="display: flex; flex-direction: column; flex-shrink: 1; flex-grow: 1;">
-                                    <div class="KqAzWh"
-                                        style="display: flex; flex-direction: column; flex-shrink: 1; flex-grow: 1;">
-                                        <div class="Placeholder_self__c17797c9" data-qa="placeholder-container">
-                                            <div class="Placeholder_content__c17797c9"><span
-                                                    class="Icon_self__7a585911 Icon_size56__7a585911 Icon_colorGreyDark600__7a585911 Placeholder_icon__c17797c9"
-                                                    data-qa="placeholder-icon"><svg xmlns="http://www.w3.org/2000/svg"
-                                                        viewBox="0 0 64 64">
-                                                        <g fill="none" fill-rule="evenodd">
-                                                            <circle fill="#FBD74C" cx="28.5" cy="23.5"
-                                                                r="9.5"></circle>
-                                                            <path
-                                                                d="M28.5 4C42.031 4 53 14.969 53 28.5a24.413 24.413 0 01-6.508 16.63c.041.022.082.05.12.08l.095.083 14 14a1 1 0 01-1.32 1.497l-.094-.083-14-14a1 1 0 01-.164-.216A24.404 24.404 0 0128.5 53C14.969 53 4 42.031 4 28.5S14.969 4 28.5 4zm0 2C16.074 6 6 16.074 6 28.5S16.074 51 28.5 51 51 40.926 51 28.5 40.926 6 28.5 6zM28 32c3.856 0 7.096.928 9.689 2.392 1.362.77 2.226 2.143 2.305 3.66l.006.229V40a1 1 0 01-.883.993L39 41H17a1 1 0 01-.993-.883L16 40v-1.739c0-1.599.871-3.067 2.29-3.877C20.856 32.924 24.095 32 28 32zm0 2c-3.545 0-6.446.827-8.719 2.122-.748.426-1.216 1.16-1.275 1.966L18 38.26V39h20v-.72c0-.76-.364-1.472-.989-1.945l-.148-.105-.158-.097C34.401 34.832 31.495 34 28 34zm.5-17a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm0 2a4.5 4.5 0 100 9 4.5 4.5 0 000-9z"
-                                                                fill="#101928" fill-rule="nonzero"></path>
-                                                        </g>
-                                                    </svg></span>
-                                                <p class="Text_self__32440045 Text_typeTypefaceParagraph17__32440045 Placeholder_text__c17797c9"
-                                                    data-qa="placeholder-body">Use the search to add a client, or keep
-                                                    empty to save as walk-in.</p>
-                                            </div>
-                                            <div class="Placeholder_children__c17797c9"></div>
                                         </div>
-                                        <div style="flex-grow: 1;"></div>
-                                        <div class="_7p6omb">
-                                            <div>
-                                                <div class="UQ5Ndy">
-                                                    <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045"
-                                                        data-qa="appointment-total">Total: <span>Free</span> (0min)</p>
+                                    </div>
+                                    <div class="TZ-mYB"
+                                        style="display: flex; flex-direction: column; flex-shrink: 1; flex-grow: 1;">
+                                        <div class="KqAzWh"
+                                            style="display: flex; flex-direction: column; flex-shrink: 1; flex-grow: 1;">
+                                            <div class="Placeholder_self__c17797c9" data-qa="placeholder-container">
+                                                <div class="Placeholder_content__c17797c9"><span
+                                                        class="Icon_self__7a585911 Icon_size56__7a585911 Icon_colorGreyDark600__7a585911 Placeholder_icon__c17797c9"
+                                                        data-qa="placeholder-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                                            viewBox="0 0 64 64">
+                                                            <g fill="none" fill-rule="evenodd">
+                                                                <circle fill="#FBD74C" cx="28.5" cy="23.5"
+                                                                    r="9.5"></circle>
+                                                                <path
+                                                                    d="M28.5 4C42.031 4 53 14.969 53 28.5a24.413 24.413 0 01-6.508 16.63c.041.022.082.05.12.08l.095.083 14 14a1 1 0 01-1.32 1.497l-.094-.083-14-14a1 1 0 01-.164-.216A24.404 24.404 0 0128.5 53C14.969 53 4 42.031 4 28.5S14.969 4 28.5 4zm0 2C16.074 6 6 16.074 6 28.5S16.074 51 28.5 51 51 40.926 51 28.5 40.926 6 28.5 6zM28 32c3.856 0 7.096.928 9.689 2.392 1.362.77 2.226 2.143 2.305 3.66l.006.229V40a1 1 0 01-.883.993L39 41H17a1 1 0 01-.993-.883L16 40v-1.739c0-1.599.871-3.067 2.29-3.877C20.856 32.924 24.095 32 28 32zm0 2c-3.545 0-6.446.827-8.719 2.122-.748.426-1.216 1.16-1.275 1.966L18 38.26V39h20v-.72c0-.76-.364-1.472-.989-1.945l-.148-.105-.158-.097C34.401 34.832 31.495 34 28 34zm.5-17a6.5 6.5 0 110 13 6.5 6.5 0 010-13zm0 2a4.5 4.5 0 100 9 4.5 4.5 0 000-9z"
+                                                                    fill="#101928" fill-rule="nonzero"></path>
+                                                            </g>
+                                                        </svg></span>
+                                                    <p class="Text_self__32440045 Text_typeTypefaceParagraph17__32440045 Placeholder_text__c17797c9"
+                                                        data-qa="placeholder-body">Use the search to add a client, or keep
+                                                        empty to save as walk-in.</p>
                                                 </div>
-                                                <div style="display: flex; flex-direction: row;"><button
-                                                        class="Button_self__0869cc83 Button_sizeDefault__0869cc83 Button_variantSecondary__0869cc83 Button_dynamicIconColor__0869cc83 Button_disabled__0869cc83 AqbXaR"
-                                                        data-qa="express-checkout-button" disabled="">
-                                                        <div class="Button_visualLayer__0869cc83"></div>
-                                                        <div class="Button_buttonBox__0869cc83">
-                                                            <p
-                                                                class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Button_buttonLabel__0869cc83">
-                                                                Express checkout</p>
-                                                        </div>
-                                                    </button><button
-                                                        class="Button_self__0869cc83 Button_sizeDefault__0869cc83 Button_variantPrimary__0869cc83 Button_dynamicIconColor__0869cc83 yh1vpz Action_hasAction__0901d2f4"
-                                                        data-qa="save-appointment-button">
-                                                        <div class="Button_visualLayer__0869cc83"></div>
-                                                        <div class="Button_buttonBox__0869cc83">
-                                                            <p
-                                                                class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Button_buttonLabel__0869cc83">
-                                                                Save appointment</p>
-                                                        </div>
-                                                    </button></div>
+                                                <div class="Placeholder_children__c17797c9"></div>
+                                            </div>
+                                            <div style="flex-grow: 1;"></div>
+                                            <div class="_7p6omb">
+                                                <div>
+                                                    <div class="UQ5Ndy">
+                                                        <p class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Text_colorGreyDark600__32440045"
+                                                            data-qa="appointment-total">Total: <span>Free</span> (0min)</p>
+                                                    </div>
+                                                    <div style="display: flex; flex-direction: row;"><button
+                                                            class="Button_self__0869cc83 Button_sizeDefault__0869cc83 Button_variantSecondary__0869cc83 Button_dynamicIconColor__0869cc83 Button_disabled__0869cc83 AqbXaR"
+                                                            data-qa="express-checkout-button" disabled="">
+                                                            <div class="Button_visualLayer__0869cc83"></div>
+                                                            <div class="Button_buttonBox__0869cc83">
+                                                                <p
+                                                                    class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Button_buttonLabel__0869cc83">
+                                                                    Express checkout</p>
+                                                            </div>
+                                                        </button><button type="button"
+                                                            class="Button_self__0869cc83 Button_sizeDefault__0869cc83 Button_variantPrimary__0869cc83 Button_dynamicIconColor__0869cc83 yh1vpz Action_hasAction__0901d2f4"
+                                                            data-qa="save-appointment-button">
+                                                            <div class="Button_visualLayer__0869cc83"></div>
+                                                            <div class="Button_buttonBox__0869cc83" onclick="onSubmit(this)"
+                                                                data-original-text="Submit">
+                                                                <p
+                                                                    class="Text_self__32440045 Text_typeTypefaceTitle17__32440045 Button_buttonLabel__0869cc83">
+                                                                    Save appointment</p>
+                                                            </div>
+                                                        </button></div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="_3CfJJ-" style="flex-grow: 1;">
-                            <div class="kXP7ZQ ODyGda" style="display: flex; flex-direction: column;">
-                                <form novalidate="" data-qa="form-appointment-form">
+
+                            <div class="_3CfJJ-" style="flex-grow: 1;">
+                                <div class="kXP7ZQ ODyGda" style="display: flex; flex-direction: column;">
                                     <div currencycode="VND" allcustomerpaidplans="" items="[object Object]">
                                         <div class="fgulPZ ieJ9WX O3kzCg ABtpP+"
                                             style="display: flex; flex-direction: column;">
                                             <div class="YgIysy"
                                                 style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-                                                <div class="wyvXUg p8KH04" data-qa="date-dropdown">
+                                                <div class="wyvXUg p8KH04 datepicker" data-qa="date-dropdown">
                                                     <div
                                                         class="Content_self__76ab3680 Content_spaceX16__76ab3680 cssCore_flexRow__33cdafe8 cssCore_flexAlignItemsCenter__33cdafe8">
+                                                        <input type="text" name="date" id="datepicker" style="display: none;">
+
                                                         <p
-                                                            class="Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_noWrap__32440045">
+                                                            class=" Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_noWrap__32440045">
                                                             Wednesday, 7 Sep 2022</p><span
                                                             class="Icon_self__7a585911 Icon_size12__7a585911 Icon_colorGreyDark600__7a585911"><svg
                                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 6">
@@ -600,8 +650,8 @@
                                                                                     class="Input_self__03800786 Input_sizeDefault__03800786 Input_inlineSuffix__03800786 Input_readOnly__03800786">
                                                                                     <input autocomplete="off"
                                                                                         class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
-                                                                                        data-qa="selected-service"
-                                                                                        name="items[0].bookedItem"
+                                                                                        data-qa="items[0]"
+                                                                                        name="items[0][bookedItem]"
                                                                                         placeholder="Choose a service"
                                                                                         warning="" value=""
                                                                                         readonly="">
@@ -629,8 +679,7 @@
                                                                         <div
                                                                             class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b k3qwoY z+xzBx">
                                                                             <div class="Field_top__b22a9f75"><label
-                                                                                    class="Label_self__97ecaa1e"
-                                                                                    data-qa="items[0].employee-label">Team
+                                                                                    class="Label_self__97ecaa1e">Team
                                                                                     member</label></div>
                                                                             <div
                                                                                 class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd Select_inlinePrefix__eeee3dfd">
@@ -638,10 +687,10 @@
                                                                                     <div
                                                                                         style="display: flex; flex-direction: row; flex-grow: 1; justify-content: center; align-items: center; margin-left: 6px;">
                                                                                         <label class="RMq13K J9Mqmu M0ZaF2"
-                                                                                            data-qa="items[0].employeeIsRequested-label"><input
+                                                                                            data-qa="items[0][employeeIsRequested]-label"><input
                                                                                                 class="fuKGX4"
                                                                                                 type="checkbox"
-                                                                                                name="items[0].employeeIsRequested"
+                                                                                                name="items[0][employeeIsRequested]"
                                                                                                 value="false">
                                                                                             <div role="button"
                                                                                                 class="Ne3Sw-"
@@ -662,7 +711,7 @@
                                                                                     </div>
                                                                                 </div><select
                                                                                     class="Select_select__eeee3dfd HpmIxr"
-                                                                                    name="items[0].employee">
+                                                                                    name="items[0][employee]">
 
                                                                                 </select><span
                                                                                     class="Icon_self__7a585911 Icon_size16__7a585911 Select_suffix__eeee3dfd Select_suffixIcon__eeee3dfd"><svg
@@ -678,12 +727,12 @@
                                                                             class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b Jj5n6Z">
                                                                             <div class="Field_top__b22a9f75"><label
                                                                                     class="Label_self__97ecaa1e"
-                                                                                    data-qa="items[0].start-label">Start
+                                                                                    data-qa="items[0][start]-label">Start
                                                                                     time</label></div>
                                                                             <div
                                                                                 class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd">
                                                                                 <select class="Select_select__eeee3dfd"
-                                                                                    name="items[0].start">
+                                                                                    name="items[0][start]">
                                                                                     <option value="0">00:00</option>
                                                                                     <option value="300">00:05</option>
                                                                                     <option value="600">00:10</option>
@@ -986,12 +1035,12 @@
                                                                             class="Field_self__b22a9f75 Field_padding__b22a9f75 cssGrid_colspan12__436c4c8b _884ofg">
                                                                             <div class="Field_top__b22a9f75"><label
                                                                                     class="Label_self__97ecaa1e"
-                                                                                    data-qa="items[0].duration-label">Duration</label>
+                                                                                    data-qa="items[0][duration]-label">Duration</label>
                                                                             </div>
                                                                             <div
                                                                                 class="Select_self__eeee3dfd Select_sizeDefault__eeee3dfd">
                                                                                 <select class="Select_select__eeee3dfd"
-                                                                                    name="items[0].duration">
+                                                                                    name="items[0][duration]">
                                                                                     <option value="300">5min</option>
                                                                                     <option value="600">10min</option>
                                                                                     <option value="900">15min</option>
@@ -1113,31 +1162,31 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div></div>
-                    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                </div>
-                <div class="modal-footer">
-
+                    </form>
                 </div>
             </div>
+            <div></div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+    <div class="modal-footer">
+
+    </div>
+    </div>
+    </div>
     </div>
 
 

@@ -412,7 +412,7 @@
     <link href="{{ asset('/calendar/styles.3303123502526b8ca4c9.css') }}" rel="stylesheet">
     <link href="{{ asset('/adminlte/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.js"></script>
-
+    
 
 @endsection
 

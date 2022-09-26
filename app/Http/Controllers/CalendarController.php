@@ -31,17 +31,30 @@ class CalendarController extends BaseController
     }
     public function calendarEvents(Request $request)
     {
+      
         
         switch ($request->type) {
            case 'create':
-              $event = Event::create([
-                  'title' => $request->event_name,
-                  'start' => $request->event_start,
-                  'end' => $request->event_end,
-              ]);
+                $date = $request->date;
+             
+                
+                foreach($request->items as $item){
+                    $start = date('Y/m/d',strtotime($date))." ".date("H:i:s",$item['start']);
+                    $timeEnd = $item['start'] + $item['duration'];
+                    $end = date('Y/m/d',strtotime($date))." ".date("H:i:s",$timeEnd);
+                    
+                    
+                    $event = Event::create([
+                        'title' => "Walk-In",
+                        'start' => $start,
+                        'end' => $end,
+                        'user_id' => $item['employee'],
+                    ]);
+                }
+              
  
-              return response()->json($event);
-             break;
+                return redirect('calendar-event')->with('toast_success', 'Task Created Successfully!');
+                break;
   
            case 'edit':
               $event = Event::find($request->id)->update([

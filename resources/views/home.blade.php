@@ -25,8 +25,6 @@
     <link rel="stylesheet" href="{{ asset('/adminlte/dist/css/adminlte.min.css') }}">
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="{{ asset('/adminlte/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/summernote/summernote-bs4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/custom.min.css') }}">
@@ -35,6 +33,11 @@
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+        .toast-top-center {
+            top: 12px;
+            margin: 0 auto;
+        }
+
         .file-upload {
             background-color: #ffffff;
             width: 100%;
@@ -251,14 +254,15 @@
                             </a>
                         </li>
                         <li class="nav-item ">
-                            <a href="/calendar-event" class="nav-link {{ $active == 'calendar-event' ? 'active' : '' }}">
+                            <a href="/calendar-event"
+                                class="nav-link {{ $active == 'calendar-event' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Calendar
                                 </p>
                             </a>
                         </li>
-                        
+
                         <?php 
                         foreach($page as $value){
                           ?>
@@ -343,7 +347,7 @@
 
                             </ul>
                         </li>
-                        
+
 
                         {{-- <li class="nav-item ">
             <a href="#" class="nav-link ">
@@ -423,8 +427,8 @@
     <!-- jQuery Knob Chart -->
     <script src="{{ asset('/adminlte/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
     <!-- daterangepicker -->
+    <link rel="stylesheet" href="{{ asset('/adminlte/plugins/jquery-ui/jquery-ui.css') }}">
     <script src="{{ asset('/adminlte/plugins/moment/moment.min.js') }}"></script>
-    <script src="{{ asset('/adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Summernote -->
@@ -496,6 +500,27 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
+        @if (session()->has('toast_success'))
+                toastr.success("", "{{ session('toast_success') }}");
+        @endif
     </script>
     @yield('javascript')
 </body>

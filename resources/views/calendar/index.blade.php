@@ -5,6 +5,7 @@
 @endsection
 
 @section('javascript')
+    
     <script>
         var SITEURL = "{{ url('/') }}";
         $.ajaxSetup({
@@ -137,8 +138,8 @@
                 eventMouseEnter: function(arg, element, jsEvent, view) {
 
                     var event = arg.event;
-                    var timeText = $('#time-'+event.id).html()
-                    
+                    var timeText = $('#time-' + event.id).html()
+
                     console.log("-------hover--------");
                     tooltip =
                         `<div class="fresha-partner-react-portal-wrapper"><div><div class="show __react_component_tooltip td0ce21d6-6176-472b-a49e-1328f0e25daf place-right type-light _3iFzxb Ww-ky8 MQJT9J R+efxS" id="event:booking:571612105" data-id="tooltip" style="left: 374px; top: 256px;">
@@ -206,13 +207,16 @@
 }</style></div>`;
                     mX = arg.jsEvent.pageX;
                     mY = arg.jsEvent.pageY;
-                    
+
                     let eleCursor = document.elementFromPoint(arg.jsEvent.clientX, arg.jsEvent.clientY);
                     var cellWidth = $('th.fc-col-header-cell').width();
                     var distanceLeft = $(eleCursor).position().left;
                     var distanceRight = distanceLeft + cellWidth
-                    
-                    if ($(eleCursor).hasClass('fc-timegrid-slot-lane') || $(eleCursor).hasClass('LuQ1Ve') || $(eleCursor).hasClass('+uhSCd') || $(eleCursor).hasClass('fc-event-resizer') || $(eleCursor).hasClass('fc-timegrid-event') || $(eleCursor).hasClass('fc-event-main') || $(eleCursor).hasClass('VoOe8c') ) {
+
+                    if ($(eleCursor).hasClass('fc-timegrid-slot-lane') || $(eleCursor).hasClass(
+                            'LuQ1Ve') || $(eleCursor).hasClass('+uhSCd') || $(eleCursor).hasClass(
+                            'fc-event-resizer') || $(eleCursor).hasClass('fc-timegrid-event') || $(
+                            eleCursor).hasClass('fc-event-main') || $(eleCursor).hasClass('VoOe8c')) {
                         var distanceLeftToCalendar = $('#duyen').offset().left;
                         $("body").append(tooltip);
                         $('.fresha-partner-react-portal-wrapper').fadeIn('500');
@@ -260,15 +264,17 @@
             calendar.render();
 
         });
+      
         document.addEventListener('mousemove', e => {
             mX = e.pageX;
             mY = e.pageY;
 
             let eleCursor = document.elementFromPoint(e.clientX, e.clientY);
-
+            console.log(eleCursor);
+            
 
             if ($(eleCursor).hasClass('fc-timegrid-slot-lane')) {
-
+                
                 var cellWidth = $('th.fc-col-header-cell').width();
                 var cellHeight = $(eleCursor).height();
                 var distanceLeft = $(eleCursor).position().left;
