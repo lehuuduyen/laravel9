@@ -42,7 +42,7 @@ class PageTransiationsSeeder extends Seeder
                 'page_id' => 2,
                 'language_id' => 1,
                 'title' => "ABOUT US",
-                'sub_title' => "About ICD Vietnam",
+                'sub_title' => "ICD Vietnam について",
                 'excerpt' => "ICD Vietnam provides speedy and high-quality services by utilizing the know-how of software development and web system development cultivated in Japan.
             ICD Vietnam's offshore development establishes a business flow that combines the good points of Japan and Vietnam by hiring excellent human resources who understand Japanese customs and have Japanese staff stationed. There is no difference in quality with Japan.",
             ],
@@ -62,7 +62,7 @@ class PageTransiationsSeeder extends Seeder
                 'page_id' => 3,
                 'language_id' => 1,
                 'title' => "SERVICES",
-                'sub_title' => "Service",
+                'sub_title' => "サービス",
                 'excerpt' => "We provide services such as offshore development, web production, system/application development, and video production.",
             ],
             [
@@ -78,7 +78,7 @@ class PageTransiationsSeeder extends Seeder
                 'page_id' => 4,
                 'language_id' => 1,
                 'title' => "STRENGTHS",
-                'sub_title' => "Strengths of ICD Vietnam",
+                'sub_title' => "ICD Vietnam の強み",
                 'excerpt' => "",
             ],
             [
@@ -94,7 +94,7 @@ class PageTransiationsSeeder extends Seeder
                 'page_id' => 5,
                 'language_id' => 1,
                 'title' => "WORKS",
-                'sub_title' => "Production record",
+                'sub_title' => "制作実績",
                 'excerpt' => "",
             ],
             [
@@ -110,7 +110,7 @@ class PageTransiationsSeeder extends Seeder
                 'page_id' => 6,
                 'language_id' => 1,
                 'title' => "NEWS",
-                'sub_title' => "News",
+                'sub_title' => "ニュース",
                 'excerpt' => "",
             ],
             [
@@ -121,10 +121,76 @@ class PageTransiationsSeeder extends Seeder
                 'sub_title' => "ニュース",
                 'excerpt' => "",
             ],
+            [
+                'id' => 13,
+                'page_id' => 7,
+                'language_id' => 1,
+                'title' => "RECRUIT",
+                'sub_title' => "採用情報",
+                'excerpt' => "",
+            ],
+            [
+                'id' => 14,
+                'page_id' => 7,
+                'language_id' => 2,
+                'title' => "RECRUIT",
+                'sub_title' => "採用情報",
+                'excerpt' => "",
+            ],
+            [
+                'id' => 15,
+                'page_id' => 8,
+                'language_id' => 1,
+                'title' => "CONTACT",
+                'sub_title' => "お問い合わせ",
+                'excerpt' => "",
+            ],
+            [
+                'id' => 16,
+                'page_id' => 8,
+                'language_id' => 2,
+                'title' => "CONTACT",
+                'sub_title' => "お問い合わせ",
+                'excerpt' => "",
+            ],
+            [
+                'id' => 17,
+                'page_id' => 9,
+                'language_id' => 1,
+                'title' => "SECURITY POLICY",
+                'sub_title' => "",
+                'excerpt' => "",
+            ],
+            [
+                'id' => 18,
+                'page_id' => 9,
+                'language_id' => 2,
+                'title' => "SECURITY POLICY",
+                'sub_title' => "",
+                'excerpt' => "",
+            ],
+            [
+                'id' => 19,
+                'page_id' =>10,
+                'language_id' => 1,
+                'title' => "PRIVACY POLICY",
+                'sub_title' => "",
+                'excerpt' => "",
+            ],
+            [
+                'id' => 20,
+                'page_id' => 10,
+                'language_id' => 2,
+                'title' => "PRIVACY POLICY",
+                'sub_title' => "",
+                'excerpt' => "",
+            ],
+            
+        
+        
 
         ];
         Page_transiation::insert($PageTransiations);
-        // \App\Models\Language::factory()->count(30)->create();
 
     }
 }

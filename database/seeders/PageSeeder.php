@@ -54,6 +54,31 @@ class PageSeeder extends Seeder
             'status' => 1,
 
         ],
+        [
+            'id' => 7,
+            'slug' => "recruit",
+            'status' => 1,
+
+        ],
+        [
+            'id' => 8,
+            'slug' => "contact",
+            'status' => 1,
+
+        ],
+        [
+            'id' => 9,
+            'slug' => "security_policy",
+            'status' => 2,
+
+        ],
+        [
+            'id' => 10,
+            'slug' => "privacy_policy",
+            'status' => 2,
+
+        ]
+        
     ];
         Page::insert($page);
         // \App\Models\Language::factory()->count(30)->create();
