@@ -5,7 +5,6 @@
 @endsection
 
 @section('javascript')
-    
     <script>
         var SITEURL = "{{ url('/') }}";
         $.ajaxSetup({
@@ -264,40 +263,39 @@
             calendar.render();
 
         });
-      
+
         document.addEventListener('mousemove', e => {
             mX = e.pageX;
             mY = e.pageY;
 
             let eleCursor = document.elementFromPoint(e.clientX, e.clientY);
-            console.log(eleCursor);
-            
-
+            let col = $(".fc-day").length
             if ($(eleCursor).hasClass('fc-timegrid-slot-lane')) {
-                
+
                 var cellWidth = $('th.fc-col-header-cell').width();
                 var cellHeight = $(eleCursor).height();
-                var distanceLeft = $(eleCursor).position().left;
+                var distanceLeft = $(eleCursor).position().left; // khoảng cách từ trái đên cột staff đầu tiên
+
                 var distanceRight = distanceLeft + cellWidth
-                var distanceLeftToCalendar = $('#duyen').offset().left; //second element distance from top
+
+                var distanceLeftToCalendar = $('#duyen').offset().left; //second element distance from left
+                // console.log(distanceLeftToCalendar);
 
                 var time = $(eleCursor).attr('data-time')
                 time = time.split(":");
                 time = time[0] + ":" + time[1];
-                if (mX >= distanceLeftToCalendar + distanceRight) {
-                    $('.temp-cell').remove();
+                for (i = 0; i <= col; i++) {
+                    distanceRight = distanceLeft + (cellWidth * i) + 4
+                    if (mX >= distanceLeftToCalendar + distanceRight && mX <= distanceLeftToCalendar +
+                        distanceRight + cellWidth) {
+                        $('.temp-cell').remove();
 
-                    $(eleCursor).append(
-                        `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distanceRight}px;"> ${time} </div>`
-                    );
-                } else {
-                    $('.temp-cell').remove();
-
-                    $(eleCursor).append(
-                        `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distanceLeft}px;"> ${time} </div>`
-                    );
+                        $(eleCursor).append(
+                            `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distanceRight}px;"> ${time} </div>`
+                        );
+                    }
                 }
-
+               
 
 
                 $(eleCursor).children('td').each(function() {
