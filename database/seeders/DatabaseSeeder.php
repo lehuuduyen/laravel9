@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ConfigDetailFieldSeeder::class);
         $this->call(PageSeeder::class);
         $this->call(PageTransiationsSeeder::class);
+        $this->call(OptionSeeder::class);
         
         Model::reguard();
     }

@@ -47,7 +47,7 @@ class Page extends Model
         //banner top
         $PageModel = new Page();
         $languageId = $PageModel->getLanguageId();
-        
+        $temp =[];
         $page = Page::where('slug', $slugPage)->first();
         foreach($listKeyPageTransiation as $keyPageTransiatio){
             $temp[$keyPageTransiatio] =  ""; 
@@ -55,9 +55,13 @@ class Page extends Model
         foreach($listKeyPage as $keyPage){
             $temp[$keyPage] = ""; 
         }
-        if(count($listKeyPostMeta)>0){
-            $temp['list']=[];
+        if(count($listKeyPage) > 0 || count($listKeyPageTransiation) > 0){
+            if(count($listKeyPostMeta)>0 ){
+                $temp['list']=[];
+            }
         }
+       
+        
         if ($page) {
             $page_transiations = Page_transiation::where("language_id", $languageId)->where('page_id', $page->id)->first();
             foreach($listKeyPageTransiation as $keyPageTransiatio){
@@ -76,8 +80,13 @@ class Page extends Model
                 $list['created_date']= date('Y-m-d H:i:s', strtotime($post->created_at));
                 $list['updated_date']= date('Y-m-d H:i:s', strtotime($post->updated_at));
                 $list['slug']= $post->slug;
-
-                $temp['list'][] =$list;
+               
+                
+                if(count($listKeyPage) == 0 && count($listKeyPageTransiation) == 0){
+                    $temp[] = $list;
+                }else{
+                    $temp['list'][] =$list;
+                }
             }
 
         }

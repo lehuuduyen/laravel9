@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Category;
 use App\Models\Page;
 use App\Models\Config_detail_field;
 use App\Models\Config_field;
@@ -34,23 +35,44 @@ class PageController extends BaseController
     }
     public function topPage()
     {
-        $page = new Page();
-        $languageId = $page->getLanguageId();
+       
         $data = [];
         try {
-            //banner top
 
+            //banner top
             $data['banner_top'] = Page::formatJsonApi('banner_top', ['img_pc', 'img_sp', 'slug'], ['title', 'excerpt']);
             //about
             $data['about'] = Page::formatJsonApi('about', ['slug'], ['title', 'excerpt', 'sub_title']);
             //services
             $data['services'] = Page::formatJsonApi('services', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_pc', 'img_sp']);
             //strengths
-            // $data['strengths'] = Page::formatJsonApi('strengths',['slug'],['title','excerpt','sub_title'],['title','excerpt','img_pc','img_sp']);
+            $data['strengths'] = Page::formatJsonApi('strengths',[],[],['title','excerpt', 'sub_title']);
             // works
             $data['works'] = Page::formatJsonApi('works', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_pc', 'img_sp']);
             // news
             $data['news'] = Page::formatJsonApi('news', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt']);
+        } catch (\Exception $e) {
+            return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $this->returnJson($data, 'Data found');
+    }
+    public function info()
+    {
+        $data = [];
+        try {
+            //banner top
+            $pages = Page::with('page_transiation')->get();
+            $hamburger_top=[];
+            foreach($pages as $key => $page){
+                $hamburger_top[$key]['title'] = $page['page_transiation']['title'];
+                $hamburger_top[$key]['slug'] = $page['slug'];
+                $hamburger_top[$key]['sub_title'] = $page['page_transiation']['sub_title'];
+            }
+            
+            $data['hamburger_top'] = $hamburger_top;
+            //about
+            $data['hamburger_foot'] =2;
+           
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }

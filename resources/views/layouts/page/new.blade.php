@@ -36,7 +36,6 @@
                     <!-- /.card-header -->
                     <!-- form start -->
 
-
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Show on menu</label>
@@ -175,7 +174,6 @@
             </div>
             <div class="col-md-6">
                 <div class="col-md-12">
-
                     <div class="card card-primary card-outline card-outline-tabs">
                         <div class="card-header p-0 border-bottom-0">
                             <ul class="nav nav-tabs" id="custom-tabs-five-tab" role="tablist">
@@ -254,8 +252,9 @@
                         <!-- /.card -->
                     </div>
                 </div>
-
+                
             </div>
+           
         </div>
 
         </form>

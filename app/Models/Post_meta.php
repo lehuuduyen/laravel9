@@ -15,7 +15,9 @@ class Post_meta extends Model
         return $this->hasOne(Language::class,'id','language_id');
     }
     public static function get_post_meta($postId,$metaKey=NULL){
-        $postMeta = Post_meta::where('post_id',$postId);
+        $PageModel = new Page();
+        $languageId = $PageModel->getLanguageId();
+        $postMeta = Post_meta::where('post_id',$postId)->where('language_id',$languageId);
         if($metaKey){
             $postMeta = $postMeta->where('meta_key',$metaKey);
         }

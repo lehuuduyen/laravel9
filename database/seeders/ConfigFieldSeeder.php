@@ -31,6 +31,10 @@ class ConfigFieldSeeder extends Seeder
                 'id' => 3,
                 'title' => "Field works",
             ],
+            [
+                'id' => 4,
+                'title' => "Field strengths",
+            ],
         ];
         Config_field::insert($Config_field);
         // \App\Models\Language::factory()->count(30)->create();

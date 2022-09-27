@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use App;
+use App\Models\Option;
 
 class PageController extends BaseController
 {
@@ -39,8 +40,8 @@ class PageController extends BaseController
     public function create()
     {
         $configField = Config_field::all();
-
-        return $this->renderView('layouts/page/new', ['active' => 'page', 'configField' => $configField]);
+        $options = Option::all();
+        return $this->renderView('layouts/page/new', ['active' => 'page', 'configField' => $configField,'options' => $options]);
     }
     public function edit($id)
     {

@@ -207,9 +207,6 @@ class PostController extends BaseController
         try {
             $data = $request->all();
 
-            
-            
-
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
