@@ -70,7 +70,7 @@ class CategoryController extends BaseController
 
             
             $category = Category::create(
-                ['name' => $data['name'],'parent_id' => $data['parent_id'],'page_id' => $getPage->id, 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['price' => $data['price'],'duration' => $data['duration'],'name' => $data['name'],'parent_id' => $data['parent_id'],'page_id' => $getPage->id, 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
@@ -106,7 +106,7 @@ class CategoryController extends BaseController
             //image
 
             $category->update(
-                ['name' => $data['name'],'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['price' => $data['price'],'duration' => $data['duration'],'name' => $data['name'],'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Category_transiation

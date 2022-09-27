@@ -1,4 +1,4 @@
-let juzawebFileManager = function (options, cb) {
+var juzawebFileManager = function (options, cb) {
     let type = options.type || 'image';
     let routePrefix = options.prefix;
     let multichoose = options.multichoose || false;

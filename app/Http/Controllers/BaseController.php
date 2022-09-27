@@ -84,7 +84,7 @@ class BaseController extends Controller
             }
         }
     }
-    public function renderView($file, $param)
+    public function renderView($file, $param=[])
     {
 
 

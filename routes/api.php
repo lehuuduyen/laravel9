@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/staff_service', 'App\Http\Controllers\Api\StaffController@index');
+
 
 Route::group(['middleware' => 'api'], function() {
     Route::apiResource('config', 'App\Http\Controllers\Api\ConfigFieldController');
@@ -24,6 +26,7 @@ Route::group(['middleware' => 'api'], function() {
     Route::apiResource('page', 'App\Http\Controllers\Api\PageController');
     Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
     Route::get('/top', 'App\Http\Controllers\Api\PageController@topPage');
+    Route::get('/calendar', 'App\Http\Controllers\Api\CalendarController@index');
 });
 
 

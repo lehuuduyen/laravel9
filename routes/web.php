@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -30,15 +31,20 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 
 
 
-Route::group(['middleware' => 'web'], function() {
+Route::group(['middleware' => 'web'], function () {
     Route::resources([
         'page'  => App\Http\Controllers\PageController::class,
         'category'  => App\Http\Controllers\CategoryController::class,
         'config'    => App\Http\Controllers\ConfigFieldController::class,
         'post'    => App\Http\Controllers\PostController::class,
+        'option'    => App\Http\Controllers\OptionController::class,
     ]);
     Route::get('change-language/{language}', 'App\Http\Controllers\HomeController@changeLanguage')
         ->name('user.change-language');
+    //fullcalender
+    Route::get('calendar-event',  'App\Http\Controllers\CalendarController@index');
+    Route::get('calendar-detail',  'App\Http\Controllers\CalendarController@detail');
+    Route::post('calendar-crud-ajax', 'App\Http\Controllers\CalendarController@calendarEvents');
 });
 
 
