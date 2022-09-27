@@ -60,14 +60,24 @@ class PageController extends BaseController
     {
         $data = [];
         try {
-            //banner top
-            $pages = Page::with('page_transiation')->get();
+            //type recruit
+            $pageRecruit = Page::with('page_transiation')->where('slug','recruit')->first();
+
             $hamburger_top=[];
-            foreach($pages as $key => $page){
-                $hamburger_top[$key]['title'] = $page['page_transiation']['title'];
-                $hamburger_top[$key]['slug'] = $page['slug'];
-                $hamburger_top[$key]['sub_title'] = $page['page_transiation']['sub_title'];
-            }
+            $array=[];
+            $array['title'] = $pageRecruit['page_transiation']['title'];
+            $array['slug'] = $pageRecruit['slug'];
+            $array['sub_title'] = $pageRecruit['page_transiation']['sub_title'];
+            $array['type'] = $this->_POST_TYPE_RECRUIT;
+            
+            array_push($hamburger_top,$array);
+            // //type page not recruit and page not category
+            // foreach($pageRecruit as $key => $page){
+            //     $hamburger_top[$key]['title'] = $page['page_transiation']['title'];
+            //     $hamburger_top[$key]['slug'] = $page['slug'];
+            //     $hamburger_top[$key]['sub_title'] = $page['page_transiation']['sub_title'];
+            //     $hamburger_top[$key]['type'] = $this->_POST_TYPE_RECRUIT;
+            // }
             
             $data['hamburger_top'] = $hamburger_top;
             //about
