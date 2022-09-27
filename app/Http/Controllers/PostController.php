@@ -28,7 +28,7 @@ class PostController extends BaseController
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Show the application dashboard.
      *
@@ -37,7 +37,7 @@ class PostController extends BaseController
     public function index()
     {
         $getPage = $this->getPage();
-        
+
 
 
         return $this->renderView('layouts/posts/list', [
@@ -49,17 +49,17 @@ class PostController extends BaseController
     }
     public function create()
     {
-        $pageModel =new Page();
-        
+        $pageModel = new Page();
+
         $getPage = $this->getPage();
 
         $getAllCategory = $this->getAllCategory();
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
-        
+
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
         $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', $pageModel->getLanguageId())->get();
         $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', $pageModel->getLanguageId())->get();
-        
+
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
             'activeUL' => $_GET['post_type'],
@@ -73,15 +73,18 @@ class PostController extends BaseController
     }
     public function edit($id)
     {
-        $pageModel =new Page();
+        $pageModel = new Page();
+        $listDetailFieldLanguage = [];
+        $listDetailFieldNotLanguage = [];
 
-        $getCategory = $this->getAllCategory();
         $getPage = $this->getPage();
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
         $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', $pageModel->getLanguageId())->get();
         $postDetail = Post::with('post_meta')->find($id);
         $getAllCategory = $this->getAllCategory();
-        $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
+        $getCategoryByPost = Post_category::where('post_id', $id)->pluck('category_id')->toArray();
+      
+        $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory, $getCategoryByPost);
         foreach ($listDetailField as $key => $detailField) {
             $listDetailField[$key]['value'] = "";
             foreach ($postDetail->post_meta as $keyPostMeta => $postMeta) {
@@ -114,13 +117,11 @@ class PostController extends BaseController
             'postActive' => "create",
             'activeUL' => $_GET['post_type'],
             'active' => $_GET['post_type'],
-            'getCategory' => $getCategory,
             'listDetailFieldLanguage' => $listDetailFieldLanguage,
             'listDetailFieldNotLanguage' => $listDetailFieldNotLanguage,
             'postDetail' => $postDetail,
             'getPage' => $getPage,
             'htmlRecursiveCategory' => $htmlRecursiveCategory,
-
 
         ]);
     }
@@ -130,7 +131,7 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-            
+
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
@@ -140,13 +141,13 @@ class PostController extends BaseController
             $slug = $this->_SLUG;
             $getPage = $this->getPage();
             $post = Post::create(
-                ['slug' => $slug,'page_id' => $getPage->id]
+                ['slug' => $slug, 'page_id' => $getPage->id]
             );
 
             //image
             if (isset($request['image'])) {
                 foreach ($request['image'] as $configDetailId => $files) {
-                    foreach ($files as $key => $file){
+                    foreach ($files as $key => $file) {
                         Post_meta::create(
                             [
                                 'post_id' => $post->id,
@@ -160,10 +161,10 @@ class PostController extends BaseController
                 }
             }
             //language
-            if(isset($data['languages'])){
+            if (isset($data['languages'])) {
                 foreach ($data['languages'] as $configDetailId =>  $language) {
                     foreach ($language as $languge_id => $value) {
-    
+
                         $postMeta = Post_meta::create(
                             [
                                 'post_id' => $post->id,
@@ -176,13 +177,11 @@ class PostController extends BaseController
                     }
                 }
             }
-            
+
             //category
-            // delete category
-            DB::table('post_category')->where('post_id', $post->id)->delete();
             //them category
-            if(isset($data['categories'])){
-                foreach($data['categories'] as $category){
+            if (isset($data['categories'])) {
+                foreach ($data['categories'] as $category) {
                     $postCategory = Post_category::create(
                         [
                             'post_id' => $post->id,
@@ -208,14 +207,15 @@ class PostController extends BaseController
         try {
             $data = $request->all();
 
-
+            
+            
 
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
 
             // check slug
-            $slug = $this->isSlugPost($data['slug']);
+            $slug = $this->isSlugPost($data['slug'],$id);
             $slug = $this->_SLUG;
             // update post
             $post = Post::find($id)->update(
@@ -227,7 +227,7 @@ class PostController extends BaseController
             //xóa tất cả file hình rồi thêm lại
             if (isset($request['image'])) {
                 foreach ($request['image'] as $configDetailId => $files) {
-                    foreach ($files as $key => $file){
+                    foreach ($files as $key => $file) {
                         Post_meta::create(
                             [
                                 'post_id' => $id,
@@ -241,18 +241,35 @@ class PostController extends BaseController
                 }
             }
 
-
-            foreach ($data['languages'] as $configDetailId =>  $language) {
-                foreach ($language as $languge_id => $value) {
-                    $postMeta = Post_meta::create(
+            if (isset($data['languages'])) {
+                foreach ($data['languages'] as $configDetailId =>  $language) {
+                    foreach ($language as $languge_id => $value) {
+                        $postMeta = Post_meta::create(
+                            [
+                                'post_id' => $id,
+                                'config_detail_field_id' => $configDetailId,
+                                'language_id' => $languge_id,
+                                'meta_key' => key($value),
+                                'meta_value' => $value[key($value)],
+                            ]
+                        );
+                    }
+                }
+            }
+            //category
+            // delete category
+            DB::table('post_category')->where('post_id', $id)->delete();
+            //them category
+            if (isset($data['categories'])) {
+               
+                foreach ($data['categories'] as $categoryId) {
+                    $postCategory = Post_category::create(
                         [
                             'post_id' => $id,
-                            'config_detail_field_id' => $configDetailId,
-                            'language_id' => $languge_id,
-                            'meta_key' => key($value),
-                            'meta_value' => $value[key($value)],
+                            'category_id' => $categoryId,
                         ]
                     );
+                    
                 }
             }
             // Commit the queries!
@@ -264,14 +281,13 @@ class PostController extends BaseController
         }
         return Redirect::back()->with('success', 'Update thành công');
     }
-    public function isSlugPost($slug)
+    public function isSlugPost($slug,$postId="")
     {
 
         $post = Post::where('slug', $slug)->first();
 
 
-        if ($post) {
-
+        if ($post && $post->id != $postId) {
             $this->isSlugPost($slug . "-2");
         } else {
             $this->_SLUG = $slug;

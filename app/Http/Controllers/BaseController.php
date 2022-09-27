@@ -17,20 +17,20 @@ class BaseController extends Controller
 {
     public $_html = "";
     public $_stt = 0;
-    public function htmlRecursiveCategory($getAllCategory)
+    public function htmlRecursiveCategory($getAllCategory,$getCategoryByPost = [])
     {
 
 
         $html = '<div class="show-taxonomies taxonomy-categories">
         <ul class="mt-2 p-0">';
-        $this->recursiveCategory($getAllCategory, NULL, False);
+        $this->recursiveCategory($getAllCategory, NULL, False,$getCategoryByPost);
         $html .= $this->_html;
 
 
         $html .= ' </ul></div>';
         return $html;
     }
-    public function recursiveCategory($getAllCategory, $parent_id = NULL, $char = '')
+    public function recursiveCategory($getAllCategory, $parent_id = NULL, $char = '',$getCategoryByPost = [])
     {
         $html = '';
         foreach ($getAllCategory as $key => $item) {
@@ -46,10 +46,15 @@ class BaseController extends Controller
                     $this->_stt =0;
 
                 }
+                
+                $checked = "";
+                if(in_array($item->id,$getCategoryByPost)){
+                    $checked ="checked";
+                }
                 if($parent_id ==NULL){
                     $char = '<li class="m-1" id="item-category-'.$item->id.'">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="categories[]" class="custom-control-input" id="categories-'.$item->id.'" value="'.$item->id.'">
+                        <input '.$checked.' type="checkbox" name="categories[]" class="custom-control-input" id="categories-'.$item->id.'" value="'.$item->id.'">
                         <label class="custom-control-label" for="categories-'.$item->id.'">' . $item->name . '</label>
                     </div>
                     ';
@@ -58,7 +63,7 @@ class BaseController extends Controller
                     $char ='<ul class="ml-3 p-0">
                     <li class="m-1" id="item-category-'.$item->id.'">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="categories[]" class="custom-control-input"
+                            <input '.$checked.' type="checkbox" name="categories[]" class="custom-control-input"
                                 id="categories-'.$item->id.'" value="'.$item->id.'">
                             <label class="custom-control-label" for="categories-'.$item->id.'">' . $item->name . '</label>
                         </div>';
@@ -75,7 +80,7 @@ class BaseController extends Controller
 
 
                 // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
-                $this->recursiveCategory($getAllCategory, $item->id, $char);
+                $this->recursiveCategory($getAllCategory, $item->id, $char,$getCategoryByPost);
             }
         }
     }
