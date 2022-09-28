@@ -44,7 +44,9 @@ Route::group(['middleware' => 'web'], function () {
     //fullcalender
     Route::get('calendar-event',  'App\Http\Controllers\CalendarController@index');
     Route::get('calendar-detail',  'App\Http\Controllers\CalendarController@detail');
+    
     Route::post('calendar-crud-ajax', 'App\Http\Controllers\CalendarController@calendarEvents');
+
 });
 
 

@@ -347,24 +347,6 @@
 
                             </ul>
                         </li>
-
-
-                        {{-- <li class="nav-item ">
-            <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-                Page Top
-              </p>
-            </a>
-          </li>
-          <li class="nav-item ">
-            <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-info-circle"></i>
-              <p>
-                About Company
-              </p>
-            </a>
-          </li> --}}
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

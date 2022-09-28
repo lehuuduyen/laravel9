@@ -26,7 +26,6 @@ class CalendarController extends BaseController
     public function detail(Request $request)
     {
         $user = User::get(['id','name as title']);
-        
         return $this->renderView('calendar/detail',['active'=>'calendar-event']);
     }
     public function calendarEvents(Request $request)
@@ -66,13 +65,11 @@ class CalendarController extends BaseController
  
               return response()->json($event);
              break;
-  
            case 'delete':
               $event = Event::find($request->id)->delete();
   
               return response()->json($event);
              break;
-             
            default:
              # ...
              break;
