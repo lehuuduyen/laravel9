@@ -25,6 +25,8 @@ class PageTransiations extends Migration
             $table->string('title');
             $table->string('sub_title')->nullable();
             $table->string('excerpt')->nullable();
+            $table->longText('description')->nullable();
+
             $table->timestamps();
         });
     }

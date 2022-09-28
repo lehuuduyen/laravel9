@@ -64,7 +64,6 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Slug</label>
                             <input type="text" class="form-control" name="slug"
-                                {{ isset($getCategory->slug) ? 'disabled' : '' }}
                                 value="{{ isset($getCategory->slug) ? $getCategory->slug : '' }}" placeholder="Enter slug">
                         </div>
                         <div class="form-group">
@@ -182,6 +181,7 @@
                                     foreach($allLanguage as $key => $language){
                                         $title = "";
                                         $subTitle = "";
+                                        $description = "";
                                         $excerpt = "";
                                        
                                         
@@ -189,6 +189,8 @@
                                             $title = ($getCategory['category_transiation'][$key]['language_id'] == $language->id )?$getCategory['category_transiation'][$key]['title']:"";
                                             $subTitle = ($getCategory['category_transiation'][$key]['language_id'] == $language->id )?$getCategory['category_transiation'][$key]['sub_title']:"";
                                             $excerpt = ($getCategory['category_transiation'][$key]['language_id'] == $language->id )?$getCategory['category_transiation'][$key]['excerpt']:"";
+                                            $description = ($getCategory['category_transiation'][$key]['language_id'] == $language->id )?$getCategory['category_transiation'][$key]['description']:"";
+                                        
                                         }
 
 
@@ -217,6 +219,11 @@
                                             <input type="text" class="form-control"
                                                 name="languages[{{ $key }}][excerpt]"
                                                 value="{{ $excerpt }}" placeholder="Enter excerpt">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Description</label>
+                                            <textarea class="summernote" name="languages[{{ $key }}][description]">
+                                                                     {{ $description }}           </textarea>
                                         </div>
                                         <input type="hidden" name="languages[{{ $key }}][languge_id]"
                                             value="{{ $language->id }}" />
@@ -247,6 +254,9 @@
 @section('javascript')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
+         $('.summernote').summernote({
+            height: 200
+        })
         $(".select2").select2()
 
         function changeTabLanguage(typeLanguage) {

@@ -57,8 +57,8 @@ class PostController extends BaseController
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
 
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
-        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', $pageModel->getLanguageId())->get();
-        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', $pageModel->getLanguageId())->get();
+        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', getLanguageId())->get();
+        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', getLanguageId())->get();
 
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
@@ -79,7 +79,7 @@ class PostController extends BaseController
 
         $getPage = $this->getPage();
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
-        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', $pageModel->getLanguageId())->get();
+        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id',getLanguageId())->get();
         $postDetail = Post::with('post_meta')->find($id);
         $getAllCategory = $this->getAllCategory();
         $getCategoryByPost = Post_category::where('post_id', $id)->pluck('category_id')->toArray();

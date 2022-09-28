@@ -15,14 +15,19 @@ class Post_meta extends Model
         return $this->hasOne(Language::class,'id','language_id');
     }
     public static function get_post_meta($postId,$metaKey=NULL){
-        $PageModel = new Page();
-        $languageId = $PageModel->getLanguageId();
-        $postMeta = Post_meta::where('post_id',$postId)->where('language_id',$languageId);
+        $metaValue = "";
+        $languageId = getLanguageId();
+        $postMeta = Post_meta::join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')->where('post_meta.post_id',$postId)->where('post_meta.language_id',$languageId);
         if($metaKey){
-            $postMeta = $postMeta->where('meta_key',$metaKey);
+            $postMeta = $postMeta->where('post_meta.meta_key',$metaKey);
         }
-        $postMeta = $postMeta->pluck('meta_value')->first();
-        return $postMeta;
+        $postMeta = $postMeta->select('config_detail_field.type','post_meta.meta_value')->first();
+        
+        if($postMeta){
+            $metaValue = ($postMeta['type'] == Config_detail_field::typeImg() && $postMeta['meta_value'] !="" ) ? \Storage::disk(config('juzaweb.filemanager.disk'))->url($postMeta['meta_value']):$postMeta['meta_value'];
+        }
+        
+        return $metaValue;
 
     }
 }

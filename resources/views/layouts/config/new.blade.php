@@ -22,7 +22,7 @@
                 <input type="hidden" id="allLanguage" value="{{ json_encode($allLanguage) }}">
                 @if (isset($configFieldDetail))
                     <div class="" style="text-align: right;margin: 10px 0px ">
-                        <a class="btn btn-success" hre f="/config/create"> Create New Config filed </a>
+                        <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
                     </div>
                     <form action="/config/{{ $configFieldDetail->id }}" id="form" method="put">
                     @else
@@ -40,28 +40,52 @@
                             <div class="col-md-12 p-0 pr-1">
                                 <div class="form-group">
                                     <label for="exampleInputtext1">Title <abbr>*</abbr></label>
-                                    <input type="text" required style="border: 1px solid #20c997!important;" class="form-control"
-                                        id="title" placeholder="Enter Title... "
+                                    <input type="text" required style="border: 1px solid #20c997!important;"
+                                        class="form-control" id="title" placeholder="Enter Title... "
                                         value="{{ isset($configFieldDetail->title) ? $configFieldDetail->title : '' }}">
                                 </div>
                             </div>
                         </div>
                         @if (!isset($configFieldDetail))
                             <div class="form-group">
-                                <button type="button" onclick="addHtml(1)" class="btn btn-block btn-outline-info btn-lg">
+                                <button type="button" onclick="addHtml(this)" data-id="1"
+                                    class="btn btn-outline-info btn-block  btn-lg"data-class="btn-outline-info">
                                     <i class="fas fa-plus"></i>
-                                    <span>Add Text</span>
+                                    <span>Text</span>
                                 </button>
-                                <button type="button" onclick="addHtml(2)"
-                                    class="btn btn-block btn-outline-warning btn-lg">
+                                <button type="button" onclick="addHtml(this)" data-id="2"
+                                    class="btn btn-outline-warning btn-block  btn-lg"data-class="btn-outline-warning">
                                     <i class="fas fa-plus"></i>
-                                    <span>Add Textarea</span>
+                                    <span>Textarea</span>
                                 </button>
-                                <button type="button" onclick="addHtml(3)"
-                                    class="btn btn-block btn-outline-secondary  btn-lg">
+                                <button type="button" onclick="addHtml(this)" data-id="4"
+                                    class="btn btn-outline-primary btn-block  btn-lg"data-class="btn-outline-primary">
                                     <i class="fas fa-plus"></i>
-                                    <span>Add Image</span>
+                                    <span>Description</span>
                                 </button>
+                                <button type="button" onclick="addHtml(this)" data-id="3"
+                                    class="btn btn-outline-success btn-block   btn-lg"data-class="btn-outline-success">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Image</span>
+                                </button>
+                              
+                                <button type="button" onclick="addHtml(this)" data-id="6"
+                                    class="btn btn-outline-danger btn-block  btn-lg"data-class="btn-outline-danger">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Radio</span>
+                                </button>
+
+                                <button type="button" onclick="addHtml(this)" data-id="7"
+                                    class="btn btn-outline-secondary btn-block  btn-lg"data-class="btn-outline-secondary">
+                                    <i class="fas fa-plus"></i>
+                                    <span>Dropdown</span>
+                                </button>
+                                <button type="button" onclick="addHtml(this)" data-id="5"
+                                class="btn btn-outline-dark btn-block  btn-lg"data-class="btn-outline-dark">
+                                <i class="fas fa-plus"></i>
+                                <span>Checkbox</span>
+                            </button>
+
                             </div>
                         @endif
 
@@ -139,8 +163,9 @@
 
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    <button type="button" onclick="onSubmit(this)" data-original-text="Submit" class="btn btn-primary">Submit</button>
-                    
+                    <button type="button" onclick="onSubmit(this)" data-original-text="Submit"
+                        class="btn btn-primary">Submit</button>
+
                 </div>
 
                 <!-- /.card -->
@@ -155,20 +180,13 @@
 
 @section('javascript')
     <script>
-        function addHtml(type) {
+        function addHtml(_this) {
             var language = JSON.parse($("#allLanguage").val())
             // IMAGE
-            let classType = "btn-outline-secondary"
-            let textType = "Image"
-            if (type == 1) {
-                // TEXT
-                classType = "btn-outline-info"
-                textType = "Text"
-            } else if (type == 2) {
-                // TEXTAREA
-                classType = "btn-outline-warning"
-                textType = "Textarea"
-            }
+            let classType = $(_this).data('class')
+            let textType = $(_this).find('span').html();
+            let type = $(_this).data('id')
+
             let htmlImg = `<div class="card card-default json-html">
                                 <div class="card-header">
                                     <h3 class="card-title font-weight-bold ${classType}">${textType}</h3>
@@ -258,10 +276,10 @@
                         },
                         success: function(msg) {
                             BtnReset(_this)
-                            if($("#form").attr('method') == 'put'){
+                            if ($("#form").attr('method') == 'put') {
                                 alertSuccess(msg.message)
-                            }else if($("#form").attr('method') == 'post'){
-                                alertSuccess(msg.message,'/config')
+                            } else if ($("#form").attr('method') == 'post') {
+                                alertSuccess(msg.message, '/config')
                             }
                         },
                         error: function(msg) {

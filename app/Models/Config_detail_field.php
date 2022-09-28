@@ -20,6 +20,18 @@ class Config_detail_field extends Model
     public static function typeImg (){
         return 3;
     } 
+    public static function typeDescription (){
+        return 4;
+    } 
+    public static function typeCheckBox (){
+        return 5;
+    } 
+    public static function typeRadio (){
+        return 6;
+    } 
+    public static function typeDropDown (){
+        return 7;
+    } 
     public function language()
     {
         return $this->hasOne(Language::class,'id','language_id');

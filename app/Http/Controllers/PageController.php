@@ -13,10 +13,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use App;
+use App\Models\Category;
 use App\Models\Option;
 
 class PageController extends BaseController
 {
+    public $_SLUG = "";
+
     /**
      * Create a new controller instance.
      *
@@ -41,7 +44,7 @@ class PageController extends BaseController
     {
         $configField = Config_field::all();
         $options = Option::all();
-        return $this->renderView('layouts/page/new', ['active' => 'page', 'configField' => $configField,'options' => $options]);
+        return $this->renderView('layouts/page/new', ['active' => 'page', 'configField' => $configField, 'options' => $options]);
     }
     public function edit($id)
     {
@@ -60,18 +63,21 @@ class PageController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-
             if ($data['slug'] == null) {
                 throw new Exception("Slug cannot be empty");
             }
+            // check slug
+            $this->_SLUG = $data['slug'];
+            $slug = $this->isSlugPage($data['slug']);
+            $slug = $this->_SLUG;
 
 
 
             $page = Page::create(
-                ['status' => $data['status'], 'is_category' => $data['is_category'], 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['status' => $data['status'], 'is_category' => $data['is_category'], 'slug' => $slug, 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
-                if($language['title'] == null){
+                if ($language['title'] == null) {
                     throw new Exception("Title cannot be empty");
                 }
                 $pageTransiattion = Page_transiation::create([
@@ -80,6 +86,7 @@ class PageController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
+                    "description" => $language['description'],
                 ]);
             }
             if (isset($data['select_list_field'])) {
@@ -94,7 +101,6 @@ class PageController extends BaseController
         } catch (\Exception $e) {
             DB::rollback();
             return $this->returnJson('', $e->getMessage(), false, Response::HTTP_INTERNAL_SERVER_ERROR);
-
         }
         return $this->returnJson($page, 'Create page success');
     }
@@ -103,9 +109,11 @@ class PageController extends BaseController
         // // Start transaction!
         DB::beginTransaction();
         try {
-            $page = Page::find($id);
+
 
             $data = $request->all();
+           
+            $page = Page::find($id);
 
             if (!isset($data['select_list_field'])) {
                 $data['select_list_field'] = [];
@@ -123,8 +131,11 @@ class PageController extends BaseController
                 }
             }
 
+
+
+
             $page->update(
-                ['is_category' => $data['is_category'],'status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                [ 'is_category' => $data['is_category'], 'status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Page_transiation
@@ -132,7 +143,7 @@ class PageController extends BaseController
             //add Page_transiation
 
             foreach ($data['languages'] as $language) {
-                if($language['title'] == null){
+                if ($language['title'] == null) {
                     throw new Exception("Title cannot be empty");
                 }
                 $pageTransiattion = Page_transiation::create([
@@ -141,6 +152,8 @@ class PageController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
+                    "description" => $language['description'],
+
                 ]);
             }
 
@@ -169,5 +182,21 @@ class PageController extends BaseController
             return $this->returnJson('', 'Delete config field success', Config_field::destroy($id));
         }
         return $this->returnJson('', 'Already have a post to use', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+    public function isSlugPage($slug, $pageId = "")
+    {
+        $Page = Page::where('slug', $slug)->first();
+        if ($Page && $Page->id != $pageId) {
+            $this->isSlugPage($slug . "-2");
+        } else {
+            $category = Category::where('slug', $slug)->first();
+            if($category){
+                $this->isSlugPage($slug . "-2");
+            }else{
+                $this->_SLUG = $slug;
+                return $slug;
+            }
+          
+        }
     }
 }

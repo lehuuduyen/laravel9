@@ -50,8 +50,10 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Show category</label>
                             <select class="form-control" name="is_category">
-                                <option {{ (isset($getPage->status) && $getPage->is_category == 1) ? 'selected' : '' }} value="1">Active</option>
-                                <option {{ (isset($getPage->status) && $getPage->is_category == 2) ? 'selected' : '' }} value="2">Unactive</option>
+                                <option {{ isset($getPage->status) && $getPage->is_category == 1 ? 'selected' : '' }}
+                                    value="1">Active</option>
+                                <option {{ isset($getPage->status) && $getPage->is_category == 2 ? 'selected' : '' }}
+                                    value="2">Unactive</option>
                             </select>
 
                         </div>
@@ -201,12 +203,14 @@
                                         $title = "";
                                         $subTitle = "";
                                         $excerpt = "";
+                                        $description = "";
                                        
                                         
                                         if(isset($getPage)){
                                             $title = ($getPage['page_all_transiation'][$key]['language_id'] == $language->id )?$getPage['page_all_transiation'][$key]['title']:"";
                                             $subTitle = ($getPage['page_all_transiation'][$key]['language_id'] == $language->id )?$getPage['page_all_transiation'][$key]['sub_title']:"";
                                             $excerpt = ($getPage['page_all_transiation'][$key]['language_id'] == $language->id )?$getPage['page_all_transiation'][$key]['excerpt']:"";
+                                            $description = ($getPage['page_all_transiation'][$key]['language_id'] == $language->id )?$getPage['page_all_transiation'][$key]['description']:"";
                                         }
 
                                      ?>
@@ -235,7 +239,11 @@
                                                 name="languages[{{ $key }}][excerpt]"
                                                 value="{{ $excerpt }}" placeholder="Enter excerpt">
                                         </div>
-
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Description</label>
+                                            <textarea class="summernote" name="languages[{{ $key }}][description]">
+                                                                     {{ $description }}           </textarea>
+                                        </div>
                                         <input type="hidden" name="languages[{{ $key }}][languge_id]"
                                             value="{{ $language->id }}" />
 
@@ -252,9 +260,9 @@
                         <!-- /.card -->
                     </div>
                 </div>
-                
+
             </div>
-           
+
         </div>
 
         </form>
@@ -268,6 +276,9 @@
     <script src="{{ asset('/adminlte/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js') }}"></script>
     <script>
         $('.duallistbox').bootstrapDualListbox()
+        $('.summernote').summernote({
+            height: 200
+        })
 
         function changeTabLanguage(typeLanguage) {
             $("input[name='languge_id']").val(typeLanguage)

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Category_config_field;
 use App\Models\Category_transiation;
 use App\Models\Config_field;
+use App\Models\Page;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -33,25 +34,25 @@ class CategoryController extends BaseController
     public function index()
     {
         $getPage = $this->getPage();
-            
-        return $this->renderView('layouts/category/list', ['activeUL' => $_GET['post_type'],'active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug ]);
+
+        return $this->renderView('layouts/category/list', ['activeUL' => $_GET['post_type'], 'active' => 'category' . $getPage->slug, 'pageSlug' => $getPage->slug]);
     }
     public function create()
     {
         $getPage = $this->getPage();
         $getAllCategory = $this->getAllCategory();
-        return $this->renderView('layouts/category/new', ['activeUL' => $_GET['post_type'],'active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug,'getAllCategory'=>$getAllCategory]);
+        return $this->renderView('layouts/category/new', ['activeUL' => $_GET['post_type'], 'active' => 'category' . $getPage->slug, 'pageSlug' => $getPage->slug, 'getAllCategory' => $getAllCategory]);
     }
-    
+
     public function edit($id)
     {
         $getPage = $this->getPage();
 
-        $getCategory = Category::with('category_transiation')->where('id',$id)->first();
+        $getCategory = Category::with('category_transiation')->where('id', $id)->first();
         $getAllCategory = $this->getAllCategory([$getCategory->id]);
-      
 
-        return $this->renderView('layouts/category/new', ['activeUL' => $_GET['post_type'],'active' => 'category'.$getPage->slug,'pageSlug'=>$getPage->slug, 'getCategory' => $getCategory,'getAllCategory'=>$getAllCategory]);
+
+        return $this->renderView('layouts/category/new', ['activeUL' => $_GET['post_type'], 'active' => 'category' . $getPage->slug, 'pageSlug' => $getPage->slug, 'getCategory' => $getCategory, 'getAllCategory' => $getAllCategory]);
     }
     public function store(Request  $request)
     {
@@ -66,11 +67,14 @@ class CategoryController extends BaseController
             if ($data['slug'] == null) {
                 throw new Exception("Slug cannot be empty");
             }
+            // check slug
+            $this->_SLUG = $data['slug'];
+            $slug = $this->isSlugPageCategory($data['slug']);
+            $slug = $this->_SLUG;
 
 
-            
             $category = Category::create(
-                ['price' => $data['price'],'duration' => $data['duration'],'name' => $data['name'],'parent_id' => $data['parent_id'],'page_id' => $getPage->id, 'slug' => $data['slug'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['price' => $data['price'], 'duration' => $data['duration'], 'name' => $data['name'], 'parent_id' => $data['parent_id'], 'page_id' => $getPage->id, 'slug' =>  $slug, 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
@@ -79,10 +83,11 @@ class CategoryController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
+                    "description" => $language['description'],
                     "languge_id" => $language['languge_id']
                 ]);
             }
-          
+
             // Commit the queries!
             DB::commit();
         } catch (\Exception $e) {
@@ -98,15 +103,24 @@ class CategoryController extends BaseController
         DB::beginTransaction();
         try {
             $category = Category::find($id);
+            $getPage = $this->getPage();
 
             $data = $request->all();
+            
+            
             if ($data['name'] == null) {
                 throw new Exception("Name cannot be empty");
             }
+            if ($data['slug'] == null) {
+                throw new Exception("Slug cannot be empty");
+            }
             //image
-
+            // check slug
+            $this->_SLUG = $data['slug'];
+            $slug = $this->isSlugPageCategory($data['slug'],$id);
+            $slug = $this->_SLUG;
             $category->update(
-                ['price' => $data['price'],'duration' => $data['duration'],'name' => $data['name'],'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['slug'=>$slug,'price' => $data['price'], 'duration' => $data['duration'], 'name' => $data['name'], 'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Category_transiation
@@ -120,11 +134,12 @@ class CategoryController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
+                    "description" => $language['description'],
                     "languge_id" => $language['languge_id']
                 ]);
             }
 
-            
+
             // Commit the queries!
             DB::commit();
         } catch (\Exception $e) {
@@ -140,5 +155,21 @@ class CategoryController extends BaseController
             return $this->returnJson('', 'Delete config field success', Config_field::destroy($id));
         }
         return $this->returnJson('', 'Already have a post to use', false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+    public function isSlugPageCategory($slug,$categoryId = "")
+    {
+        $Page = Page::where('slug', $slug)->first();
+        if ($Page) {
+            $this->isSlugPageCategory($slug . "-2");
+        } else {
+            $category = Category::where('slug', $slug)->first();
+            if ($category && $category->id != $categoryId) {
+                $this->isSlugPageCategory($slug . "-2");
+            }else{
+                $this->_SLUG = $slug;
+                return $slug;
+            }
+           
+        }
     }
 }

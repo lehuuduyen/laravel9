@@ -25,6 +25,7 @@ class CreateCategoryTransiationsTable extends Migration
             $table->string('title')->nullable();
             $table->string('sub_title')->nullable();
             $table->string('excerpt')->nullable();
+            $table->longText('description')->nullable();
             $table->timestamps();
         });
     }

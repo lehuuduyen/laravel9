@@ -11,25 +11,10 @@ class Page extends Model
     protected $table = 'page';
     protected $fillable = ['name', 'img_sp', 'img_pc', 'slug', 'status','is_category'];
     public $_ENGLISH = 1;
-    public function getLanguageId()
-    {
-
-        $languageId = $this->_ENGLISH;
-        if (!isset($_GET['language'])) {
-            $slug = \Session::get('website_language', config('app.locale'));
-        } else {
-            $slug = $_GET['language'];
-        }
-        $language = Language::where('slug', $slug)->first();
-
-        if ($language) {
-            $languageId = $language->id;
-        }
-        return $languageId;
-    }
+    
     public function page_transiation()
     {
-        $languageId = $this->getLanguageId();
+        $languageId = getLanguageId();
         return $this->hasOne(Page_transiation::class, 'page_id', 'id')->where('language_id', $languageId);
     }
     public function page_all_transiation()
@@ -45,8 +30,7 @@ class Page extends Model
     public static function formatJsonApi($slugPage,$listKeyPage=[],$listKeyPageTransiation=[],$listKeyPostMeta=[])
     {
         //banner top
-        $PageModel = new Page();
-        $languageId = $PageModel->getLanguageId();
+        $languageId = getLanguageId();
         $temp =[];
         $page = Page::where('slug', $slugPage)->first();
         foreach($listKeyPageTransiation as $keyPageTransiatio){
@@ -74,7 +58,7 @@ class Page extends Model
             $posts = Post::where('page_id', $page->id)->get();
             foreach ($posts as $post) {
                 foreach($listKeyPostMeta as $keyPostMeta){
-                    $value = Post_meta::get_post_meta($post->id, $keyPostMeta);
+                    $value = Post_meta::get_post_meta($post->id, $keyPostMeta);  
                     $list[$keyPostMeta]= $value;
                 }
                 $list['created_date']= date('Y-m-d H:i:s', strtotime($post->created_at));

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Language;
 use App\Models\Option;
 
 if (!function_exists('format_size_units')) {
@@ -42,6 +43,24 @@ if (!function_exists('formatMinuteToHour')) {
             $duration =  $hour. $minute;
         }
         return $duration;
+    }
+}
+if (!function_exists('getLanguageId')) {
+    function getLanguageId(): string
+    {
+        $_ENGLISH = 1;
+        $languageId = $_ENGLISH;
+        if (!isset($_GET['language'])) {
+            $slug = \Session::get('website_language', config('app.locale'));
+        } else {
+            $slug = $_GET['language'];
+        }
+        $language = Language::where('slug', $slug)->first();
+
+        if ($language) {
+            $languageId = $language->id;
+        }
+        return $languageId;
     }
 }
 ?>
