@@ -48,6 +48,7 @@ class ConfigFieldController extends BaseController
         foreach ($configFieldDetail->config_detail_field as $key => $value) {
             $temp[$value->key]['type'] = $value->type;
             $temp[$value->key]['key'] = $value->key;
+            $temp[$value->key]['tags'] = $value->tags;
             $temp[$value->key]['language'][$value->language['id']] = [
                 'id' => $value->id,
                 'language_id' => $value->language['id'],
@@ -102,9 +103,13 @@ class ConfigFieldController extends BaseController
             );
 
             foreach ($listConfigDettail as $configDetail) {
+                $array = ['language_id' => $configDetail->language_id, 'title' => $configDetail->title, 'config_field_id' => $configField->id, 'key' => $configDetail->key, 'type' => $configDetail->type];
+                if ($configDetail->type > 4) {
 
+                    $array['tags'] = $configDetail->tags;
+                }
                 Config_detail_field::create(
-                    ['language_id' => $configDetail->language_id, 'title' => $configDetail->title, 'config_field_id' => $configField->id, 'key' => $configDetail->key, 'type' => $configDetail->type],
+                    $array
                 );
             }
 
@@ -172,10 +177,15 @@ class ConfigFieldController extends BaseController
                     }
                 }
             } else {
-                Config_detail_field::where('config_field_id', $id)->delete();
+               
                 foreach ($listConfigDettail as $configDetail) {
+                    $array = ['language_id' => $configDetail->language_id, 'title' => $configDetail->title, 'config_field_id' => $id, 'key' => $configDetail->key, 'type' => $configDetail->type];
+                    if ($configDetail->type > 4) {
+                        $array['tags'] = $configDetail->tags;
+                    }
+                    
                     Config_detail_field::create(
-                        ['language_id' => $configDetail->language_id, 'title' => $configDetail->title, 'config_field_id' => $id, 'key' => $configDetail->key, 'type' => $configDetail->type],
+                        $array
                     );
                 }
             }

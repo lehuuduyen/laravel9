@@ -57,8 +57,8 @@ class PostController extends BaseController
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
 
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
-        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2])->where('language_id', getLanguageId())->get();
-        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->where('type', 3)->where('language_id', getLanguageId())->get();
+        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1,2,4])->where('language_id', getLanguageId())->get();
+        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [3,5,6,7])->where('language_id', getLanguageId())->get();
 
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
@@ -90,28 +90,26 @@ class PostController extends BaseController
             foreach ($postDetail->post_meta as $keyPostMeta => $postMeta) {
                 if ($postMeta['config_detail_field_id'] == $detailField['id']) {
                     //title and text area
-                    if ($detailField['type'] == 1 || $detailField['type'] == 2) {
+                    if ($detailField['type'] == Config_detail_field::typeText() || $detailField['type'] == Config_detail_field::typeTextArea() || $detailField['type'] == Config_detail_field::typeDescription()) {
                         $listDetailField[$key][$postMeta->language['slug']] = $postMeta['meta_value'];
                     }
                     //image
-                    if ($detailField['type'] == 3) {
+                    if ($detailField['type'] == Config_detail_field::typeImg() || $detailField['type'] == Config_detail_field::typeCheckBox() || $detailField['type'] == Config_detail_field::typeRadio() || $detailField['type'] == Config_detail_field::typeDropDown()) {
                         $listDetailField[$key]['value'] = $postMeta['meta_value'];
                     }
                     unset($postDetail->post_meta[$keyPostMeta]);
                 }
             }
-            if ($detailField['type'] == 1 || $detailField['type'] == 2) {
+            if ($detailField['type'] == Config_detail_field::typeText() || $detailField['type'] == Config_detail_field::typeTextArea() || $detailField['type'] == Config_detail_field::typeDescription()) {
                 $listDetailFieldLanguage[] = $listDetailField[$key];
             }
-            if ($detailField['type'] == 3) {
+            if ($detailField['type'] == Config_detail_field::typeImg() || $detailField['type'] == Config_detail_field::typeCheckBox() || $detailField['type'] == Config_detail_field::typeRadio() || $detailField['type'] == Config_detail_field::typeDropDown()) {
                 if ($listDetailField[$key]['value'] != "") {
                     $listDetailField[$key]['value'] =  $listDetailField[$key]['value'];
                 }
                 $listDetailFieldNotLanguage[] = $listDetailField[$key];
             }
         }
-
-
 
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",

@@ -124,6 +124,17 @@
                                         </div>
                                         <?php
                                                                 }
+                                                                if($listDetailField['type'] == 4){
+                                                                                ?>
+                                        {{-- textarea --}}
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                            <textarea class="form-control" rows="5"
+                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">{{ $value }}</textarea>
+                                        </div>
+                                        <?php
+                                                                }
                                                 }    
                                                 
                                             ?>
@@ -207,6 +218,81 @@
                         <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
                             <p>Click here to select file</p>
                         </div>
+                    </div>
+
+                </div>
+                <?php
+                                    }
+                                    if($value['type'] == 5){
+                                        ?>
+                {{-- checkbox --}}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
+
+                    </div>
+                    <div class="card-body">
+                        @php
+                            $tags = explode(',', $value['tags']);
+                        @endphp
+                        @foreach ($tags as $tag)
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="{{ $value['key'] }}"
+                                    value="{{ $tag }}">
+                                <label class="form-check-label"> {{ $tag }} </label>
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                </div>
+                <?php
+                                    }
+                                    if($value['type'] == 6){
+                                        ?>
+                {{-- radio --}}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
+
+                    </div>
+                    <div class="card-body">
+                        @php
+                            $tags = explode(',', $value['tags']);
+                        @endphp
+                        @foreach ($tags as $tag)
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="{{ $value['key'] }}"
+                                    value="{{ $tag }}">
+                                <label class="form-check-label"> {{ $tag }} </label>
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                </div>
+                <?php
+                                    }
+                                    if($value['type'] == 7){
+                                        ?>
+                {{-- select --}}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
+
+                    </div>
+                    <div class="card-body">
+                        @php
+                            $tags = explode(',', $value['tags']);
+                        @endphp
+                        <select class="form-control" name="{{ $value['key'] }}">
+
+                            <option value=""></option>
+                            @foreach ($tags as $tag)
+                            <option value="{{ $tag }}">{{ $tag }}</option>
+                            @endforeach
+                        </select>
+
                     </div>
 
                 </div>
