@@ -9,6 +9,6 @@ class Category_transiation extends Model
 {
     use HasFactory;
     protected $table = 'category_transiations';
-    protected $fillable = ['category_id','language_id','title','sub_title','excerpt'];
+    protected $fillable = ['description','category_id','language_id','title','sub_title','excerpt'];
 
 }

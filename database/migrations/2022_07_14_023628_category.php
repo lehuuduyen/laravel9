@@ -19,8 +19,8 @@ class Category extends Migration
             $table->string('img_sp')->nullable();
             $table->string('img_pc')->nullable();
             $table->tinyInteger('status')->default(2);
-            $table->integer('price')->default(0);
-            $table->tinyInteger('duration')->default(0);
+            $table->integer('price')->nullable();
+            $table->tinyInteger('duration')->nullable();
             $table->unsignedBigInteger('page_id');
             $table->foreign('page_id')
               ->references('id')->on('page')->onDelete('cascade');

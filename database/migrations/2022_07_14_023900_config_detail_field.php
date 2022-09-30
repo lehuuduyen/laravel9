@@ -24,6 +24,7 @@ class ConfigDetailField extends Migration
 
             $table->string('title');
             $table->string('key');
+            $table->longText('tags')->nullable();
             $table->tinyInteger('type');
             $table->timestamps();
         });

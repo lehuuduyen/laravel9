@@ -9,7 +9,7 @@ class Config_detail_field extends Model
 {
     use HasFactory;
     protected $table = 'config_detail_field';
-    protected $fillable = ['title','key','type','config_field_id','language_id'];
+    protected $fillable = ['title','tags','key','type','config_field_id','language_id'];
 
     public static function typeText (){
         return 1;
@@ -19,6 +19,18 @@ class Config_detail_field extends Model
     }  
     public static function typeImg (){
         return 3;
+    } 
+    public static function typeDescription (){
+        return 4;
+    } 
+    public static function typeCheckBox (){
+        return 5;
+    } 
+    public static function typeRadio (){
+        return 6;
+    } 
+    public static function typeDropDown (){
+        return 7;
     } 
     public function language()
     {

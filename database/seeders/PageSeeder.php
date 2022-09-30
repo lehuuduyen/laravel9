@@ -39,7 +39,7 @@ class PageSeeder extends Seeder
         [
             'id' => 4,
             'slug' => "strengths",
-            'status' => 2,
+            'status' => 1,
 
         ],
         [

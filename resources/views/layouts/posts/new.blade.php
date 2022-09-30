@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     <!-- dropzonejs -->
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/dropzone/min/dropzone.min.css') }}">
-    <style>.show-taxonomies {
-        max-height: 200px;
-        overflow: auto;
-    }</style>
+    <style>
+        .show-taxonomies {
+            max-height: 200px;
+            overflow: auto;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -23,13 +25,14 @@
             <input type="hidden" name="action" value="Update">
 
             <div class="" style="text-align: right;margin: 10px 0px ">
-                <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New Config filed </a>
+                <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New Config filed
+                </a>
             </div>
             <form action="/post/{{ $postDetail->id }}?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data"
                 id="form" method="post">
                 {{ method_field('PUT') }}
             @else
-            <input type="hidden" name="action" value="Create">
+                <input type="hidden" name="action" value="Create">
 
                 <form action="/post?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data" id="form"
                     method="post">
@@ -83,7 +86,7 @@
                             </ul>
                         </div>
                         <div class="card-body">
-                            <div class="tab-content" >
+                            <div class="tab-content">
                                 <?php 
                                     foreach($allLanguage as $key => $language){
                                      ?>
@@ -121,6 +124,17 @@
                                         </div>
                                         <?php
                                                                 }
+                                                                if($listDetailField['type'] == 4){
+                                                                                ?>
+                                        {{-- textarea --}}
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                            <textarea class="form-control" rows="5"
+                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">{{ $value }}</textarea>
+                                        </div>
+                                        <?php
+                                                                }
                                                 }    
                                                 
                                             ?>
@@ -142,13 +156,14 @@
             <div class="col-md-4">
                 <div class="card card-primary card-outline card-outline-tabs">
                     <div class="card-body" style="text-align: center">
-                        <button type="button" onclick="onSubmit(this)" data-original-text="Submit" class="btn btn-primary">Submit</button>
+                        <button type="button" onclick="onSubmit(this)" data-original-text="Submit"
+                            class="btn btn-primary">Submit</button>
                     </div>
                 </div>
                 <div class="card card-primary card-outline card-outline-tabs">
 
                     <div class="card-body">
-                        <div class="tab-content" >
+                        <div class="tab-content">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Slug</label>
                                 <input type="text" class="form-control" name="slug" placeholder="Enter slug"
@@ -157,19 +172,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-primary card-outline card-outline-tabs">
-                    <div class="card-body">
-                        <div class="tab-content" >
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Category</label>
-                                {!! $htmlRecursiveCategory !!}
+                @if ($htmlRecursiveCategory != '')
+                    <div class="card card-primary card-outline card-outline-tabs">
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Category</label>
+                                    {!! $htmlRecursiveCategory !!}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
+
                 <?php 
                         foreach($listDetailFieldNotLanguage as $value){
-                            
+                            $meta_value = (isset($value['value']))?$value['value']:"";
                             
                             if($value['type'] == 3){
                                         ?>
@@ -180,8 +198,8 @@
 
                     </div>
                     <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
-                                class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="image[{{ $value['id'] }}][{{ $value['key'] }}]"
-                            class="input-path"
+                                class="fa fa-times-circle fa-2x"></i></a> <input type="hidden"
+                            name="image[{{ $value['id'] }}][{{ $value['key'] }}]" class="input-path"
                             value="{{ $value['value'] }}">
                         <div class="dropify-preview image-hidden"
                             style="{{ isset($value['value']) && $value['value'] != '' ? 'display: block' : 'display: none' }};">
@@ -208,6 +226,96 @@
                 </div>
                 <?php
                                     }
+                                    if($value['type'] == 5){
+                                        ?>
+                {{-- checkbox --}}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
+
+                    </div>
+                    <div class="card-body">
+                        @php
+                            $tags = explode(',', $value['tags']);
+                            $listMetaValue = ($meta_value !="")?json_decode($meta_value):[];
+                           
+                            
+                        @endphp
+                        @foreach ($tags as $tag)
+                            @php
+                                $checked = (in_array($tag,$listMetaValue))? "checked":"";
+                            @endphp
+                            <div class="form-check">
+                                <input {{ $checked }} class="form-check-input" type="checkbox"
+                                    name="checkbox[{{ $value['id'] }}][{{ $value['key'] }}][]"
+                                    value="{{ $tag }}">
+                                <label class="form-check-label"> {{ $tag }} </label>
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                </div>
+                <?php
+                                    }
+                                    if($value['type'] == 6){
+                                        ?>
+                {{-- radio --}}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
+
+                    </div>
+                    <div class="card-body">
+                        @php
+                            $tags = explode(',', $value['tags']);
+                        @endphp
+                        @foreach ($tags as $tag)
+                            @php
+                                $checked = $meta_value == $tag ? 'checked' : '';
+                            @endphp
+                            <div class="form-check">
+                                <input {{ $checked }} class="form-check-input" type="radio"
+                                    name="radio[{{ $value['id'] }}][{{ $value['key'] }}]" value="{{ $tag }}">
+                                <label class="form-check-label"> {{ $tag }} </label>
+                            </div>
+                        @endforeach
+
+                    </div>
+
+                </div>
+                <?php
+                                    }
+                                    if($value['type'] == 7){
+                                        ?>
+                {{-- select --}}
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title font-weight-bold">{{ $value['title'] }}</h3>
+
+                    </div>
+                    <div class="card-body">
+                        @php
+                            $tags = explode(',', $value['tags']);
+                        @endphp
+                        <select class="form-control" name="dropdown[{{ $value['id'] }}][{{ $value['key'] }}]">
+                            <option selected="selected" disabled value=""></option>
+
+                            @foreach ($tags as $tag)
+                                @php
+                                    $selected = $meta_value == $tag ? 'selected' : '';
+                                @endphp
+
+                                <option {{ $selected }} value="{{ $tag }}">{{ $tag }}</option>
+                            @endforeach
+
+                        </select>
+
+                    </div>
+
+                </div>
+                <?php
+                                    }
                         }    
                         
                         
@@ -229,7 +337,7 @@
             height: 200
         })
         $('.select2').select2()
-        
+
         function onSubmit(_this) {
             let action = $('input[name="action"]').val();
             Swal.fire({
@@ -246,6 +354,5 @@
                 }
             })
         }
-        
     </script>
 @endsection
