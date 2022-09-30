@@ -26,7 +26,7 @@ Route::group(['middleware' => 'api'], function() {
     Route::apiResource('page', 'App\Http\Controllers\Api\PageController');
     Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
     Route::get('/top', 'App\Http\Controllers\Api\PageController@topPage');
-    Route::get('/calendar', 'App\Http\Controllers\Api\CalendarController@index');
+    Route::get('/calendar', 'App\Http\Controllers\Api\CalendarController@index'); 
 });
 
 

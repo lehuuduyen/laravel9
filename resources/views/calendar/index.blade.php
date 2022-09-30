@@ -3,9 +3,9 @@
     <div id='full_calendar_events'></div>
     <input type="hidden" name="user" id="user" value="{{ $user }}">
 @endsection
-
+ 
 @section('javascript')
-    <script>
+    <script> 
         var SITEURL = "{{ url('/') }}";
         $.ajaxSetup({
             headers: {

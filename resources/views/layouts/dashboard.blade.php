@@ -484,7 +484,7 @@
                             <!-- card tools -->
                             <div class="card-tools">
                                 <button type="button" class="btn btn-primary btn-sm daterange" title="Date range">
-                                    <i class="far fa-calendar-alt"></i>
+                                    <i class="far fa-calendar-alt "></i>
                                 </button>
                                 <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse"
                                     title="Collapse">
@@ -578,7 +578,7 @@
 
                             <h3 class="card-title">
                                 <i class="far fa-calendar-alt"></i>
-                                Calendar
+                                Calendar 
                             </h3>
                             <!-- tools card -->
                             <div class="card-tools">
@@ -593,7 +593,7 @@
                                         <a href="#" class="dropdown-item">Clear events</a>
                                         <div class="dropdown-divider"></div>
                                         <a href="#" class="dropdown-item">View calendar</a>
-                                    </div>
+                                    </div> 
                                 </div>
                                 <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
                                     <i class="fas fa-minus"></i>

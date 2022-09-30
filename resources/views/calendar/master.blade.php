@@ -12,7 +12,7 @@
             font-size: 14px;
         }
 
-        #calendar {
+        #calendar  {
             max-width: 1100px;
             margin: 40px auto;
         }
@@ -407,13 +407,13 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('/calendar/modules.e35b0e935d22574b4b3a.css') }}">
-
+ 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.css" rel="stylesheet">
     <link href="{{ asset('/calendar/styles.3303123502526b8ca4c9.css') }}" rel="stylesheet">
     <link href="{{ asset('/adminlte/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.11.3/main.min.js"></script>
     
-
+ 
 @endsection
 
 

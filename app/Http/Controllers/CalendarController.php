@@ -14,6 +14,7 @@ use App\Models\User;
 
 class CalendarController extends BaseController
 {
+    
     public function index()
     {
         $user = User::get(['id','name as title']);

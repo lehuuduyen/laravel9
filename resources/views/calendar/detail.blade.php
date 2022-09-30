@@ -1,6 +1,6 @@
 @extends('calendar.master')
 
-
+ 
 
 @section('javascript')
     <script src="{{ asset('/adminlte/plugins/select2/js/select2.min.js') }}"></script>
@@ -454,7 +454,7 @@
 
 
 
-
+ 
 
                     </div>
                     <button type="button" class="close" onclick="history.back(-1);$('#duyen').load('/calendar-event');"

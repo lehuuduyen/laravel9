@@ -253,12 +253,12 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item">
                             <a href="/calendar-event"
                                 class="nav-link {{ $active == 'calendar-event' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Calendar
+                                    Calendar 
                                 </p>
                             </a>
                         </li>
