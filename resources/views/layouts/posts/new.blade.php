@@ -172,19 +172,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="card card-primary card-outline card-outline-tabs">
-                    <div class="card-body">
-                        <div class="tab-content">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Category</label>
-                                {!! $htmlRecursiveCategory !!}
+                @if ($htmlRecursiveCategory != '')
+                    <div class="card card-primary card-outline card-outline-tabs">
+                        <div class="card-body">
+                            <div class="tab-content">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Category</label>
+                                    {!! $htmlRecursiveCategory !!}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                @endif
+
                 <?php 
                         foreach($listDetailFieldNotLanguage as $value){
-                            
+                            $meta_value = (isset($value['value']))?$value['value']:"";
                             
                             if($value['type'] == 3){
                                         ?>
@@ -234,10 +237,17 @@
                     <div class="card-body">
                         @php
                             $tags = explode(',', $value['tags']);
+                            $listMetaValue = ($meta_value !="")?json_decode($meta_value):[];
+                           
+                            
                         @endphp
                         @foreach ($tags as $tag)
+                            @php
+                                $checked = (in_array($tag,$listMetaValue))? "checked":"";
+                            @endphp
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="{{ $value['key'] }}"
+                                <input {{ $checked }} class="form-check-input" type="checkbox"
+                                    name="checkbox[{{ $value['id'] }}][{{ $value['key'] }}][]"
                                     value="{{ $tag }}">
                                 <label class="form-check-label"> {{ $tag }} </label>
                             </div>
@@ -261,9 +271,12 @@
                             $tags = explode(',', $value['tags']);
                         @endphp
                         @foreach ($tags as $tag)
+                            @php
+                                $checked = $meta_value == $tag ? 'checked' : '';
+                            @endphp
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="{{ $value['key'] }}"
-                                    value="{{ $tag }}">
+                                <input {{ $checked }} class="form-check-input" type="radio"
+                                    name="radio[{{ $value['id'] }}][{{ $value['key'] }}]" value="{{ $tag }}">
                                 <label class="form-check-label"> {{ $tag }} </label>
                             </div>
                         @endforeach
@@ -285,12 +298,17 @@
                         @php
                             $tags = explode(',', $value['tags']);
                         @endphp
-                        <select class="form-control" name="{{ $value['key'] }}">
+                        <select class="form-control" name="dropdown[{{ $value['id'] }}][{{ $value['key'] }}]">
+                            <option selected="selected" disabled value=""></option>
 
-                            <option value=""></option>
                             @foreach ($tags as $tag)
-                            <option value="{{ $tag }}">{{ $tag }}</option>
+                                @php
+                                    $selected = $meta_value == $tag ? 'selected' : '';
+                                @endphp
+
+                                <option {{ $selected }} value="{{ $tag }}">{{ $tag }}</option>
                             @endforeach
+
                         </select>
 
                     </div>

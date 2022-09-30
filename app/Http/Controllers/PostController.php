@@ -110,7 +110,8 @@ class PostController extends BaseController
                 $listDetailFieldNotLanguage[] = $listDetailField[$key];
             }
         }
-
+  
+        
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
             'activeUL' => $_GET['post_type'],
@@ -129,7 +130,8 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-
+            
+            
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
@@ -204,7 +206,7 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-
+            
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
@@ -246,6 +248,55 @@ class PostController extends BaseController
                                 'language_id' => $languge_id,
                                 'meta_key' => key($value),
                                 'meta_value' => $value[key($value)],
+                            ]
+                        );
+                    }
+                }
+            }
+        
+            if (isset($data['radio'])) {
+                foreach ($data['radio'] as $configDetailId =>  $radio) {
+                    foreach ($radio as $key => $value) {
+                        $postMeta = Post_meta::create(
+                            [
+                                'post_id' => $id,
+                                'config_detail_field_id' => $configDetailId,
+                                'language_id' =>1,
+                                'meta_key' => $key,
+                                'meta_value' => $value,
+                            ]
+                        );
+                    }
+                }
+            }
+            if (isset($data['dropdown'])) {
+                foreach ($data['dropdown'] as $configDetailId =>  $dropdown) {
+                    foreach ($dropdown as $value) {
+                        $postMeta = Post_meta::create(
+                            [
+                                'post_id' => $id,
+                                'config_detail_field_id' => $configDetailId,
+                                'language_id' =>1,
+                                'meta_key' => $key,
+                                'meta_value' => $value,
+                            ]
+                        );
+                    }
+                }
+            }
+            if (isset($data['checkbox'])) {
+                foreach ($data['checkbox'] as $configDetailId =>  $checkbox) {
+                    foreach ($checkbox as $value) {
+                        
+                        
+                        
+                        $postMeta = Post_meta::create(
+                            [
+                                'post_id' => $id,
+                                'config_detail_field_id' => $configDetailId,
+                                'language_id' =>1,
+                                'meta_key' => key($value),
+                                'meta_value' => json_encode($value),
                             ]
                         );
                     }

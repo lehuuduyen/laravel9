@@ -20,17 +20,20 @@ class BaseController extends Controller
     public $_POST_TYPE_PAGE = "page";
     public $_POST_TYPE_CATEGORY = "category";
     public $_POST_TYPE_RECRUIT = "recruit";
-    public function htmlRecursiveCategory($getAllCategory,$getCategoryByPost = [])
+    public function htmlRecursiveCategory($getAllCategory=[],$getCategoryByPost = [])
     {
+        $html =  "";
+        if(count($getAllCategory)>0){
+            $html = '<div class="show-taxonomies taxonomy-categories">
+            <ul class="mt-2 p-0">';
+            $this->recursiveCategory($getAllCategory, NULL, False,$getCategoryByPost);
+            $html .= $this->_html;
+    
+    
+            $html .= ' </ul></div>';
+        }
 
 
-        $html = '<div class="show-taxonomies taxonomy-categories">
-        <ul class="mt-2 p-0">';
-        $this->recursiveCategory($getAllCategory, NULL, False,$getCategoryByPost);
-        $html .= $this->_html;
-
-
-        $html .= ' </ul></div>';
         return $html;
     }
     public function recursiveCategory($getAllCategory, $parent_id = NULL, $char = '',$getCategoryByPost = [])
