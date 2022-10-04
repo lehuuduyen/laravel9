@@ -32,7 +32,11 @@ class CalendarController extends BaseController
     }
     public function calendarEvents(Request $request)
     {
-      
+        date_default_timezone_set('UTC');
+        echo '<pre>';
+        print_r($request->all());
+        die;
+        
         
         switch ($request->type) {
            case 'create':
@@ -44,7 +48,6 @@ class CalendarController extends BaseController
                     $timeEnd = $item['start'] + $item['duration'];
                     $end = date('Y/m/d',strtotime($date))." ".date("H:i:s",$timeEnd);
                     
-                    
                     $event = Event::create([
                         'title' => "Walk-In",
                         'start' => $start,
@@ -55,7 +58,6 @@ class CalendarController extends BaseController
               
  
                 return redirect('calendar-event')->with('toast_success', 'Task Created Successfully!');
-                break;
   
            case 'edit':
               $event = Event::find($request->id)->update([
@@ -66,7 +68,6 @@ class CalendarController extends BaseController
               ]);
  
               return response()->json($event);
-             break;
   
            case 'delete':
               $event = Event::find($request->id)->delete();

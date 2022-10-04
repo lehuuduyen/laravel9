@@ -405,6 +405,9 @@
         ._0TvLLS:hover{
             background-color: #f8f8fb
         }
+        .fc-timegrid-slot-lane{
+            cursor: cell;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('/calendar/modules.e35b0e935d22574b4b3a.css') }}">
  

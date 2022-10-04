@@ -41,6 +41,9 @@
                         </div>
                     @endif
                     @if (\Session::has('success'))
+                    <script>
+                        localStorage.removeItem("sta");
+                    </script>
                         <div class="alert alert-success">
                             <ul>
                                 <li>{!! \Session::get('success') !!}</li>

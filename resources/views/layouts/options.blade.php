@@ -52,6 +52,12 @@
                                         class="form-control" id="hamburger_footId" name="hamburger_foot" placeholder="Enter Slug hamburger_foot ... "
                                         value="{{ isset($data['hamburger_foot']) ? $data['hamburger_foot'] : '' }}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputtext1">ID Service <abbr>*</abbr></label>
+                                    <input type="text" required style="border: 1px solid #20c997!important;"
+                                        class="form-control" id="serviceId" name="service" placeholder="Enter Title... "
+                                        value="{{ isset($data['service']) ? $data['service'] : '' }}">
+                                </div>
                             </div>
 
                     </div>

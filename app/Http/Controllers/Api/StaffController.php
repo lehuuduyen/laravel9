@@ -30,7 +30,6 @@ class StaffController extends BaseController
             }
         }                             
         return response()->json( ['staff'=>$user,'service'=>$service]);
-        
     }
 
     /**

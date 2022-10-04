@@ -3,9 +3,9 @@
     <div id='full_calendar_events'></div>
     <input type="hidden" name="user" id="user" value="{{ $user }}">
 @endsection
- 
+
 @section('javascript')
-    <script> 
+    <script>
         var SITEURL = "{{ url('/') }}";
         $.ajaxSetup({
             headers: {
@@ -40,12 +40,12 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 selectOverlap: false,
                 editable: true,
-                selectable: true,
-                selectHelper: true,
+                // selectable: true,
+                // selectHelper: true,
                 // selectMirror: true,
-                slotDuration: '00:15',
-                snapDuration: '00:05',
-                timeZone: 'UTC',
+                slotDuration: '00:05',
+                snapDuration: '00:15',
+
                 allDaySlot: false,
                 locale: 'en-GB',
                 slotLabelFormat: {
@@ -240,6 +240,7 @@
                 dateClick: function(info) {
                     let date = moment(info.dateStr).format('YYYY-MM-DD');
                     let hour = moment(info.dateStr).format('HH');
+
                     let minute = moment(info.dateStr).format('mm');
                     let startTime = (hour * 3600) + (minute * 60)
 
@@ -249,11 +250,8 @@
                     const nextState = {
                         additionalInformation: 'Updated the URL with JS'
                     };
-                    window.history.pushState({
-                        urlPath: window.location.href
-                    }, nextTitle, nextURL);
-                    $('#duyen').load(nextURL);
-                    document.title = nextTitle
+                   
+                    location.href = nextURL
 
                 },
 
@@ -264,6 +262,11 @@
 
         });
 
+        function addMinutes(numOfMinutes, date = new Date()) {
+            date.setMinutes(date.getMinutes() + numOfMinutes);
+
+            return date;
+        }
         document.addEventListener('mousemove', e => {
             mX = e.pageX;
             mY = e.pageY;
@@ -282,6 +285,8 @@
                 // console.log(distanceLeftToCalendar);
 
                 var time = $(eleCursor).attr('data-time')
+                var d1 = new Date ()
+
                 time = time.split(":");
                 time = time[0] + ":" + time[1];
                 for (i = 0; i <= col; i++) {
@@ -291,11 +296,11 @@
                         $('.temp-cell').remove();
 
                         $(eleCursor).append(
-                            `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distanceRight}px;"> ${time} </div>`
+                            `<div class="GvBFIk RNzZJP temp-cell" style="height:${cellHeight}px;width:${cellWidth}px;left:${distanceRight}px;"> ${time}  </div>`
                         );
                     }
                 }
-               
+
 
 
                 $(eleCursor).children('td').each(function() {

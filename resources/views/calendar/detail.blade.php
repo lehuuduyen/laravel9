@@ -1,6 +1,6 @@
 @extends('calendar.master')
 
- 
+
 
 @section('javascript')
     <script src="{{ asset('/adminlte/plugins/select2/js/select2.min.js') }}"></script>
@@ -19,7 +19,7 @@
             return result;
         }
 
-        function setView1(startTime = 0, durationFromService = "", serviceName = "") {
+        function setView1(startTime = 0, durationFromService = "", serviceName = "",serviceId ="") {
             let countView1 = $('[data-qa="appointment-item-section"]').length;
             let staff = JSON.parse(localStorage.getItem('sta'))['staff']
             let staffId = findGetParameter('employeeId');
@@ -55,6 +55,7 @@
                                                                             </div>
                                                                             <div
                                                                                 class="Input_self__03800786 Input_sizeDefault__03800786 Input_inlineSuffix__03800786 Input_readOnly__03800786">
+                                                                                <input type="hidden" name="items[${countView1}][service_id]" value="${serviceId}">
                                                                                 <input autocomplete="off"
                                                                                     class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
                                                                                     data-qa="items[${countView1}]"
@@ -296,7 +297,7 @@
                                 <div class="JlRnJN xgR9V2" style="background-color: rgb(165, 223, 248);"></div>
                             `
                 $.each(val.category_child, function(keyChild, valChild) {
-                    html += `<div class="_0TvLLS p8KH04" data-qa="spl-result-item-manucure" data-duration="${valChild.duration}" data-data="${valChild.name} (${valChild.duration_string}, ₫${valChild.price})"
+                    html += `<div class="_0TvLLS p8KH04" data-qa="spl-result-item-manucure" data-serviceId="${valChild.id}"data-duration="${valChild.duration}" data-data="${valChild.name} (${valChild.duration_string}, ₫${valChild.price})"
                                     style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
                                     <div class="Rmj0sK"
                                         style="display: flex; flex-direction: row; flex-grow: 1; align-items: center;">
@@ -385,11 +386,15 @@
 
             let elementInputBookedItem = $(this).closest('.fresha-partner-react-portal-wrapper').attr(
                 'origin-element') + "[bookedItem]";
+            let elementInputServiceId = $(this).closest('.fresha-partner-react-portal-wrapper').attr(
+                'origin-element') + "[serviceId]";
 
             let elementInputStartTime = $(this).closest('.fresha-partner-react-portal-wrapper').attr(
                 'origin-element') + "[start]";
             let elementInputDuration = $(this).closest('.fresha-partner-react-portal-wrapper').attr(
                 'origin-element') + "[duration]";
+            let serviceId = $(this).attr('data-serviceId')
+            $("input[name='" + elementInputServiceId + "']").val(serviceId)
             $("input[name='" + elementInputBookedItem + "']").val($(this).data('data'))
             $(".fresha-partner-react-portal-wrapper").css('display', 'none')
             $('.DP71MP').remove()
@@ -398,7 +403,7 @@
             $("select[name='" + elementInputDuration + "']").val(durationFromService)
             if (elementInput == "bookedItem") {
                 startTime = $("select[name='start']").val()
-                setView1(parseInt(startTime), parseInt(durationFromService), $(this).data('data'))
+                setView1(parseInt(startTime), parseInt(durationFromService), $(this).data('data'),serviceId)
             }
             setView2(parseInt(startTime) + parseInt(durationFromService))
 
@@ -433,7 +438,8 @@
             });
 
             $('#datepicker').on('change', function() {
-                $('.Text_noWrap__32440045').html(moment($('#datepicker').val()).format("dddd, DD MMM YYYY"));
+                $('.Text_noWrap__32440045').html(moment($('#datepicker').val()).format(
+                "dddd, DD MMM YYYY"));
             });
 
             $('.datepicker').on('click', function() {
@@ -454,7 +460,7 @@
 
 
 
- 
+
 
                     </div>
                     <button type="button" class="close" onclick="history.back(-1);$('#duyen').load('/calendar-event');"
@@ -561,7 +567,8 @@
                                                 <div class="wyvXUg p8KH04 datepicker" data-qa="date-dropdown">
                                                     <div
                                                         class="Content_self__76ab3680 Content_spaceX16__76ab3680 cssCore_flexRow__33cdafe8 cssCore_flexAlignItemsCenter__33cdafe8">
-                                                        <input type="text" name="date" id="datepicker" style="display: none;">
+                                                        <input type="text" name="date" id="datepicker"
+                                                            style="display: none;">
 
                                                         <p
                                                             class=" Text_self__32440045 Text_typeTypefaceTitle20__32440045 Text_noWrap__32440045">
@@ -648,6 +655,8 @@
                                                                                 </div>
                                                                                 <div
                                                                                     class="Input_self__03800786 Input_sizeDefault__03800786 Input_inlineSuffix__03800786 Input_readOnly__03800786">
+                                                                                    <input type="hidden"
+                                                                                        name="items[0][serviceId]">
                                                                                     <input autocomplete="off"
                                                                                         class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
                                                                                         data-qa="items[0]"

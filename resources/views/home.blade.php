@@ -339,12 +339,12 @@
                                         <p>Page</p>
                                     </a>
                                 </li>
-                                {{-- <li class="nav-item">
+                                <li class="nav-item">
                                     <a href="/option" class="nav-link {{ $active == 'option' ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Options</p>
                                     </a>
-                                </li> --}}
+                                </li>
 
                             </ul>
                         </li>
