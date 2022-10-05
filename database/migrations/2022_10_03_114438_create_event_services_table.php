@@ -20,8 +20,7 @@ class CreateEventServicesTable extends Migration
                 ->references('id')->on('events')->onDelete('cascade');
             $table->unsignedBigInteger('service_id');
             $table->foreign('service_id')
-                ->references('id')->on('events')->onDelete('cascade');
-            $table->string('name');
+                ->references('id')->on('category')->onDelete('cascade');
 
             $table->timestamps();
         });
