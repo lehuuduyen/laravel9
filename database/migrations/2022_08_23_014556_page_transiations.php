@@ -14,7 +14,7 @@ class PageTransiations extends Migration
     public function up()
     {
         Schema::create('page_transiations', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('page_id');
             $table->unsignedBigInteger('language_id');
             $table->foreign('page_id')

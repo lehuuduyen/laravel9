@@ -116,7 +116,8 @@
                 },
                 eventContent: function(arg) {
                     var event = arg.event;
-
+                    console.log(event.extendedProps );
+                    
                     var customHtml =
                         `<div class ="VoOe8c BvZth5"  > 
                             <div class ="LuQ1Ve" > 

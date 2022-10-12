@@ -55,7 +55,7 @@
                                                                             </div>
                                                                             <div
                                                                                 class="Input_self__03800786 Input_sizeDefault__03800786 Input_inlineSuffix__03800786 Input_readOnly__03800786">
-                                                                                <input type="hidden" name="items[${countView1}][service_id]" value="${serviceId}">
+                                                                                <input type="hidden" name="items[${countView1}][serviceId]" value="${serviceId}">
                                                                                 <input autocomplete="off"
                                                                                     class="Input_input__03800786 Input_readOnly__03800786 sLSoAL"
                                                                                     data-qa="items[${countView1}]"
