@@ -408,6 +408,9 @@
         .fc-timegrid-slot-lane{
             cursor: cell;
         }
+        .fc-event-resizer{
+            z-index: -1 !important;
+        }
     </style>
     <link rel="stylesheet" type="text/css" href="{{ asset('/calendar/modules.e35b0e935d22574b4b3a.css') }}">
  

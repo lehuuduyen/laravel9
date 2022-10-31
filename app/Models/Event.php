@@ -14,7 +14,10 @@ class Event extends Model
         'start',
         'end',
         "user_id",
-        "appointment_id"
+        "appointment_id",
+        'service_id',
         
     ];
+    
+    
 }

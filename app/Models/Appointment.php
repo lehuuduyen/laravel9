@@ -9,6 +9,8 @@ class Appointment extends Model
 {
     use HasFactory;
     protected $table = 'appointments';
-    protected $fillable = ['customer_id'];
-
+    protected $fillable = ['customer_id','code'];
+    public static function randomCode(){
+        return time().random_int(100000, 999999);
+    }
 }

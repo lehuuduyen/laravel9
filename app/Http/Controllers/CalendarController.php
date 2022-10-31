@@ -35,8 +35,6 @@ class CalendarController extends BaseController
     {
         date_default_timezone_set('UTC');
 
-
-
         switch ($request->type) {
             case 'create':
                 $date = $request->date;
@@ -46,6 +44,7 @@ class CalendarController extends BaseController
                     if(count($request->items) >0){
                         $appointment = Appointment::create([
                             'customer_id' => (isset($request->customer_id))?$request->customer_id:null,
+                            'code' =>Appointment::randomCode()
                         ]);
                         foreach ($request->items as $item) {
                             $start = date('Y/m/d', strtotime($date)) . " " . date("H:i:s", $item['start']);
@@ -58,11 +57,6 @@ class CalendarController extends BaseController
                                 'end' => $end,
                                 'appointment_id' => $appointment->id,
                                 'user_id' => $item['employee'],
-                            ]);
-    
-    
-                            $eventService = Event_service::create([
-                                'event_id' => $event->id,
                                 'service_id' => $item['serviceId'],
                             ]);
     

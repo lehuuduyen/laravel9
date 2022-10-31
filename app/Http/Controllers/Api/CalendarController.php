@@ -20,14 +20,13 @@ class CalendarController extends BaseController
     {   
         $data = [];
         if(isset($request->start)) {  
-            $data = Event::whereDate('start', '>=', $request->start)
-                ->whereDate('end',   '<=', $request->end)
-                ->get(['user_id as resourceId', 'title', 'start', 'end','id']);
+            $data = Event::join('category', 'category.id', '=', 'events.service_id')->join('appointments', 'appointments.id', '=', 'events.appointment_id')->whereDate('events.start', '>=', $request->start)
+                ->whereDate('events.end',   '<=', $request->end)
+                ->get(['events.user_id as resourceId', 'events.title', 'events.start', 'events.end','events.id','category.name','appointments.code']);
             foreach($data as $key => $val){
                 $data[$key]['start'] = date(DATE_ATOM,strtotime($val['start']));
                 $data[$key]['end'] = date(DATE_ATOM,strtotime($val['end']));
                 $data[$key]['color'] = '#a5dff8';
-                $data[$key]['duyenle'] = '#a5dff8';
             }
         }
         return response()->json($data);
@@ -38,7 +37,7 @@ class CalendarController extends BaseController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response    
      */
     public function store(Request $request)
     {

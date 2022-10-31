@@ -25,6 +25,10 @@ class CreateEventsTable extends Migration
             $table->unsignedBigInteger('appointment_id')->nullable();
             $table->foreign('appointment_id')
                 ->references('id')->on('appointments')->onDelete('cascade');
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')
+                ->references('id')->on('category')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
