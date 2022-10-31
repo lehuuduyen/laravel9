@@ -253,7 +253,7 @@
                                 </p>
                             </a>
                         </li>
-                        
+
                         <?php 
                         foreach($page as $value){
                           ?>
@@ -269,34 +269,49 @@
                             </a>
                             <ul class="nav nav-treeview">
 
-                                <li class="nav-item ">
-                                    <a href="/post?post_type={{ $value->slug }}"
-                                        class="nav-link {{ $active == $value->slug && $postActive == 'index' ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-copy"></i>
-                                        <p>
-                                            {{ __('message.list', ['title' => $value->title]) }}
-                                        </p>
-                                    </a>
-                                </li>
-                                <li class="nav-item ">
-                                    <a href="/post/create?post_type={{ $value->slug }}"
-                                        class="nav-link {{ $active == $value->slug && $postActive == 'create' ? 'active' : '' }}">
-                                        <i class="nav-icon fas fa-copy"></i>
-                                        <p>
-                                            Add new
-                                        </p>
-                                    </a>
-                                </li>
-                                @if ($value->is_category == 1)
+{{-- hiển thị chỉ 1 post  --}}
+                                @if ($value->status == 3)
+
                                     <li class="nav-item ">
-                                        <a href="/category?post_type={{ $value->slug }}"
-                                            class="nav-link {{ $active == 'category' . $value->slug ? 'active' : '' }}">
+                                        <a href="/post/create?post_type={{ $value->slug }}"
+                                            class="nav-link {{ $active == $value->slug && $postActive == 'create' ? 'active' : '' }}">
                                             <i class="nav-icon fas fa-copy"></i>
                                             <p>
-                                                Category
+                                                Update
                                             </p>
                                         </a>
                                     </li>
+                                @else
+                                    <li class="nav-item ">
+                                        <a href="/post?post_type={{ $value->slug }}"
+                                            class="nav-link {{ $active == $value->slug && $postActive == 'index' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-copy"></i>
+                                            <p>
+                                                {{ __('message.list', ['title' => $value->title]) }}
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item ">
+                                        <a href="/post/create?post_type={{ $value->slug }}"
+                                            class="nav-link {{ $active == $value->slug && $postActive == 'create' ? 'active' : '' }}">
+                                            <i class="nav-icon fas fa-copy"></i>
+                                            <p>
+                                                Add new
+                                            </p>
+                                        </a>
+                                    </li>
+                                    @if ($value->is_category == 1)
+                                        <li class="nav-item ">
+                                            <a href="/category?post_type={{ $value->slug }}"
+                                                class="nav-link {{ $active == 'category' . $value->slug ? 'active' : '' }}">
+                                                <i class="nav-icon fas fa-copy"></i>
+                                                <p>
+                                                    Category
+                                                </p>
+                                            </a>
+                                        </li>
+                                    @endif
+
                                 @endif
 
 
@@ -510,7 +525,7 @@
         }
 
         @if (session()->has('toast_success'))
-                toastr.success("", "{{ session('toast_success') }}");
+            toastr.success("", "{{ session('toast_success') }}");
         @endif
     </script>
     @yield('javascript')

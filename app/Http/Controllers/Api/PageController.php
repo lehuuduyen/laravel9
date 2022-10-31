@@ -13,6 +13,7 @@ use App\Models\Post;
 use App\Models\Post_meta;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use stdClass;
 
 class PageController extends BaseController
 {
@@ -62,8 +63,10 @@ class PageController extends BaseController
     {
         $data = [];
         try {
+          
+
             //type recruit
-            $pageRecruit = Page::where('slug', 'recruita')->first();
+            $pageRecruit = Page::where('slug', 'recruit')->first();
             $pageRecruitId = "";
             $hamburger_top = [];
             $array = [];
@@ -78,9 +81,9 @@ class PageController extends BaseController
 
             // //type page not recruit and page not category
             if ($pageRecruitId) {
-                $pageNotRecruit = Page::where('id', '!=', $pageRecruit['id'])->get();
+                $pageNotRecruit = Page::where('id', '!=', $pageRecruit['id'])->where('status', '!=', Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST())->get();
             } else {
-                $pageNotRecruit = Page::get();
+                $pageNotRecruit = Page::where('status', '!=', Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST())->get();
             }
 
 
@@ -112,6 +115,30 @@ class PageController extends BaseController
             $data['hamburger_top'] = $hamburger_top;
             //about
             $data['hamburger_foot'] = $hamburger_top;
+            //company info
+            $companyInfo = Page::formatJsonApi('company_info', [], [],['id','logo','name','address','hotline','lat','long','long','facebook','twiter','instagram','linkedin']);
+           
+            
+            $temp = new stdClass;
+            if(!empty($companyInfo)){
+                $temp = [
+                    'logo'=>$companyInfo[0]['logo'],
+                    'name'=>$companyInfo[0]['name'],
+                    'address'=>$companyInfo[0]['address'],
+                    'hotline'=>$companyInfo[0]['hotline'],
+                    'location'=>['lat'=>$companyInfo[0]['lat'],'long'=>$companyInfo[0]['long']],
+                    'social'=>[
+                        'facebook' =>$companyInfo[0]['facebook'],
+                        'twiter' =>$companyInfo[0]['twiter'],
+                        'instagram' =>$companyInfo[0]['instagram'],
+                        'linkedin' =>$companyInfo[0]['linkedin'],
+                    ],
+                ];
+            }
+            $data['company_info'] = $temp;
+
+         
+
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -119,12 +146,17 @@ class PageController extends BaseController
     }
     public function getCategoryBySlug()
     {
-        $slug = $_GET['slug'];
-
-
-        $data = [];
+        
         try {
             //type recruit
+            $data = [];
+
+            if(!isset( $_GET['slug'])){
+                throw new \Exception("Missing param slug");
+            }
+            $slug = $_GET['slug'];
+
+
             $page = Page::where('slug', $slug)->where('is_category', Category::CATEGORY_ACTIVE())->first();
 
             if ($page) {

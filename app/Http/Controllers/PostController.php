@@ -50,9 +50,12 @@ class PostController extends BaseController
     public function create()
     {
         $pageModel = new Page();
-
+        $listPost = Post::first();
+        
         $getPage = $this->getPage();
-
+        if($listPost){
+            return redirect("/post/".$listPost['id']."/edit?post_type=".$getPage['slug'])->with('success', 'Thêm thành công');
+        }
         $getAllCategory = $this->getAllCategory();
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
 
@@ -130,8 +133,6 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-            
-            
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
@@ -143,14 +144,14 @@ class PostController extends BaseController
             $post = Post::create(
                 ['slug' => $slug, 'page_id' => $getPage->id]
             );
-
+            $postId = $post->id;
             //image
             if (isset($request['image'])) {
                 foreach ($request['image'] as $configDetailId => $files) {
                     foreach ($files as $key => $file) {
                         Post_meta::create(
                             [
-                                'post_id' => $post->id,
+                                'post_id' => $postId,
                                 'config_detail_field_id' => $configDetailId,
                                 'language_id' => 1,
                                 'meta_key' => $key,
@@ -167,7 +168,7 @@ class PostController extends BaseController
 
                         $postMeta = Post_meta::create(
                             [
-                                'post_id' => $post->id,
+                                'post_id' => $postId,
                                 'config_detail_field_id' => $configDetailId,
                                 'language_id' => $languge_id,
                                 'meta_key' => key($value),
@@ -184,7 +185,7 @@ class PostController extends BaseController
                 foreach ($data['categories'] as $category) {
                     $postCategory = Post_category::create(
                         [
-                            'post_id' => $post->id,
+                            'post_id' => $postId,
                             'category_id' => $category,
                         ]
                     );
@@ -198,7 +199,7 @@ class PostController extends BaseController
 
             return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
         }
-        return Redirect::back()->with('success', 'Thêm thành công');
+        return redirect("/post/$postId/edit?post_type=".$getPage['slug'])->with('success', 'Thêm thành công');
     }
     public function update(Request  $request, $id)
     {

@@ -96,7 +96,7 @@ class BaseController extends Controller
 
 
         $listSlugCategory = [];
-        $page = Page::with('page_transiation')->where('status', 1)->get();
+        $page = Page::with('page_transiation')->whereIn('status', [Page::_STATUS_ACTIVE_MENU(),Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST()])->get();
 
 
         $param['page'] = $page;
@@ -127,7 +127,7 @@ class BaseController extends Controller
     {
         if (isset($_GET['post_type'])) {
             $slug = $_GET['post_type'];
-            $getPage = Page::with('page_transiation')->where('slug', $slug)->where('status', 1)->first();
+            $getPage = Page::with('page_transiation')->where('slug', $slug)->whereIn('status', [Page::_STATUS_ACTIVE_MENU(),Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST()])->first();
 
             if ($getPage) {
                 $getPage['title'] = $getPage['page_transiation']['title'];

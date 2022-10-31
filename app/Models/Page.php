@@ -11,7 +11,18 @@ class Page extends Model
     protected $table = 'page';
     protected $fillable = ['name', 'img_sp', 'img_pc', 'slug', 'status','is_category'];
     public $_ENGLISH = 1;
+
     
+    public static function _STATUS_ACTIVE_MENU (){
+        return 1;
+    }
+    public static function _STATUS_NO_ACTIVE_MENU (){
+        return 2;
+    }  
+    public static function _STATUS_ACTIVE_MENU_ONLY_ONE_POST (){
+        return 3;
+    } 
+
     public function page_transiation()
     {
         $languageId = getLanguageId();
@@ -61,6 +72,7 @@ class Page extends Model
                     $value = Post_meta::get_post_meta($post->id, $keyPostMeta);  
                     $list[$keyPostMeta]= $value;
                 }
+
                 $list['created_date']= date('Y-m-d H:i:s', strtotime($post->created_at));
                 $list['updated_date']= date('Y-m-d H:i:s', strtotime($post->updated_at));
                 $list['slug']= $post->slug;

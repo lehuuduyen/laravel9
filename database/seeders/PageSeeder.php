@@ -22,60 +22,83 @@ class PageSeeder extends Seeder
             'id' => 1,
             'slug' => "banner_top",
             'status' => 2,
+            'is_category'=>2
+
 
         ],
         [
             'id' => 2,
-            'slug' => "about",
+            'slug' => "company",
             'status' => 2,
+            'is_category'=>1
+
 
         ],
         [
             'id' => 3,
             'slug' => "services",
             'status' => 1,
+            'is_category'=>1
 
         ],
         [
             'id' => 4,
             'slug' => "strengths",
             'status' => 1,
+            'is_category'=>1
 
         ],
         [
             'id' => 5,
             'slug' => "works",
             'status' => 1,
+            'is_category'=>1
 
         ],
         [
             'id' => 6,
             'slug' => "news",
             'status' => 1,
+            'is_category'=>1
 
         ],
         [
             'id' => 7,
             'slug' => "recruit",
             'status' => 1,
+            'is_category'=>2
 
         ],
         [
             'id' => 8,
             'slug' => "contact",
-            'status' => 1,
+            'status' => 2,
+            'is_category'=>2
+
 
         ],
         [
             'id' => 9,
             'slug' => "security_policy",
             'status' => 2,
+            'is_category'=>2
+
 
         ],
         [
             'id' => 10,
             'slug' => "privacy_policy",
             'status' => 2,
+            'is_category'=>2
+
+
+        ]
+        ,
+        [
+            'id' => 11,
+            'slug' => "company_info",
+            'status' => 3,
+            'is_category'=>2
 
         ]
         

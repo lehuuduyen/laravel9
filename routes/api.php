@@ -29,8 +29,16 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('/info', 'App\Http\Controllers\Api\PageController@info');
     Route::get('/get_category', 'App\Http\Controllers\Api\PageController@getCategoryBySlug');
     Route::get('/get_page', 'App\Http\Controllers\Api\PageController@getPageBySlug');
-    Route::get('/get_recruit', 'App\Http\Controllers\Api\PageController@getRecruit');
+    Route::get('/recruit', 'App\Http\Controllers\Api\PageController@getRecruit');
 });
 
-
-
+// Top
+// param: language VVVV
+// info
+// param: language VVVV
+// category
+// param: language, slug
+// page
+// param: language, slug
+// recruit
+// param: language

@@ -44,6 +44,8 @@
                                     value="1">Active</option>
                                 <option {{ isset($getPage->status) && $getPage->status == 2 ? 'selected' : '' }}
                                     value="2">Unactive</option>
+                                <option {{ isset($getPage->status) && $getPage->status == 3 ? 'selected' : '' }}
+                                    value="3">Active Only One Post</option>
                             </select>
 
                         </div>
@@ -54,6 +56,7 @@
                                     value="1">Active</option>
                                 <option {{ isset($getPage->status) && $getPage->is_category == 2 ? 'selected' : '' }}
                                     value="2">Unactive</option>
+                                    
                             </select>
 
                         </div>

@@ -166,8 +166,14 @@
                         <div class="tab-content">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Slug</label>
-                                <input type="text" class="form-control" name="slug" placeholder="Enter slug"
-                                    value="{{ isset($postDetail) ? $postDetail['slug'] : '' }}">
+                                @if ($getPage['status'] == 3)
+                                <input type="text" class="form-control" style="pointer-events:none;background:#e9ecef;" name="slug" placeholder="Enter slug"
+                                    value="{{ $getPage['slug']}}">
+                                @else
+                                    <input type="text" class="form-control" name="slug" placeholder="Enter slug"
+                                        value="{{ isset($postDetail) ? $postDetail['slug'] : '' }}">
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -237,18 +243,18 @@
                     <div class="card-body">
                         @php
                             $tags = explode(',', $value['tags']);
-                            $listMetaValue = ($meta_value !="")?json_decode($meta_value):[];
-                           
+                            $listMetaValue = $meta_value != '' ? json_decode($meta_value) : [];
                             
                         @endphp
                         @foreach ($tags as $tag)
                             @php
-                                $checked = (in_array($tag,$listMetaValue))? "checked":"";
+                                $checked = in_array($tag, $listMetaValue) ? 'checked' : '';
                             @endphp
                             <div class="form-check">
                                 <input {{ $checked }} class="form-check-input" type="checkbox"
                                     name="checkbox[{{ $value['id'] }}][{{ $value['key'] }}][]"
                                     value="{{ $tag }}">
+
                                 <label class="form-check-label"> {{ $tag }} </label>
                             </div>
                         @endforeach

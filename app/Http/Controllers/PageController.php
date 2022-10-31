@@ -102,6 +102,7 @@ class PageController extends BaseController
             DB::rollback();
             return $this->returnJson('', $e->getMessage(), false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+        
         return $this->returnJson($page, 'Create page success');
     }
     public function update(Request  $request, $id)

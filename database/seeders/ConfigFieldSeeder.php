@@ -21,19 +21,11 @@ class ConfigFieldSeeder extends Seeder
         $Config_field = [
             [
                 'id' => 1,
-                'title' => "Field services",
+                'title' => "Field company | service | work | news",
             ],
             [
                 'id' => 2,
-                'title' => "Field news",
-            ],
-            [
-                'id' => 3,
-                'title' => "Field works",
-            ],
-            [
-                'id' => 4,
-                'title' => "Field strengths",
+                'title' => "Field company info",
             ],
         ];
         Config_field::insert($Config_field);
