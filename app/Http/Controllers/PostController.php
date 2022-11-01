@@ -49,19 +49,20 @@ class PostController extends BaseController
     }
     public function create()
     {
-        $pageModel = new Page();
-        $listPost = Post::first();
-        
+
         $getPage = $this->getPage();
-        if($listPost){
-            return redirect("/post/".$listPost['id']."/edit?post_type=".$getPage['slug'])->with('success', 'Thêm thành công');
+
+        $listPost = Post::where('page_id', $getPage['id'])->first();
+
+        if ($listPost && $getPage['status'] == Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST()) {
+            return redirect("/post/" . $listPost['id'] . "/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
         }
         $getAllCategory = $this->getAllCategory();
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
 
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
-        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1,2,4])->where('language_id', getLanguageId())->get();
-        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [3,5,6,7])->where('language_id', getLanguageId())->get();
+        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2, 4])->where('language_id', getLanguageId())->get();
+        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [3, 5, 6, 7])->where('language_id', getLanguageId())->get();
 
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
@@ -82,11 +83,11 @@ class PostController extends BaseController
 
         $getPage = $this->getPage();
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
-        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id',getLanguageId())->get();
+        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', getLanguageId())->get();
         $postDetail = Post::with('post_meta')->find($id);
         $getAllCategory = $this->getAllCategory();
         $getCategoryByPost = Post_category::where('post_id', $id)->pluck('category_id')->toArray();
-      
+
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory, $getCategoryByPost);
         foreach ($listDetailField as $key => $detailField) {
             $listDetailField[$key]['value'] = "";
@@ -113,8 +114,8 @@ class PostController extends BaseController
                 $listDetailFieldNotLanguage[] = $listDetailField[$key];
             }
         }
-  
-        
+
+
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
             'activeUL' => $_GET['post_type'],
@@ -199,7 +200,7 @@ class PostController extends BaseController
 
             return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
         }
-        return redirect("/post/$postId/edit?post_type=".$getPage['slug'])->with('success', 'Thêm thành công');
+        return redirect("/post/$postId/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
     }
     public function update(Request  $request, $id)
     {
@@ -207,13 +208,13 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-            
+
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
 
             // check slug
-            $slug = $this->isSlugPost($data['slug'],$id);
+            $slug = $this->isSlugPost($data['slug'], $id);
             $slug = $this->_SLUG;
             // update post
             $post = Post::find($id)->update(
@@ -254,7 +255,7 @@ class PostController extends BaseController
                     }
                 }
             }
-        
+
             if (isset($data['radio'])) {
                 foreach ($data['radio'] as $configDetailId =>  $radio) {
                     foreach ($radio as $key => $value) {
@@ -262,7 +263,7 @@ class PostController extends BaseController
                             [
                                 'post_id' => $id,
                                 'config_detail_field_id' => $configDetailId,
-                                'language_id' =>1,
+                                'language_id' => 1,
                                 'meta_key' => $key,
                                 'meta_value' => $value,
                             ]
@@ -277,7 +278,7 @@ class PostController extends BaseController
                             [
                                 'post_id' => $id,
                                 'config_detail_field_id' => $configDetailId,
-                                'language_id' =>1,
+                                'language_id' => 1,
                                 'meta_key' => $key,
                                 'meta_value' => $value,
                             ]
@@ -288,14 +289,14 @@ class PostController extends BaseController
             if (isset($data['checkbox'])) {
                 foreach ($data['checkbox'] as $configDetailId =>  $checkbox) {
                     foreach ($checkbox as $value) {
-                        
-                        
-                        
+
+
+
                         $postMeta = Post_meta::create(
                             [
                                 'post_id' => $id,
                                 'config_detail_field_id' => $configDetailId,
-                                'language_id' =>1,
+                                'language_id' => 1,
                                 'meta_key' => key($value),
                                 'meta_value' => json_encode($value),
                             ]
@@ -308,7 +309,7 @@ class PostController extends BaseController
             DB::table('post_category')->where('post_id', $id)->delete();
             //them category
             if (isset($data['categories'])) {
-               
+
                 foreach ($data['categories'] as $categoryId) {
                     $postCategory = Post_category::create(
                         [
@@ -316,7 +317,6 @@ class PostController extends BaseController
                             'category_id' => $categoryId,
                         ]
                     );
-                    
                 }
             }
             // Commit the queries!
@@ -328,7 +328,7 @@ class PostController extends BaseController
         }
         return Redirect::back()->with('success', 'Update thành công');
     }
-    public function isSlugPost($slug,$postId="")
+    public function isSlugPost($slug, $postId = "")
     {
 
         $post = Post::where('slug', $slug)->first();

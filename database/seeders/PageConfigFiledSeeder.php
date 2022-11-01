@@ -45,6 +45,11 @@ class PageConfigFiledSeeder extends Seeder
             'page_id' => 11, //campany_info
             'config_field_id' => 2,
 
+        ],[
+            'id' => 6,
+            'page_id' => 7, //resuit
+            'config_field_id' => 1,
+
         ],
         
     ];

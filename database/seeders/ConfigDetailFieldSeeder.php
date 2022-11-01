@@ -125,7 +125,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'language_id' => 1,
                 'title' => "Description Full",
                 'key' => "description_full",
-                'type' => 1,
+                'type' => 4,
             ],
             [
                 'id' => 14,
@@ -133,7 +133,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'language_id' => 2,
                 'title' => "Description Full",
                 'key' => "description_full",
-                'type' => 1,
+                'type' => 4,
             ],
             [
                 'id' => 15,

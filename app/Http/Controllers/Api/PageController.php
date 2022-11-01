@@ -155,10 +155,8 @@ class PageController extends BaseController
                 throw new \Exception("Missing param slug");
             }
             $slug = $_GET['slug'];
-
-
             $page = Page::where('slug', $slug)->where('is_category', Category::CATEGORY_ACTIVE())->first();
-
+            
             if ($page) {
                 $data['title'] = $page['page_transiation']['title'];
                 $data['slug'] = $page['slug'];
@@ -185,10 +183,40 @@ class PageController extends BaseController
         }
         return $this->returnJson($data, 'Data found');
     }
+    public function itemDetail()
+    {
+
+        try {
+            // theo getCategoryBySlug
+            $data = [];
+
+            if (!isset($_GET['slug'])) {
+                throw new \Exception("Missing param slug");
+            }
+            $slug = $_GET['slug'];
+            $post = Post::where('slug', $slug)->first();
+            if ($post) {
+                $data['title'] =  Post_meta::get_post_meta($post->id, 'title');
+                $data['slug'] = $slug;
+                $data['sub_title'] = Post_meta::get_post_meta($post->id, 'sub_title');
+                $data['img_sp'] =  Post_meta::get_post_meta($post->id, 'img_sp');
+                $data['img_pc'] =  Post_meta::get_post_meta($post->id, 'img_pc');
+                $data['description_sort'] = Post_meta::get_post_meta($post->id, 'description_sort');
+                $data['description_full'] = Post_meta::get_post_meta($post->id, 'description_full');
+            }
+
+
+        } catch (\Exception $e) {
+            return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $this->returnJson($data, 'Data found');
+    }
     public function getPageBySlug()
     {
+        if(!isset( $_GET['slug'])){
+            throw new \Exception("Missing param slug");
+        }
         $slug = $_GET['slug'];
-
 
         $data = [];
         try {
@@ -217,6 +245,7 @@ class PageController extends BaseController
 
         $data = [];
         try {
+            
             //type recruit
             $page = Page::where('slug',  $this->_slugRecruit)->where('is_category', Category::CATEGORY_ACTIVE())->first();
             if ($page) {
@@ -236,6 +265,42 @@ class PageController extends BaseController
         }
         return $this->returnJson($data, 'Data found');
     }
+    public function getRecruitDetail()
+    {
+        
+        try {
+            //type recruit
+            $data = [];
+
+            if(!isset( $_GET['slug'])){
+                throw new \Exception("Missing param slug");
+            }
+            $slug = $_GET['slug'];
+            $page = Page::where('slug',  $this->_slugRecruit)->where('is_category', Category::CATEGORY_ACTIVE())->first();
+            
+            if ($page) {
+                $post = Post::where('slug', $slug)->first() ;
+                if($post){
+                    $data['title'] =  Post_meta::get_post_meta($post->id, 'title');
+                    $data['slug'] =$slug;
+                    $data['sub_title'] = Post_meta::get_post_meta($post->id, 'sub_title');
+                    $data['img_sp'] =  Post_meta::get_post_meta($post->id, 'img_sp');
+                    $data['img_pc'] =  Post_meta::get_post_meta($post->id, 'img_pc');
+                    $data['description_sort'] = Post_meta::get_post_meta($post->id, 'description_sort');
+                    $data['description_full'] = Post_meta::get_post_meta($post->id, 'description_full');
+                }
+                
+            } 
+
+            // //type page not recruit and page not category
+
+
+        } catch (\Exception $e) {
+            return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $this->returnJson($data, 'Data found');
+    }
+    
     /**
      * Store a newly created resource in storage.
      *

@@ -66,7 +66,7 @@ class PageSeeder extends Seeder
             'id' => 7,
             'slug' => "recruit",
             'status' => 1,
-            'is_category'=>2
+            'is_category'=>1
 
         ],
         [
