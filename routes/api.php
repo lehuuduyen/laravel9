@@ -34,13 +34,3 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('/recruit_detail', 'App\Http\Controllers\Api\PageController@getRecruitDetail');
 });
 
-// Top
-// param: language VVVV
-// info
-// param: language VVVV
-// category
-// param: language, slug  VVVV
-// page
-// param: language, slug VVVV
-// recruit
-// param: language VVVV

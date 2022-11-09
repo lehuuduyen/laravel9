@@ -36,7 +36,7 @@ class PageSeeder extends Seeder
         ],
         [
             'id' => 3,
-            'slug' => "services",
+            'slug' => "service",
             'status' => 1,
             'is_category'=>1
 
@@ -79,7 +79,7 @@ class PageSeeder extends Seeder
         ],
         [
             'id' => 9,
-            'slug' => "security_policy",
+            'slug' => "security",
             'status' => 2,
             'is_category'=>2
 
@@ -87,7 +87,7 @@ class PageSeeder extends Seeder
         ],
         [
             'id' => 10,
-            'slug' => "privacy_policy",
+            'slug' => "privacy",
             'status' => 2,
             'is_category'=>2
 

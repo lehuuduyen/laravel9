@@ -313,6 +313,22 @@ class ConfigDetailFieldSeeder extends Seeder
                 'key' => "linkedin",
                 'type' => 1,
             ],
+            [
+                'id' => 37,
+                'config_field_id' => 2,
+                'language_id' => 1,
+                'title' => "Working Time",
+                'key' => "working_time",
+                'type' => 1,
+            ],
+            [
+                'id' => 38,
+                'config_field_id' => 2,
+                'language_id' => 2,
+                'title' => "Working Time",
+                'key' => "working_time",
+                'type' => 1,
+            ],
         ];
         Config_detail_field::insert($Config_detail_field);
         // \App\Models\Language::factory()->count(30)->create();

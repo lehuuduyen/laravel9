@@ -17,9 +17,11 @@ class BaseController extends Controller
 {
     public $_html = "";
     public $_stt = 0;
-    public $_POST_TYPE_PAGE = "page";
-    public $_POST_TYPE_CATEGORY = "category";
-    public $_POST_TYPE_RECRUIT = "recruit";
+    // public $_POST_TYPE_PAGE = "page";
+    // public $_POST_TYPE_CATEGORY = "category";
+    // public $_POST_TYPE_RECRUIT = "recruit";
+    // public $_POST_TYPE_COMPANY = "company";
+    // public $_POST_TYPE_TOP = "top";
     public function htmlRecursiveCategory($getAllCategory=[],$getCategoryByPost = [])
     {
         $html =  "";

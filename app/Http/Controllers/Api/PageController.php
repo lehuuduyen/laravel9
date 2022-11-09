@@ -17,7 +17,7 @@ use stdClass;
 
 class PageController extends BaseController
 {
-        
+
     public $_slugRecruit = "recruit";
 
     /**
@@ -47,7 +47,7 @@ class PageController extends BaseController
             //about
             $data['about'] = Page::formatJsonApi('about', ['slug'], ['title', 'excerpt', 'sub_title']);
             //services
-            $data['services'] = Page::formatJsonApi('services', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_pc', 'img_sp']);
+            $data['services'] = Page::formatJsonApi('service', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_pc', 'img_sp']);
             //strengths
             $data['strengths'] = Page::formatJsonApi('strengths', [], [], ['title', 'excerpt', 'sub_title']);
             // works
@@ -59,86 +59,76 @@ class PageController extends BaseController
         }
         return $this->returnJson($data, 'Data found');
     }
+    public function formatInfo($slug, $hamburger_top)
+    {
+        $pageCompany = Page::where('slug', $slug)->first();
+        $array = [];
+        if ($pageCompany) {
+            $array['title'] = strtoupper($pageCompany['slug']);
+            $array['slug'] = $pageCompany['slug'];
+            $array['sub_title'] = $pageCompany['page_transiation']['sub_title'];
+            // $array['type'] = $this->_POST_TYPE_RECRUIT;
+            array_push($hamburger_top, $array);
+        }
+        return $hamburger_top;
+    }
     public function info()
     {
         $data = [];
+        $hamburger_top = [];
+        $hamburger_foot = [];
         try {
-          
+            // type top
+            $array['title'] = "TOP";
+            $array['slug'] = "/";
+            $array['sub_title'] = "トップページ";
+            $array['type'] = $this->_POST_TYPE_TOP;
+            array_push($hamburger_top, $array);
 
+            //type company
+            $hamburger_top = $this->formatInfo('company', $hamburger_top);
+            //type service
+            $hamburger_top = $this->formatInfo('service', $hamburger_top);
+            //type works
+            $hamburger_top = $this->formatInfo('works', $hamburger_top);
+            //type news
+            $hamburger_top = $this->formatInfo('news', $hamburger_top);
             //type recruit
-            $pageRecruit = Page::where('slug', 'recruit')->first();
-            $pageRecruitId = "";
-            $hamburger_top = [];
-            $array = [];
-            if ($pageRecruit) {
-                $pageRecruitId = $pageRecruit['id'];
-                $array['title'] = $pageRecruit['page_transiation']['title'];
-                $array['slug'] = $pageRecruit['slug'];
-                $array['sub_title'] = $pageRecruit['page_transiation']['sub_title'];
-                $array['type'] = $this->_POST_TYPE_RECRUIT;
-                array_push($hamburger_top, $array);
-            }
+            $hamburger_top = $this->formatInfo('recruit', $hamburger_top);
+            //type contact
+            $hamburger_top = $this->formatInfo('contact', $hamburger_top);
 
-            // //type page not recruit and page not category
-            if ($pageRecruitId) {
-                $pageNotRecruit = Page::where('id', '!=', $pageRecruit['id'])->where('status', '!=', Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST())->get();
-            } else {
-                $pageNotRecruit = Page::where('status', '!=', Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST())->get();
-            }
-
-
-
-            foreach ($pageNotRecruit as $key => $page) {
-                $temp = [];
-                $temp['title'] = $page['page_transiation']['title'];
-                $temp['slug'] = $page['slug'];
-                $temp['sub_title'] = $page['page_transiation']['sub_title'];
-                if ($page['is_category'] == 1) {
-                    $temp['type'] = $this->_POST_TYPE_CATEGORY;
-                } else {
-                    $temp['type'] = $this->_POST_TYPE_PAGE;
-                }
-                array_push($hamburger_top, $temp);
-            }
-            // //list category
-            $categories = Category::with('category_transiation_by_language')->get();
-
-
-            foreach ($categories as $key => $category) {
-                $temp = [];
-                $temp['title'] = $category['category_transiation_by_language']['title'];
-                $temp['slug'] = $category['slug'];
-                $temp['sub_title'] = $category['category_transiation_by_language']['sub_title'];
-                $temp['type'] = $this->_POST_TYPE_CATEGORY;
-                array_push($hamburger_top, $temp);
-            }
             $data['hamburger_top'] = $hamburger_top;
-            //about
-            $data['hamburger_foot'] = $hamburger_top;
-            //company info
-            $companyInfo = Page::formatJsonApi('company_info', [], [],['id','logo','name','address','hotline','lat','long','long','facebook','twiter','instagram','linkedin']);
-           
+            //security
             
+            $hamburger_foot = $this->formatInfo('security', $hamburger_foot);
+            //privacy
+
+            $hamburger_foot = $this->formatInfo('privacy', $hamburger_foot);
+
+            $data['hamburger_foot'] = $hamburger_foot;
+            //company info
+            $companyInfo = Page::formatJsonApi('company_info', [], [], ['id', 'logo', 'name', 'address', 'hotline', 'lat', 'long', 'long', 'facebook', 'twiter', 'instagram', 'linkedin']);
+
+
             $temp = new stdClass;
-            if(!empty($companyInfo)){
+            if (!empty($companyInfo)) {
                 $temp = [
-                    'logo'=>$companyInfo[0]['logo'],
-                    'name'=>$companyInfo[0]['name'],
-                    'address'=>$companyInfo[0]['address'],
-                    'hotline'=>$companyInfo[0]['hotline'],
-                    'location'=>['lat'=>$companyInfo[0]['lat'],'long'=>$companyInfo[0]['long']],
-                    'social'=>[
-                        'facebook' =>$companyInfo[0]['facebook'],
-                        'twiter' =>$companyInfo[0]['twiter'],
-                        'instagram' =>$companyInfo[0]['instagram'],
-                        'linkedin' =>$companyInfo[0]['linkedin'],
+                    'logo' => $companyInfo[0]['logo'],
+                    'name' => $companyInfo[0]['name'],
+                    'address' => $companyInfo[0]['address'],
+                    'hotline' => $companyInfo[0]['hotline'],
+                    'working_time' => $companyInfo[0]['working_time'],
+                    'location' => ['lat' => $companyInfo[0]['lat'], 'long' => $companyInfo[0]['long']],
+                    'social' => [
+                        'facebook' => $companyInfo[0]['facebook'],
+                        'twiter' => $companyInfo[0]['twiter'],
+                        'instagram' => $companyInfo[0]['instagram'],
+                        'linkedin' => $companyInfo[0]['linkedin'],
                     ],
                 ];
             }
             $data['company_info'] = $temp;
-
-         
-
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -146,17 +136,17 @@ class PageController extends BaseController
     }
     public function getCategoryBySlug()
     {
-        
+
         try {
             //type recruit
             $data = [];
 
-            if(!isset( $_GET['slug'])){
+            if (!isset($_GET['slug'])) {
                 throw new \Exception("Missing param slug");
             }
             $slug = $_GET['slug'];
             $page = Page::where('slug', $slug)->where('is_category', Category::CATEGORY_ACTIVE())->first();
-            
+
             if ($page) {
                 $data['title'] = $page['page_transiation']['title'];
                 $data['slug'] = $page['slug'];
@@ -171,7 +161,7 @@ class PageController extends BaseController
                     $data['slug'] = $categorie['slug'];
                     $data['sub_title'] = $categorie['category_transiation_by_language']['sub_title'];
                     $data['description'] = $categorie['category_transiation_by_language']['description'];
-                    $data['list'] = Category::getPostByCategory($categorie['id'],['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full', 'design_type']);
+                    $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full', 'design_type']);
                 }
             }
 
@@ -204,8 +194,6 @@ class PageController extends BaseController
                 $data['description_sort'] = Post_meta::get_post_meta($post->id, 'description_sort');
                 $data['description_full'] = Post_meta::get_post_meta($post->id, 'description_full');
             }
-
-
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -213,7 +201,7 @@ class PageController extends BaseController
     }
     public function getPageBySlug()
     {
-        if(!isset( $_GET['slug'])){
+        if (!isset($_GET['slug'])) {
             throw new \Exception("Missing param slug");
         }
         $slug = $_GET['slug'];
@@ -228,7 +216,7 @@ class PageController extends BaseController
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
                 $data['description'] = $page['page_transiation']['description'];
-            } else{
+            } else {
                 return $this->returnJson($data, 'Data not found');
             }
 
@@ -245,7 +233,7 @@ class PageController extends BaseController
 
         $data = [];
         try {
-            
+
             //type recruit
             $page = Page::where('slug',  $this->_slugRecruit)->where('is_category', Category::CATEGORY_ACTIVE())->first();
             if ($page) {
@@ -255,7 +243,7 @@ class PageController extends BaseController
                 $data['description'] = $page['page_transiation']['description'];
                 $list = Page::formatJsonApi($this->_slugRecruit, [], [], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full', 'design_type']);
                 $data['list'] = $list;
-            } 
+            }
 
             // //type page not recruit and page not category
 
@@ -267,30 +255,29 @@ class PageController extends BaseController
     }
     public function getRecruitDetail()
     {
-        
+
         try {
             //type recruit
             $data = [];
 
-            if(!isset( $_GET['slug'])){
+            if (!isset($_GET['slug'])) {
                 throw new \Exception("Missing param slug");
             }
             $slug = $_GET['slug'];
             $page = Page::where('slug',  $this->_slugRecruit)->where('is_category', Category::CATEGORY_ACTIVE())->first();
-            
+
             if ($page) {
-                $post = Post::where('slug', $slug)->first() ;
-                if($post){
+                $post = Post::where('slug', $slug)->first();
+                if ($post) {
                     $data['title'] =  Post_meta::get_post_meta($post->id, 'title');
-                    $data['slug'] =$slug;
+                    $data['slug'] = $slug;
                     $data['sub_title'] = Post_meta::get_post_meta($post->id, 'sub_title');
                     $data['img_sp'] =  Post_meta::get_post_meta($post->id, 'img_sp');
                     $data['img_pc'] =  Post_meta::get_post_meta($post->id, 'img_pc');
                     $data['description_sort'] = Post_meta::get_post_meta($post->id, 'description_sort');
                     $data['description_full'] = Post_meta::get_post_meta($post->id, 'description_full');
                 }
-                
-            } 
+            }
 
             // //type page not recruit and page not category
 
@@ -300,7 +287,7 @@ class PageController extends BaseController
         }
         return $this->returnJson($data, 'Data found');
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
