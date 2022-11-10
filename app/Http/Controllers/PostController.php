@@ -82,9 +82,13 @@ class PostController extends BaseController
         $listDetailFieldNotLanguage = [];
 
         $getPage = $this->getPage();
+        
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
         $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', getLanguageId())->get();
         $postDetail = Post::with('post_meta')->find($id);
+        if(!$postDetail){
+            return $this->error("Empty", "Page not exists");
+        }
         $getAllCategory = $this->getAllCategory();
         $getCategoryByPost = Post_category::where('post_id', $id)->pluck('category_id')->toArray();
 

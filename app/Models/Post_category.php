@@ -10,5 +10,8 @@ class Post_category extends Model
     use HasFactory;
     protected $table = 'post_category';
     protected $fillable = ['post_id','category_id'];
-   
+    public function nameCategory(){
+        return $this->hasOne(Category::class,'id','category_id');
+        
+    }
 }

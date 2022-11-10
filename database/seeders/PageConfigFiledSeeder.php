@@ -37,7 +37,7 @@ class PageConfigFiledSeeder extends Seeder
         [
             'id' => 4,
             'page_id' => 4, //strength
-            'config_field_id' => 1,
+            'config_field_id' => 3,
 
         ],
         [

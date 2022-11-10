@@ -21,7 +21,6 @@ class ConfigDetailFieldSeeder extends Seeder
     {
         $Config_detail_field = [
             [
-                //service
                 'id' => 1,
                 'config_field_id' => 1,
                 'language_id' => 1,
@@ -77,7 +76,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'key' => "img_pc",
                 'type' => 3,
             ],
-          
+
             [
                 'id' => 8,
                 'config_field_id' => 1,
@@ -329,6 +328,191 @@ class ConfigDetailFieldSeeder extends Seeder
                 'key' => "working_time",
                 'type' => 1,
             ],
+            [
+                'id' => 39,
+                'config_field_id' => 1,
+                'language_id' => 1,
+                'title' => "Vector Image",
+                'key' => "img_vector",
+                'type' => 3,
+            ],
+            [
+                'id' => 40,
+                'config_field_id' => 1,
+                'language_id' => 2,
+                'title' => "Vector Image jp",
+                'key' => "img_vector",
+                'type' => 3,
+            ],
+
+
+
+
+
+
+            [
+                'id' => 41,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Title",
+                'key' => "title",
+                'type' => 1,
+            ],
+
+            [
+                'id' => 42,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Excerpt",
+                'key' => "excerpt",
+                'type' => 2,
+            ],
+
+            [
+                'id' => 43,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Image PC",
+                'key' => "img_pc",
+                'type' => 3,
+            ],
+
+            [
+                'id' => 44,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Image SP",
+                'key' => "img_sp",
+                'type' => 3,
+            ],
+
+            [
+                'id' => 45,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Title jp",
+                'key' => "title",
+                'type' => 1,
+            ],
+
+            [
+                'id' => 46,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Excerpt jp",
+                'key' => "excerpt",
+                'type' => 2,
+            ],
+
+            [
+                'id' => 47,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Image PC Jp",
+                'key' => "img_pc",
+                'type' => 3,
+            ],
+
+            [
+                'id' => 48,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Image SP Jp",
+                'key' => "img_sp",
+                'type' => 3,
+            ],
+
+            [
+                'id' => 49,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Sub Title",
+                'key' => "sub_title",
+                'type' => 1,
+            ],
+
+            [
+                'id' => 50,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Sub Title",
+                'key' => "sub_title",
+                'type' => 1,
+            ],
+
+            [
+                'id' => 51,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Description Sort",
+                'key' => "description_sort",
+                'type' => 4,
+            ],
+
+            [
+                'id' => 52,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Description Sort",
+                'key' => "description_sort",
+                'type' => 4,
+            ],
+
+            [
+                'id' => 53,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Description Full",
+                'key' => "description_full",
+                'type' => 4,
+            ],
+
+            [
+                'id' => 54,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Description Full",
+                'key' => "description_full",
+                'type' => 4,
+            ],
+
+            [
+                'id' => 55,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Design Type",
+                'key' => "design_type",
+                'type' => 1,
+            ],
+
+            [
+                'id' => 56,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Design Type",
+                'key' => "design_type",
+                'type' => 1,
+            ],
+
+            [
+                'id' => 57,
+                'config_field_id' => 3,
+                'language_id' => 1,
+                'title' => "Icon",
+                'key' => "img",
+                'type' => 3,
+            ],
+
+            [
+                'id' => 58,
+                'config_field_id' => 3,
+                'language_id' => 2,
+                'title' => "Icon jp",
+                'key' => "img",
+                'type' => 3,
+            ],
+
+
         ];
         Config_detail_field::insert($Config_detail_field);
         // \App\Models\Language::factory()->count(30)->create();

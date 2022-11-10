@@ -45,15 +45,15 @@ class PageController extends BaseController
             //banner top
             $data['banner_top'] = Page::formatJsonApi('banner_top', ['img_pc', 'img_sp', 'slug'], ['title', 'excerpt']);
             //about
-            $data['about'] = Page::formatJsonApi('about', ['slug'], ['title', 'excerpt', 'sub_title']);
+            $data['about'] = Page::formatJsonApi('company', ['slug','img_pc', 'img_sp'], ['title', 'excerpt', 'sub_title']);
             //services
-            $data['services'] = Page::formatJsonApi('service', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_pc', 'img_sp']);
+            $data['services'] = Page::formatJsonApi('service', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_vector']);
             //strengths
-            $data['strengths'] = Page::formatJsonApi('strengths', [], [], ['title', 'excerpt', 'sub_title']);
+            $data['strengths'] = Page::formatJsonApi('strengths', ['slug'], ['title','excerpt','sub_title'], ['title', 'excerpt',  'img']);
             // works
             $data['works'] = Page::formatJsonApi('works', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_pc', 'img_sp']);
             // news
-            $data['news'] = Page::formatJsonApi('news', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt']);
+            $data['news'] = Page::formatJsonApi('news', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt','category'],true);
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -67,7 +67,6 @@ class PageController extends BaseController
             $array['title'] = strtoupper($pageCompany['slug']);
             $array['slug'] = $pageCompany['slug'];
             $array['sub_title'] = $pageCompany['page_transiation']['sub_title'];
-            // $array['type'] = $this->_POST_TYPE_RECRUIT;
             array_push($hamburger_top, $array);
         }
         return $hamburger_top;
@@ -82,7 +81,6 @@ class PageController extends BaseController
             $array['title'] = "TOP";
             $array['slug'] = "/";
             $array['sub_title'] = "トップページ";
-            $array['type'] = $this->_POST_TYPE_TOP;
             array_push($hamburger_top, $array);
 
             //type company

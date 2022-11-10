@@ -15,5 +15,9 @@ class Post extends Model
     {
         return $this->hasMany(Post_meta::class)->with('language');
     }
+    public function post_category()
+    {
+        return $this->hasMany(Post_category::class);
+    }
     
 }

@@ -38,12 +38,13 @@ class Page extends Model
     }
 
 
-    public static function formatJsonApi($slugPage,$listKeyPage=[],$listKeyPageTransiation=[],$listKeyPostMeta=[])
+    public static function formatJsonApi($slugPage,$listKeyPage=[],$listKeyPageTransiation=[],$listKeyPostMeta=[],$isCategory = false)
     {
         //banner top
         $languageId = getLanguageId();
         $temp =[];
         $page = Page::where('slug', $slugPage)->first();
+        
         foreach($listKeyPageTransiation as $keyPageTransiatio){
             $temp[$keyPageTransiatio] =  ""; 
         }
@@ -66,15 +67,21 @@ class Page extends Model
                 $temp[$keyPage] = $page->$keyPage; 
             }
             //list post service
-            $posts = Post::where('page_id', $page->id)->get();
+            $posts = Post::with('post_category')->where('page_id', $page->id)->get();
+           
+            
+            
             foreach ($posts as $post) {
+                if ($isCategory && empty($post['post_category'])  ){
+                    continue;
+                }
                 foreach($listKeyPostMeta as $keyPostMeta){
                     $value = Post_meta::get_post_meta($post->id, $keyPostMeta);  
                     $list[$keyPostMeta]= $value;
                 }
 
-                $list['created_date']= date('Y-m-d H:i:s', strtotime($post->created_at));
-                $list['updated_date']= date('Y-m-d H:i:s', strtotime($post->updated_at));
+                // $list['created_date']= date('Y-m-d H:i:s', strtotime($post->created_at));
+                // $list['updated_date']= date('Y-m-d H:i:s', strtotime($post->updated_at));
                 $list['slug']= $post->slug;
                
                 
@@ -89,4 +96,5 @@ class Page extends Model
         return $temp;
 
     }
+    
 }
