@@ -17,6 +17,7 @@ class Page extends Migration
             $table->bigIncrements("id");
             $table->string('slug')->unique();
             $table->tinyInteger('status')->default(2);
+            $table->string('banner')->nullable();
             $table->string('img_sp')->nullable();
             $table->string('img_pc')->nullable();
             $table->tinyInteger('is_category')->default(2);

@@ -45,15 +45,17 @@ class PageController extends BaseController
             //banner top
             $data['banner_top'] = Page::formatJsonApi('banner_top', ['img_pc', 'img_sp', 'slug'], ['title', 'excerpt']);
             //about
-            $data['about'] = Page::formatJsonApi('company', ['slug','img_pc', 'img_sp'], ['title', 'excerpt', 'sub_title']);
+            $data['about'] = Page::formatJsonApi('company', ['slug', 'img_pc', 'img_sp'], ['title', 'excerpt', 'sub_title']);
             //services
             $data['services'] = Page::formatJsonApi('service', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_vector']);
             //strengths
-            $data['strengths'] = Page::formatJsonApi('strengths', ['slug'], ['title','excerpt','sub_title'], ['title', 'excerpt',  'img']);
+            $data['strengths'] = Page::formatJsonApi('strengths', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt',  'img']);
             // works
             $data['works'] = Page::formatJsonApi('works', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_pc', 'img_sp']);
             // news
-            $data['news'] = Page::formatJsonApi('news', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt','category'],true);
+            $data['news'] = Page::formatJsonApi('news', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'category'], true);
+            // recruit
+            $data['recruit'] = Page::formatJsonApi('recruit', ['slug','banner']);
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -98,7 +100,7 @@ class PageController extends BaseController
 
             $data['hamburger_top'] = $hamburger_top;
             //security
-            
+
             $hamburger_foot = $this->formatInfo('security', $hamburger_foot);
             //privacy
 

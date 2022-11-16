@@ -67,6 +67,35 @@
                                 value="{{ isset($getPage->slug) ? $getPage->slug : '' }}" placeholder="Enter slug">
                         </div>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Banner</label>
+                            <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
+                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="banner"
+                                    class="input-path"
+                                    value="{{ isset($getPage->banner) && $getPage->banner != '' ? $getPage->banner : '' }}">
+                                <div class="dropify-preview image-hidden"
+                                    style="{{ isset($getPage->banner) && $getPage->banner != '' ? 'display: block' : 'display: none' }};">
+                                    <span class="dropify-render">
+                                        <?php
+                                            if(isset($getPage->banner) && $getPage->banner !=""){
+                                                ?>
+                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getPage->banner) }}"
+                                            alt="">
+                                        <?php
+                                            }
+                                        ?>
+                                    </span>
+                                    <div class="dropify-infos">
+                                        <div class="dropify-infos-inner">
+                                            <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
+                                    <p>Click here to select file</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">Image pc</label>
                             <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
                                         class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="imagepc"
