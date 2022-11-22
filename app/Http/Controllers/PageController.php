@@ -74,7 +74,7 @@ class PageController extends BaseController
 
 
             $page = Page::create(
-                ['status' => $data['status'],'banner' => $data['banner'], 'is_category' => $data['is_category'], 'slug' => $slug, 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['status' => $data['status'],'banner_sp' => $data['banner_sp'],'banner_pc' => $data['banner_pc'], 'is_category' => $data['is_category'], 'slug' => $slug, 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
                 if ($language['title'] == null) {
@@ -86,7 +86,6 @@ class PageController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
-                    "description" => $language['description'],
                 ]);
             }
             if (isset($data['select_list_field'])) {
@@ -136,7 +135,7 @@ class PageController extends BaseController
 
 
             $page->update(
-                [ 'is_category' => $data['is_category'],'banner' => $data['banner'], 'status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                [ 'is_category' => $data['is_category'],'banner_sp' => $data['banner_sp'],'banner_pc' => $data['banner_pc'],'status' => $data['status'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Page_transiation
@@ -153,7 +152,6 @@ class PageController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
-                    "description" => $language['description'],
 
                 ]);
             }

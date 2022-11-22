@@ -49,17 +49,23 @@ if (!function_exists('getLanguageId')) {
     function getLanguageId(): string
     {
         $_ENGLISH = 1;
-        $languageId = $_ENGLISH;
+        $_JAPAN = 2;
+        //default language
+        $languageId = $_JAPAN;
+       
         if (!isset($_GET['language'])) {
-            $slug = \Session::get('website_language', config('app.locale'));
+            $slug = \Session::get('website_language');
         } else {
             $slug = $_GET['language'];
         }
+        
         $language = Language::where('slug', $slug)->first();
 
         if ($language) {
             $languageId = $language->id;
         }
+      
+        
         return $languageId;
     }
 }

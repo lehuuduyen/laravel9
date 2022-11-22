@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Page_config_field;
 use App\Models\Config_detail_field;
 use App\Models\Config_field;
+use App\Models\Language;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Post_category;
@@ -150,19 +151,26 @@ class PostController extends BaseController
                 ['slug' => $slug, 'page_id' => $getPage->id]
             );
             $postId = $post->id;
+            $getAllLangugae = Language::pluck('id')->toArray();
+       
+            
+
             //image
             if (isset($request['image'])) {
                 foreach ($request['image'] as $configDetailId => $files) {
                     foreach ($files as $key => $file) {
-                        Post_meta::create(
-                            [
-                                'post_id' => $postId,
-                                'config_detail_field_id' => $configDetailId,
-                                'language_id' => 1,
-                                'meta_key' => $key,
-                                'meta_value' => $file,
-                            ]
-                        );
+                        foreach($getAllLangugae as $languageId){
+                            Post_meta::create(
+                                [
+                                    'post_id' => $postId,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => $file,
+                                ]
+                            );
+                        }
+                       
                     }
                 }
             }
@@ -207,7 +215,7 @@ class PostController extends BaseController
         return redirect("/post/$postId/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
     }
     public function update(Request  $request, $id)
-    {
+    { 
         // // Start transaction!
         DB::beginTransaction();
         try {
@@ -221,25 +229,28 @@ class PostController extends BaseController
             $slug = $this->isSlugPost($data['slug'], $id);
             $slug = $this->_SLUG;
             // update post
-            $post = Post::find($id)->update(
+            Post::find($id)->update(
                 ['slug' => $slug]
             );
             //xóa tất cả post meta type ko là hình
             DB::table('post_meta')->join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')
                 ->where('config_detail_field.type', '!=', Config_detail_field::typeImg())->where('post_meta.post_id', $id)->delete();
             //xóa tất cả file hình rồi thêm lại
+            $getAllLangugae = Language::pluck('id')->toArray();
             if (isset($request['image'])) {
                 foreach ($request['image'] as $configDetailId => $files) {
                     foreach ($files as $key => $file) {
-                        Post_meta::create(
-                            [
-                                'post_id' => $id,
-                                'config_detail_field_id' => $configDetailId,
-                                'language_id' => 1,
-                                'meta_key' => $key,
-                                'meta_value' => $file,
-                            ]
-                        );
+                        foreach($getAllLangugae as $languageId){
+                            Post_meta::create(
+                                [
+                                    'post_id' => $id,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => $file,
+                                ]
+                            );
+                        }
                     }
                 }
             }

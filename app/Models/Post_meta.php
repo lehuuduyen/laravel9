@@ -32,7 +32,6 @@ class Post_meta extends Model
                 $postMeta = $postMeta->where('post_meta.meta_key', $metaKey);
             }
             $postMeta = $postMeta->select('config_detail_field.type', 'post_meta.meta_value')->first();
-    
             if ($postMeta) {
                 $metaValue = ($postMeta['type'] == Config_detail_field::typeImg() && $postMeta['meta_value'] != "") ? env('APP_URL', 'http://localhost:8080') . \Storage::disk(config('juzaweb.filemanager.disk'))->url($postMeta['meta_value']) : $postMeta['meta_value'];
             }

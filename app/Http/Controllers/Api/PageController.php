@@ -55,7 +55,7 @@ class PageController extends BaseController
             // news
             $data['news'] = Page::formatJsonApi('news', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'category'], true);
             // recruit
-            $data['recruit'] = Page::formatJsonApi('recruit', ['slug','banner']);
+            $data['recruit'] = Page::formatJsonApi('recruit', ['slug','banner_pc','banner_sp']);
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }

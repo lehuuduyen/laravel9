@@ -67,18 +67,47 @@
                                 value="{{ isset($getPage->slug) ? $getPage->slug : '' }}" placeholder="Enter slug">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Banner</label>
+                            <label for="exampleInputEmail1">Banner pc</label>
                             <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
-                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="banner"
+                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="banner_pc"
                                     class="input-path"
-                                    value="{{ isset($getPage->banner) && $getPage->banner != '' ? $getPage->banner : '' }}">
+                                    value="{{ isset($getPage->banner_pc) && $getPage->banner_pc != '' ? $getPage->banner_pc : '' }}">
                                 <div class="dropify-preview image-hidden"
-                                    style="{{ isset($getPage->banner) && $getPage->banner != '' ? 'display: block' : 'display: none' }};">
+                                    style="{{ isset($getPage->banner_pc) && $getPage->banner_pc != '' ? 'display: block' : 'display: none' }};">
                                     <span class="dropify-render">
                                         <?php
-                                            if(isset($getPage->banner) && $getPage->banner !=""){
+                                            if(isset($getPage->banner_pc) && $getPage->banner_pc !=""){
                                                 ?>
-                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getPage->banner) }}"
+                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getPage->banner_pc) }}"
+                                            alt="">
+                                        <?php
+                                            }
+                                        ?>
+                                    </span>
+                                    <div class="dropify-infos">
+                                        <div class="dropify-infos-inner">
+                                            <p class="dropify-filename"><span class="dropify-filename-inner"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="icon-choose"><i class="fa fa-cloud-upload fa-5x"></i>
+                                    <p>Click here to select file</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Banner sp</label>
+                            <div class="form-image text-center"><a href="javascript:void(0)" class="image-clear"><i
+                                        class="fa fa-times-circle fa-2x"></i></a> <input type="hidden" name="banner_sp"
+                                    class="input-path"
+                                    value="{{ isset($getPage->banner_sp) && $getPage->banner_sp != '' ? $getPage->banner_sp : '' }}">
+                                <div class="dropify-preview image-hidden"
+                                    style="{{ isset($getPage->banner_sp) && $getPage->banner_sp != '' ? 'display: block' : 'display: none' }};">
+                                    <span class="dropify-render">
+                                        <?php
+                                            if(isset($getPage->banner_sp) && $getPage->banner_sp !=""){
+                                                ?>
+                                        <img src="{{ Storage::disk(config('juzaweb.filemanager.disk'))->url($getPage->banner_sp) }}"
                                             alt="">
                                         <?php
                                             }
@@ -265,16 +294,11 @@
                                                 name="languages[{{ $key }}][sub_title]"
                                                 value="{{ $subTitle }}" placeholder="Enter sub title">
                                         </div>
+                                     
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Excerpt</label>
-                                            <input type="text" class="form-control"
-                                                name="languages[{{ $key }}][excerpt]"
-                                                value="{{ $excerpt }}" placeholder="Enter excerpt">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Description</label>
-                                            <textarea class="summernote" name="languages[{{ $key }}][description]">
-                                                                     {{ $description }}           </textarea>
+                                            <textarea class="summernote" name="languages[{{ $key }}][excerpt]">
+                                                                     {{ $excerpt }}           </textarea>
                                         </div>
                                         <input type="hidden" name="languages[{{ $key }}][languge_id]"
                                             value="{{ $language->id }}" />

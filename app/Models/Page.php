@@ -9,7 +9,7 @@ class Page extends Model
 {
     use HasFactory;
     protected $table = 'page';
-    protected $fillable = ['name', 'img_sp', 'img_pc', 'slug', 'status','is_category','banner'];
+    protected $fillable = ['name', 'img_sp', 'img_pc', 'slug', 'status','is_category','banner_pc','banner_sp'];
     public $_ENGLISH = 1;
 
     
@@ -77,6 +77,7 @@ class Page extends Model
                 }
                 foreach($listKeyPostMeta as $keyPostMeta){
                     $value = Post_meta::get_post_meta($post->id, $keyPostMeta);  
+                  
                     $list[$keyPostMeta]= $value;
                 }
 
