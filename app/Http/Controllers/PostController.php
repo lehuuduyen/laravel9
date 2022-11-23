@@ -232,10 +232,9 @@ class PostController extends BaseController
             Post::find($id)->update(
                 ['slug' => $slug]
             );
-            //xóa tất cả post meta type ko là hình
+            //xóa tất cả post meta
             DB::table('post_meta')->join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')
-                ->where('config_detail_field.type', '!=', Config_detail_field::typeImg())->where('post_meta.post_id', $id)->delete();
-            //xóa tất cả file hình rồi thêm lại
+                ->where('post_meta.post_id', $id)->delete();
             $getAllLangugae = Language::pluck('id')->toArray();
             if (isset($request['image'])) {
                 foreach ($request['image'] as $configDetailId => $files) {

@@ -152,7 +152,7 @@ class PageController extends BaseController
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
                 $data['description'] = $page['page_transiation']['description'];
-                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full', 'design_type']);
+                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full']);
                 $data['list'] = $list;
             } else {
                 $categorie = Category::where('slug', $slug)->first();
@@ -161,7 +161,7 @@ class PageController extends BaseController
                     $data['slug'] = $categorie['slug'];
                     $data['sub_title'] = $categorie['category_transiation_by_language']['sub_title'];
                     $data['description'] = $categorie['category_transiation_by_language']['description'];
-                    $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full', 'design_type']);
+                    $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full']);
                 }
             }
 
@@ -250,7 +250,6 @@ class PageController extends BaseController
                     $temp = [];
                     $temp['cat_name'] = $category['category_transiation_by_language']['title'];
                     $temp['cat_sub'] = $category['category_transiation_by_language']['sub_title'];
-                    $temp['design_type'] = $category['category_transiation_by_language']['title'];
                 }
                 // $data['list'] = $list;
             }

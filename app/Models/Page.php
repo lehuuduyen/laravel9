@@ -83,7 +83,7 @@ class Page extends Model
                 }
 
                 // $list['created_date']= date('Y-m-d H:i:s', strtotime($post->created_at));
-                // $list['updated_date']= date('Y-m-d H:i:s', strtotime($post->updated_at));
+                $list['updated_at']= date('Y-m-d H:i:s', strtotime($post->updated_at));
                 $list['slug']= $post->slug;
                
                 

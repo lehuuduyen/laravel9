@@ -16,17 +16,18 @@ class Post_meta extends Model
     }
     public static function get_post_meta($postId, $metaKey = NULL)
     {
-        if ($metaKey == "category") {
-            $postCategory = Post_category::with('nameCategory')->where('post_id', $postId)->get();
+        $languageId = getLanguageId();
 
-            $listNameCategory = [];
+        if ($metaKey == "category") {
+            $postCategory = Post_category::join('category_transiations', 'category_transiations.category_id', '=', 'post_category.category_id')->where('post_category.post_id', $postId)->where('category_transiations.language_id',$languageId)->get('category_transiations.title');
+            
+            
+            $metaValue = [];
             foreach ($postCategory as $category) {
-                $listNameCategory[] = $category['nameCategory']->name;
+                $metaValue[] = $category['title'];
             }
-            $metaValue = implode(', ',$listNameCategory);
         }else{
             $metaValue = "";
-            $languageId = getLanguageId();
             $postMeta = Post_meta::join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')->where('post_meta.post_id', $postId)->where('post_meta.language_id', $languageId);
             if ($metaKey) {
                 $postMeta = $postMeta->where('post_meta.meta_key', $metaKey);

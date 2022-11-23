@@ -134,22 +134,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'key' => "description_full",
                 'type' => 4,
             ],
-            [
-                'id' => 15,
-                'config_field_id' => 1,
-                'language_id' => 1,
-                'title' => "Design Type",
-                'key' => "design_type",
-                'type' => 1,
-            ],
-            [
-                'id' => 16,
-                'config_field_id' => 1,
-                'language_id' => 2,
-                'title' => "Design Type",
-                'key' => "design_type",
-                'type' => 1,
-            ],
+            
 
 
             [
@@ -476,24 +461,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'type' => 4,
             ],
 
-            [
-                'id' => 55,
-                'config_field_id' => 3,
-                'language_id' => 1,
-                'title' => "Design Type",
-                'key' => "design_type",
-                'type' => 1,
-            ],
-
-            [
-                'id' => 56,
-                'config_field_id' => 3,
-                'language_id' => 2,
-                'title' => "Design Type",
-                'key' => "design_type",
-                'type' => 1,
-            ],
-
+           
             [
                 'id' => 57,
                 'config_field_id' => 3,

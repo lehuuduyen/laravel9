@@ -195,7 +195,7 @@
 
 
                                      ?>
-                                <div class="tab-pane fade {{ $key == 0 ? 'active show' : '' }}""
+                                <div class="tab-pane fade {{ $key == 0 ? 'active show' : '' }}"
                                     id="custom-tabs{{ $key }}" role="tabpanel"
                                     aria-labelledby="custom-tabs-five-overlay-tab">
                                     <div class="overlay-wrapper">

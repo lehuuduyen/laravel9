@@ -156,9 +156,9 @@ class PageController extends BaseController
                 ]);
             }
 
-            //xóa Page_transiation
+            //xóa Page_config_field
             Page_config_field::where('page_id', $id)->delete();
-            //add Page_transiation
+            //add Page_config_field
             if (isset($data['select_list_field'])) {
                 foreach ($data['select_list_field'] as $fieldId) {
                     Page_config_field::create(
