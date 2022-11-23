@@ -108,7 +108,7 @@ class PageController extends BaseController
 
             $data['hamburger_foot'] = $hamburger_foot;
             //company info
-            $companyInfo = Page::formatJsonApi('company_info', [], [], ['id', 'logo', 'name', 'address', 'hotline', 'lat', 'long', 'long', 'facebook', 'twiter', 'instagram', 'linkedin']);
+            $companyInfo = Page::formatJsonApi('company_info', [], [], ['id', 'logo', 'name', 'address', 'hotline', 'lat','working_time', 'long', 'long', 'facebook', 'twiter', 'instagram', 'linkedin']);
 
 
             $temp = new stdClass;
