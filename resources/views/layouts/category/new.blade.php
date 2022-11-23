@@ -62,11 +62,11 @@
                                 value="{{ isset($getCategory->name) ? $getCategory->name : '' }}" placeholder="Enter name">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Slug</label>
+                            <label for="exampleInputEmail1">Slug *</label>
                             <input type="text" class="form-control" name="slug"
                                 value="{{ isset($getCategory->slug) ? $getCategory->slug : '' }}" placeholder="Enter slug">
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="exampleInputEmail1">Price</label>
                             <input type="number" class="form-control" name="price"
                                
@@ -81,7 +81,7 @@
                                     
                                 @endfor
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="form-group">
                             <label for="exampleInputEmail1">Parent</label>
                             <select class="select2 form-control" name="parent_id">
@@ -214,16 +214,11 @@
                                                 name="languages[{{ $key }}][sub_title]"
                                                 value="{{ $subTitle }}" placeholder="Enter sub title">
                                         </div>
+                                        
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Excerpt</label>
-                                            <input type="text" class="form-control"
-                                                name="languages[{{ $key }}][excerpt]"
-                                                value="{{ $excerpt }}" placeholder="Enter excerpt">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Description</label>
-                                            <textarea class="summernote" name="languages[{{ $key }}][description]">
-                                                                     {{ $description }}           </textarea>
+                                            <textarea class="summernote" name="languages[{{ $key }}][excerpt]">
+                                                                     {{ $excerpt }}           </textarea>
                                         </div>
                                         <input type="hidden" name="languages[{{ $key }}][languge_id]"
                                             value="{{ $language->id }}" />

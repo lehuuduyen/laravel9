@@ -80,7 +80,7 @@ class PageController extends BaseController
                 if ($language['title'] == null) {
                     throw new Exception("Title cannot be empty");
                 }
-                $pageTransiattion = Page_transiation::create([
+                Page_transiation::create([
                     "language_id" => $language['languge_id'],
                     "page_id" => $page->id,
                     "title" => $language['title'],

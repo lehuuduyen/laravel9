@@ -11,7 +11,7 @@ class Page extends Model
     protected $table = 'page';
     protected $fillable = ['name', 'img_sp', 'img_pc', 'slug', 'status','is_category','banner_pc','banner_sp'];
     public $_ENGLISH = 1;
-
+    public $_LIST_KEY_IMAGE = ['img_sp', 'img_pc','banner_pc','banner_sp'];
     
     public static function _STATUS_ACTIVE_MENU (){
         return 1;
@@ -44,7 +44,7 @@ class Page extends Model
         $languageId = getLanguageId();
         $temp =[];
         $page = Page::where('slug', $slugPage)->first();
-        
+        $pageModel = new Page();
         foreach($listKeyPageTransiation as $keyPageTransiatio){
             $temp[$keyPageTransiatio] =  ""; 
         }
@@ -64,7 +64,8 @@ class Page extends Model
                 $temp[$keyPageTransiatio] = (isset($page_transiations->$keyPageTransiatio)) ? $page_transiations->$keyPageTransiatio : ""; 
             }
             foreach($listKeyPage as $keyPage){
-                $temp[$keyPage] = $page->$keyPage; 
+                
+                $temp[$keyPage] = (in_array($keyPage,$pageModel->_LIST_KEY_IMAGE) && $page->$keyPage !="" )?env('APP_URL', 'http://localhost:8080') . \Storage::disk(config('juzaweb.filemanager.disk'))->url($page->$keyPage):$page->$keyPage; 
             }
             //list post service
             $posts = Post::with('post_category')->where('page_id', $page->id)->get();

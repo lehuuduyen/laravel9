@@ -72,9 +72,12 @@ class CategoryController extends BaseController
             $slug = $this->isSlugPageCategory($data['slug']);
             $slug = $this->_SLUG;
 
-
+            //co giá
+            // $category = Category::create(
+            //     ['price' => $data['price'], 'duration' => $data['duration'], 'name' => $data['name'], 'parent_id' => $data['parent_id'], 'page_id' => $getPage->id, 'slug' =>  $slug, 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+            // );
             $category = Category::create(
-                ['price' => $data['price'], 'duration' => $data['duration'], 'name' => $data['name'], 'parent_id' => $data['parent_id'], 'page_id' => $getPage->id, 'slug' =>  $slug, 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['name' => $data['name'], 'parent_id' => $data['parent_id'], 'page_id' => $getPage->id, 'slug' =>  $slug, 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
             foreach ($data['languages'] as $language) {
                 $categoryTransiattion = Category_transiation::create([
@@ -83,7 +86,6 @@ class CategoryController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
-                    "description" => $language['description'],
                     "languge_id" => $language['languge_id']
                 ]);
             }
@@ -119,8 +121,12 @@ class CategoryController extends BaseController
             $this->_SLUG = $data['slug'];
             $slug = $this->isSlugPageCategory($data['slug'],$id);
             $slug = $this->_SLUG;
+            //có giá
+            // $category->update(
+            //     ['slug'=>$slug,'price' => $data['price'], 'duration' => $data['duration'], 'name' => $data['name'], 'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+            // );
             $category->update(
-                ['slug'=>$slug,'price' => $data['price'], 'duration' => $data['duration'], 'name' => $data['name'], 'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
+                ['slug'=>$slug, 'name' => $data['name'], 'parent_id' => $data['parent_id'], 'img_sp' => $data['imagesp'], 'img_pc' => $data['imagepc']]
             );
 
             //xóa Category_transiation
@@ -134,7 +140,6 @@ class CategoryController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
-                    "description" => $language['description'],
                     "languge_id" => $language['languge_id']
                 ]);
             }
