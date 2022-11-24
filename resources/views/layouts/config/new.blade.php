@@ -119,6 +119,22 @@
                                     // Summernote
                                     $classType = 'btn-outline-warning';
                                     $textType = 'Summernote';
+                                }elseif ($type == 4) {
+                                    // Textarea
+                                    $classType = 'btn-outline-primary';
+                                    $textType = 'Textarea';
+                                }elseif ($type == 6) {
+                                    // Radio
+                                    $classType = 'btn-outline-danger';
+                                    $textType = 'Radio';
+                                }elseif ($type == 7) {
+                                    // Dropdown
+                                    $classType = 'btn-outline-secondary';
+                                    $textType = 'Dropdown';
+                                }elseif ($type == 5) {
+                                    // Checkbox
+                                    $classType = 'btn-outline-dark';
+                                    $textType = 'Checkbox';
                                 }
                                 $disabled = count($listPost) > 0 ? 'disabled' : '';
                             @endphp

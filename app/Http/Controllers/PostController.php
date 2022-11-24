@@ -83,11 +83,11 @@ class PostController extends BaseController
         $listDetailFieldNotLanguage = [];
 
         $getPage = $this->getPage();
-        
+
         $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
         $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', getLanguageId())->get();
         $postDetail = Post::with('post_meta')->find($id);
-        if(!$postDetail){
+        if (!$postDetail) {
             return $this->error("Empty", "Page not exists");
         }
         $getAllCategory = $this->getAllCategory();
@@ -152,14 +152,15 @@ class PostController extends BaseController
             );
             $postId = $post->id;
             $getAllLangugae = Language::pluck('id')->toArray();
-       
-            
+
+
 
             //image
-            if (isset($request['image'])) {
-                foreach ($request['image'] as $configDetailId => $files) {
-                    foreach ($files as $key => $file) {
-                        foreach($getAllLangugae as $languageId){
+            foreach ($getAllLangugae as $languageId) {
+
+                if (isset($request['image'])) {
+                    foreach ($request['image'] as $configDetailId => $files) {
+                        foreach ($files as $key => $file) {
                             Post_meta::create(
                                 [
                                     'post_id' => $postId,
@@ -170,7 +171,52 @@ class PostController extends BaseController
                                 ]
                             );
                         }
-                       
+                    }
+                }
+                if (isset($data['radio'])) {
+                    foreach ($data['radio'] as $configDetailId =>  $radio) {
+                        foreach ($radio as $key => $value) {
+                            $postMeta = Post_meta::create(
+                                [
+                                    'post_id' => $postId,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => $value,
+                                ]
+                            );
+                        }
+                    }
+                }
+                if (isset($data['dropdown'])) {
+                    foreach ($data['dropdown'] as $configDetailId =>  $dropdown) {
+                        foreach ($dropdown as $value) {
+                            $postMeta = Post_meta::create(
+                                [
+                                    'post_id' => $postId,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => $value,
+                                ]
+                            );
+                        }
+                    }
+                }
+                if (isset($data['checkbox'])) {
+
+                    foreach ($data['checkbox'] as $configDetailId =>  $checkbox) {
+                        foreach ($checkbox as $key => $value) {
+                            $postMeta = Post_meta::create(
+                                [
+                                    'post_id' => $postId,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => json_encode($value),
+                                ]
+                            );
+                        }
                     }
                 }
             }
@@ -205,6 +251,7 @@ class PostController extends BaseController
                 }
             }
 
+
             // Commit the queries!
             DB::commit();
         } catch (\Exception $e) {
@@ -215,7 +262,7 @@ class PostController extends BaseController
         return redirect("/post/$postId/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
     }
     public function update(Request  $request, $id)
-    { 
+    {
         // // Start transaction!
         DB::beginTransaction();
         try {
@@ -236,10 +283,11 @@ class PostController extends BaseController
             DB::table('post_meta')->join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')
                 ->where('post_meta.post_id', $id)->delete();
             $getAllLangugae = Language::pluck('id')->toArray();
-            if (isset($request['image'])) {
-                foreach ($request['image'] as $configDetailId => $files) {
-                    foreach ($files as $key => $file) {
-                        foreach($getAllLangugae as $languageId){
+            foreach ($getAllLangugae as $languageId) {
+
+                if (isset($request['image'])) {
+                    foreach ($request['image'] as $configDetailId => $files) {
+                        foreach ($files as $key => $file) {
                             Post_meta::create(
                                 [
                                     'post_id' => $id,
@@ -252,6 +300,54 @@ class PostController extends BaseController
                         }
                     }
                 }
+                if (isset($data['radio'])) {
+                    foreach ($data['radio'] as $configDetailId =>  $radio) {
+                        foreach ($radio as $key => $value) {
+                            $postMeta = Post_meta::create(
+                                [
+                                    'post_id' => $id,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => $value,
+                                ]
+                            );
+                        }
+                    }
+                }
+                if (isset($data['dropdown'])) {
+                    foreach ($data['dropdown'] as $configDetailId =>  $dropdown) {
+                        foreach ($dropdown as $value) {
+                            $postMeta = Post_meta::create(
+                                [
+                                    'post_id' => $id,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => $value,
+                                ]
+                            );
+                        }
+                    }
+                }
+                if (isset($data['checkbox'])) {
+    
+                    foreach ($data['checkbox'] as $configDetailId =>  $checkbox) {
+                        foreach ($checkbox as $key => $value) {
+                            $postMeta = Post_meta::create(
+                                [
+                                    'post_id' => $id,
+                                    'config_detail_field_id' => $configDetailId,
+                                    'language_id' => $languageId,
+                                    'meta_key' => $key,
+                                    'meta_value' => json_encode($value),
+                                ]
+                            );
+                        }
+                    }
+                }
+
+
             }
 
             if (isset($data['languages'])) {
@@ -270,54 +366,7 @@ class PostController extends BaseController
                 }
             }
 
-            if (isset($data['radio'])) {
-                foreach ($data['radio'] as $configDetailId =>  $radio) {
-                    foreach ($radio as $key => $value) {
-                        $postMeta = Post_meta::create(
-                            [
-                                'post_id' => $id,
-                                'config_detail_field_id' => $configDetailId,
-                                'language_id' => 1,
-                                'meta_key' => $key,
-                                'meta_value' => $value,
-                            ]
-                        );
-                    }
-                }
-            }
-            if (isset($data['dropdown'])) {
-                foreach ($data['dropdown'] as $configDetailId =>  $dropdown) {
-                    foreach ($dropdown as $value) {
-                        $postMeta = Post_meta::create(
-                            [
-                                'post_id' => $id,
-                                'config_detail_field_id' => $configDetailId,
-                                'language_id' => 1,
-                                'meta_key' => $key,
-                                'meta_value' => $value,
-                            ]
-                        );
-                    }
-                }
-            }
-            if (isset($data['checkbox'])) {
-                foreach ($data['checkbox'] as $configDetailId =>  $checkbox) {
-                    foreach ($checkbox as $value) {
-
-
-
-                        $postMeta = Post_meta::create(
-                            [
-                                'post_id' => $id,
-                                'config_detail_field_id' => $configDetailId,
-                                'language_id' => 1,
-                                'meta_key' => key($value),
-                                'meta_value' => json_encode($value),
-                            ]
-                        );
-                    }
-                }
-            }
+            
             //category
             // delete category
             DB::table('post_category')->where('post_id', $id)->delete();

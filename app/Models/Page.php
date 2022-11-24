@@ -32,6 +32,7 @@ class Page extends Model
     {
         return $this->hasMany(Page_transiation::class, 'page_id', 'id');
     }
+ 
     public function page_config_field()
     {
         return $this->hasMany(Page_config_field::class, 'page_id', 'id');
@@ -45,8 +46,8 @@ class Page extends Model
         $temp =[];
         $page = Page::where('slug', $slugPage)->first();
         $pageModel = new Page();
-        foreach($listKeyPageTransiation as $keyPageTransiatio){
-            $temp[$keyPageTransiatio] =  ""; 
+        foreach($listKeyPageTransiation as $keyPageTransiation){
+            $temp[$keyPageTransiation] =  ""; 
         }
         foreach($listKeyPage as $keyPage){
             $temp[$keyPage] = ""; 
@@ -60,8 +61,10 @@ class Page extends Model
         
         if ($page) {
             $page_transiations = Page_transiation::where("language_id", $languageId)->where('page_id', $page->id)->first();
-            foreach($listKeyPageTransiation as $keyPageTransiatio){
-                $temp[$keyPageTransiatio] = (isset($page_transiations->$keyPageTransiatio)) ? $page_transiations->$keyPageTransiatio : ""; 
+           
+            
+            foreach($listKeyPageTransiation as $keyPageTransiation){
+                $temp[$keyPageTransiation] = (isset($page_transiations->$keyPageTransiation)) ? $page_transiations->$keyPageTransiation : ""; 
             }
             foreach($listKeyPage as $keyPage){
                 
@@ -76,7 +79,10 @@ class Page extends Model
                 if ($isCategory && empty($post['post_category'])  ){
                     continue;
                 }
+                $list['slug']= $post->slug;
+              
                 foreach($listKeyPostMeta as $keyPostMeta){
+                    
                     $value = Post_meta::get_post_meta($post->id, $keyPostMeta);  
                   
                     $list[$keyPostMeta]= $value;
@@ -84,7 +90,7 @@ class Page extends Model
 
                 // $list['created_date']= date('Y-m-d H:i:s', strtotime($post->created_at));
                 $list['updated_at']= date('Y-m-d H:i:s', strtotime($post->updated_at));
-                $list['slug']= $post->slug;
+                
                
                 
                 if(count($listKeyPage) == 0 && count($listKeyPageTransiation) == 0){

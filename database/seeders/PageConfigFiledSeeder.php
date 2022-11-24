@@ -26,7 +26,7 @@ class PageConfigFiledSeeder extends Seeder
         ],[
             'id' => 2,
             'page_id' => 5, //work
-            'config_field_id' => 1,
+            'config_field_id' => 4,
 
         ],[
             'id' => 3,
@@ -42,7 +42,7 @@ class PageConfigFiledSeeder extends Seeder
         ],
         [
             'id' => 5,
-            'page_id' => 11, //campany_info
+            'page_id' => 11, //infomation menu
             'config_field_id' => 2,
 
         ],[
@@ -51,6 +51,12 @@ class PageConfigFiledSeeder extends Seeder
             'config_field_id' => 1,
 
         ],
+        [
+            'id' => 7,
+            'page_id' => 2, //company
+            'config_field_id' => 1,
+
+        ]
         
     ];
     Page_config_field::insert($page);

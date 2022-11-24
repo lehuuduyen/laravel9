@@ -91,12 +91,11 @@ class PageSeeder extends Seeder
             'status' => 2,
             'is_category'=>2
 
-
         ]
         ,
         [
             'id' => 11,
-            'slug' => "company_info",
+            'slug' => "information",
             'status' => 3,
             'is_category'=>2
 

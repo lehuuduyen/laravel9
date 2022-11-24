@@ -189,7 +189,7 @@ class PageTransiationsSeeder extends Seeder
                 'id' => 21,
                 'page_id' =>11,
                 'language_id' => 1,
-                'title' => "COMPANY INFO",
+                'title' => "Information",
                 'sub_title' => "",
                 'excerpt' => "",
             ],
@@ -201,9 +201,6 @@ class PageTransiationsSeeder extends Seeder
                 'sub_title' => "",
                 'excerpt' => "",
             ],
-            
-        
-        
 
         ];
         Page_transiation::insert($PageTransiations);

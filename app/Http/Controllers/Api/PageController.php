@@ -108,7 +108,7 @@ class PageController extends BaseController
 
             $data['hamburger_foot'] = $hamburger_foot;
             //company info
-            $companyInfo = Page::formatJsonApi('company_info', [], [], ['id', 'logo', 'name', 'address', 'hotline', 'lat','working_time', 'long', 'long', 'facebook', 'twiter', 'instagram', 'linkedin']);
+            $companyInfo = Page::formatJsonApi('company_info', [], [], ['id', 'logo', 'name', 'address', 'hotline', 'location','working_time', 'facebook', 'twitter', 'instagram', 'linkedin']);
 
 
             $temp = new stdClass;
@@ -119,10 +119,10 @@ class PageController extends BaseController
                     'address' => $companyInfo[0]['address'],
                     'hotline' => $companyInfo[0]['hotline'],
                     'working_time' => $companyInfo[0]['working_time'],
-                    'location' => ['lat' => $companyInfo[0]['lat'], 'long' => $companyInfo[0]['long']],
+                    'location' => $companyInfo[0]['location'],
                     'social' => [
                         'facebook' => $companyInfo[0]['facebook'],
-                        'twiter' => $companyInfo[0]['twiter'],
+                        'twitter' => $companyInfo[0]['twitter'],
                         'instagram' => $companyInfo[0]['instagram'],
                         'linkedin' => $companyInfo[0]['linkedin'],
                     ],
@@ -151,8 +151,8 @@ class PageController extends BaseController
                 $data['title'] = $page['page_transiation']['title'];
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
-                $data['description'] = $page['page_transiation']['description'];
-                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full']);
+                $data['excerpt'] = $page['page_transiation']['excerpt'];
+                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'img_sp', 'img_pc','excerpt','customer','technologies','category'],true);
                 $data['list'] = $list;
             } else {
                 $categorie = Category::where('slug', $slug)->first();
@@ -160,8 +160,8 @@ class PageController extends BaseController
                     $data['title'] = $categorie['category_transiation_by_language']['title'];
                     $data['slug'] = $categorie['slug'];
                     $data['sub_title'] = $categorie['category_transiation_by_language']['sub_title'];
-                    $data['description'] = $categorie['category_transiation_by_language']['description'];
-                    $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'img_sp', 'img_pc', 'description_sort', 'description_full']);
+                    $data['excerpt'] = $categorie['category_transiation_by_language']['excerpt'];
+                    $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'img_sp', 'img_pc','excerpt','customer','technologies','category']);
                 }
             }
 
@@ -215,7 +215,7 @@ class PageController extends BaseController
                 $data['title'] = $page['page_transiation']['title'];
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
-                $data['description'] = $page['page_transiation']['description'];
+                $data['excerpt'] = $page['page_transiation']['excerpt'];
             } else {
                 return $this->returnJson($data, 'Data not found');
             }
@@ -242,7 +242,6 @@ class PageController extends BaseController
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
                 $data['description'] = $page['page_transiation']['description'];
                 $listCategory = Category::with('category_transiation_by_language')->where('page_id',$page['id'])->get();
-          
                 
                 $list = [];
                 foreach($listCategory as $category){
