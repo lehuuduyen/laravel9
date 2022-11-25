@@ -190,6 +190,9 @@ class PageController extends BaseController
             if ($post) {
                 $categories = Post_meta::getPostCategory($post->id);
                 $postMeta = Post_meta::get_post_meta($post->id);  
+                $getPage = Page::with('page_transiation')->find($post->page_id);
+                $data['parent']['title'] = $getPage['page_transiation']['title'];
+                $data['parent']['sub_title'] = $getPage['page_transiation']['sub_title'];
                 
                 
                 $data['title'] =  (isset($postMeta['title']))?$postMeta['title']:"";
@@ -217,9 +220,6 @@ class PageController extends BaseController
 
                 $data['page']['before'] = $tempBefore;
                 $data['page']['after'] = $tempAfter;
-
-               
-
 
 
             }
