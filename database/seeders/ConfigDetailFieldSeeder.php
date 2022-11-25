@@ -516,6 +516,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'key' => "img_pc",
                 'type' => 3,
             ],
+
             [
                 'id' => 67,
                 'config_field_id' => 4,
@@ -536,37 +537,37 @@ class ConfigDetailFieldSeeder extends Seeder
                 'type' => 2,
             ],
             [
-                'id' => 69,
-                'config_field_id' => 4,
-                'tags'=>"",
-                'language_id' => 1,
-                'title' => "Customer",
-                'key' => "customer",
-                'type' => 1,
-            ],
-
-            [
-                'id' => 70,
-                'config_field_id' => 4,
-                'tags'=>"",
-                'language_id' => 2,
-                'title' => "Customer",
-                'key' => "customer",
-                'type' => 1,
-            ],
-            [
                 'id' => 71,
                 'config_field_id' => 4,
+                'tags'=>"",
                 'language_id' => 1,
-                'title' => "Technologies",
-                'key' => "technologies",
-                'tags'=> "After Effects,InDesign,Photoshop,HTML5,CSS3,JavaScript,Wordpress C#,JavaScript,SQL,PHP,Java,Zend Framework,AWS,nginx,Apache,Azure,oracle,spring など",
-                'type' => 5,
+                'title' => "Thumbnail",
+                'key' => "thumbnail",
+                'type' => 3,
             ],
 
             [
                 'id' => 72,
                 'config_field_id' => 4,
+                'tags'=>"",
+                'language_id' => 2,
+                'title' => "Thumbnail",
+                'key' => "thumbnail",
+                'type' => 3,
+            ],
+            [
+                'id' => 73,
+                'config_field_id' => 4,
+                'language_id' => 1,
+                'title' => "Technologies",
+                'key' => "technologies",
+                'tags'=> "After Effects,InDesign,Photoshop,HTML5,CSS3,JavaScript,Wordpress C#,JavaScript,SQL,PHP,Java,Zend Framework,AWS,nginx,Apache,Azure,oracle,spring など",
+                'type' => 5,
+            ],
+
+            [
+                'id' => 74,
+                'config_field_id' => 4,
                 'language_id' => 2,
                 'title' => "Technologies",
                 'key' => "technologies",
@@ -574,6 +575,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'type' => 5,
             ],
 
+        
 
         ];
         Config_detail_field::insert($Config_detail_field);

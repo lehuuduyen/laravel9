@@ -10,6 +10,7 @@ use App\Models\Config_field;
 use App\Models\Language;
 use App\Models\Page_transiation;
 use App\Models\Post;
+use App\Models\Post_category;
 use App\Models\Post_meta;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -152,7 +153,7 @@ class PageController extends BaseController
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
                 $data['excerpt'] = $page['page_transiation']['excerpt'];
-                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'img_sp', 'img_pc','excerpt','customer','technologies','category'],true);
+                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'thumbnail','excerpt','category'],true);
                 $data['list'] = $list;
             } else {
                 $categorie = Category::where('slug', $slug)->first();
@@ -161,7 +162,7 @@ class PageController extends BaseController
                     $data['slug'] = $categorie['slug'];
                     $data['sub_title'] = $categorie['category_transiation_by_language']['sub_title'];
                     $data['excerpt'] = $categorie['category_transiation_by_language']['excerpt'];
-                    $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'img_sp', 'img_pc','excerpt','customer','technologies','category']);
+                    $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'thumbnail','excerpt','category']);
                 }
             }
 
@@ -173,26 +174,54 @@ class PageController extends BaseController
         }
         return $this->returnJson($data, 'Data found');
     }
-    public function itemDetail()
+    public function itemDetailPost()
     {
 
         try {
-            // theo getCategoryBySlug
+            // theo detail post
             $data = [];
-
+            $tempAfter = new stdClass();
+            $tempBefore = new stdClass();
             if (!isset($_GET['slug'])) {
                 throw new \Exception("Missing param slug");
             }
             $slug = $_GET['slug'];
-            $post = Post::where('slug', $slug)->first();
+            $post = Post::with('post_category')->where('slug', $slug)->first();
             if ($post) {
-                $data['title'] =  Post_meta::get_post_meta($post->id, 'title');
+                $categories = Post_meta::getPostCategory($post->id);
+                $postMeta = Post_meta::get_post_meta($post->id);  
+                
+                
+                $data['title'] =  (isset($postMeta['title']))?$postMeta['title']:"";
                 $data['slug'] = $slug;
-                $data['sub_title'] = Post_meta::get_post_meta($post->id, 'sub_title');
-                $data['img_sp'] =  Post_meta::get_post_meta($post->id, 'img_sp');
-                $data['img_pc'] =  Post_meta::get_post_meta($post->id, 'img_pc');
-                $data['description_sort'] = Post_meta::get_post_meta($post->id, 'description_sort');
-                $data['description_full'] = Post_meta::get_post_meta($post->id, 'description_full');
+                $data['sub_title'] = (isset($postMeta['sub_title']))?$postMeta['sub_title']:"";
+                $data['img_sp'] =  (isset($postMeta['img_sp']))?$postMeta['img_sp']:"";
+                $data['img_pc'] =  (isset($postMeta['img_pc']))?$postMeta['img_pc']:"";
+                $data['excerpt'] = (isset($postMeta['excerpt']))?$postMeta['excerpt']:"";
+                $data['technologies'] = (isset($postMeta['technologies']))?$postMeta['technologies']:[];
+                
+                $data['category'] = $categories;
+                $data['updated_at']= date('Y-m-d H:i:s', strtotime($post->updated_at));
+                $before = Post::where('page_id',$post->page_id)->where('id','<',$post->id)->first();
+                if($before){
+                    $tempBefore->title = Post_meta::get_post_meta($before->id,"title");
+                    $tempBefore->thumbnail = Post_meta::get_post_meta($before->id,"thumbnail");
+                    $tempBefore->slug = $before->slug;
+                }
+                $after = Post::where('page_id',$post->page_id)->where('id','>',$post->id)->first();
+                if($after){
+                    $tempAfter->title = Post_meta::get_post_meta($after->id,"title");
+                    $tempAfter->thumbnail = Post_meta::get_post_meta($after->id,"thumbnail");
+                    $tempAfter->slug = $after->slug;
+                }
+
+                $data['page']['before'] = $tempBefore;
+                $data['page']['after'] = $tempAfter;
+
+               
+
+
+
             }
         } catch (\Exception $e) {
             return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -240,7 +269,7 @@ class PageController extends BaseController
                 $data['title'] = $page['page_transiation']['title'];
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
-                $data['description'] = $page['page_transiation']['description'];
+                $data['excerpt'] = $page['page_transiation']['excerpt'];
                 $listCategory = Category::with('category_transiation_by_language')->where('page_id',$page['id'])->get();
                 
                 $list = [];

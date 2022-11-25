@@ -21,23 +21,17 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        // $allCategory = Category::get();
-        $data = [];
+        $allCategory = Category::get();
 
-        if (!isset($_GET['post_type'])) {
-            return $this->returnJson($data, 'Missing param post_type',false);
+        if(isset($_GET['post_type'])){
+            $allCategory = Category::getCategoryByPage($_GET['post_type']);
         }
-        $page = Page::with('page_transiation')->where('slug', $_GET['post_type'])->first();
-        if($page){
-
-            $data['title'] = (isset($page['page_transiation']->title))?$page['page_transiation']->title:"";
-            $data['sub_title'] = (isset($page['page_transiation']->sub_title))?$page['page_transiation']->sub_title:"";
-            $data['slug'] = $page['slug'];
-            $data['excerpt'] = (isset($page['page_transiation']->excerpt))?$page['page_transiation']->excerpt:"";
-            $data['update_at'] = date('Y-m-d H:i:s', strtotime($page->updated_at));
+        
+        
+        foreach($allCategory as $key => $category){
+            $allCategory[$key]->update_at = date('Y-m-d H:i:s',strtotime($category->updated_at));
         }
-
-        return $this->returnJson($data, 'Data found');
+        return $this->returnJson($allCategory,'Data found');
     }
 
     /**

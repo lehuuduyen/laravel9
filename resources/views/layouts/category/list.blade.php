@@ -86,7 +86,7 @@
 
                 "processing": true,
                 "ajax": {
-                    "url": "/api/category?post_type="+pageSlug,
+                    "url": "/api/list_category?post_type="+pageSlug,
                     "type": "GET"
                 },
                 "columns": [{
