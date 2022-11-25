@@ -197,7 +197,7 @@ class PageTransiationsSeeder extends Seeder
                 'id' => 22,
                 'page_id' => 11,
                 'language_id' => 2,
-                'title' => "COMPANY INFO",
+                'title' => "Information",
                 'sub_title' => "",
                 'excerpt' => "",
             ],

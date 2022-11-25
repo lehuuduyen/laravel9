@@ -574,7 +574,41 @@ class ConfigDetailFieldSeeder extends Seeder
                 'tags'=> "After Effects,InDesign,Photoshop,HTML5,CSS3,JavaScript,Wordpress C#,JavaScript,SQL,PHP,Java,Zend Framework,AWS,nginx,Apache,Azure,oracle,spring など",
                 'type' => 5,
             ],
-
+            [
+                'id' => 75,
+                'config_field_id' => 2,
+                'tags'=>"",
+                'language_id' => 1,
+                'title' => "Description",
+                'key' => "description",
+                'type' => 1,
+            ],
+            [
+                'id' => 76,
+                'config_field_id' => 2,
+                'tags'=>"",
+                'language_id' => 2,
+                'title' => "Description",
+                'key' => "description",
+                'type' => 1,
+            ], [
+                'id' => 77,
+                'config_field_id' => 2,
+                'tags'=>"",
+                'language_id' => 1,
+                'title' => "Keywords",
+                'key' => "keywords",
+                'type' => 1,
+            ],
+            [
+                'id' => 78,
+                'config_field_id' => 2,
+                'tags'=>"",
+                'language_id' => 2,
+                'title' => "Keywords",
+                'key' => "keywords",
+                'type' => 1,
+            ],
         
 
         ];

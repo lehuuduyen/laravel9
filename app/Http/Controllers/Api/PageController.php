@@ -115,17 +115,19 @@ class PageController extends BaseController
             $temp = new stdClass;
             if (!empty($companyInfo)) {
                 $temp = [
-                    'logo' => $companyInfo[0]['logo'],
-                    'name' => $companyInfo[0]['name'],
-                    'address' => $companyInfo[0]['address'],
-                    'hotline' => $companyInfo[0]['hotline'],
-                    'working_time' => $companyInfo[0]['working_time'],
-                    'location' => $companyInfo[0]['location'],
+                    'logo' => (isset($companyInfo[0]['logo']))?$companyInfo[0]['logo']:"",
+                    'name' => (isset($companyInfo[0]['name']))?$companyInfo[0]['name']:"",
+                    'address' => (isset($companyInfo[0]['address']))?$companyInfo[0]['address']:"",
+                    'hotline' => (isset($companyInfo[0]['hotline']))?$companyInfo[0]['hotline']:"",
+                    'working_time' => (isset($companyInfo[0]['working_time']))?$companyInfo[0]['working_time']:"",
+                    'location' => (isset($companyInfo[0]['location']))?$companyInfo[0]['location']:"",
+                    'description' => (isset($companyInfo[0]['description']))?$companyInfo[0]['description']:"",
+                    'keywords' => (isset($companyInfo[0]['keywords']))?$companyInfo[0]['keywords']:"",
                     'social' => [
-                        'facebook' => $companyInfo[0]['facebook'],
-                        'twitter' => $companyInfo[0]['twitter'],
-                        'instagram' => $companyInfo[0]['instagram'],
-                        'linkedin' => $companyInfo[0]['linkedin'],
+                        'facebook' => (isset($companyInfo[0]['facebook']))?$companyInfo[0]['facebook']:"",
+                        'twitter' => (isset($companyInfo[0]['twitter']))?$companyInfo[0]['twitter']:"",
+                        'instagram' => (isset($companyInfo[0]['instagram']))?$companyInfo[0]['instagram']:"",
+                        'linkedin' => (isset($companyInfo[0]['linkedin']))?$companyInfo[0]['linkedin']:"",
                     ],
                 ];
             }
@@ -190,6 +192,8 @@ class PageController extends BaseController
             if ($post) {
                 $categories = Post_meta::getPostCategory($post->id);
                 $postMeta = Post_meta::get_post_meta($post->id);  
+             
+                
                 $getPage = Page::with('page_transiation')->find($post->page_id);
                 $data['parent']['title'] = $getPage['page_transiation']['title'];
                 $data['parent']['sub_title'] = $getPage['page_transiation']['sub_title'];
@@ -201,7 +205,7 @@ class PageController extends BaseController
                 $data['img_sp'] =  (isset($postMeta['img_sp']))?$postMeta['img_sp']:"";
                 $data['img_pc'] =  (isset($postMeta['img_pc']))?$postMeta['img_pc']:"";
                 $data['excerpt'] = (isset($postMeta['excerpt']))?$postMeta['excerpt']:"";
-                $data['technologies'] = (isset($postMeta['technologies']))?$postMeta['technologies']:[];
+                $data['technologies'] = (isset($postMeta['technologies']))?json_decode($postMeta['technologies']):[];
                 
                 $data['category'] = $categories;
                 $data['updated_at']= date('Y-m-d H:i:s', strtotime($post->updated_at));
