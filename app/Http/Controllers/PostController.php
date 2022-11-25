@@ -52,7 +52,8 @@ class PostController extends BaseController
     {
 
         $getPage = $this->getPage();
-
+        $listDetailFieldLanguage =[];
+        $listDetailFieldNotLanguage =[];
         $listPost = Post::where('page_id', $getPage['id'])->first();
 
         if ($listPost && $getPage['status'] == Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST()) {
@@ -61,10 +62,16 @@ class PostController extends BaseController
         $getAllCategory = $this->getAllCategory();
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
 
-        $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
-        $listDetailFieldLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [1, 2, 4])->where('language_id', getLanguageId())->get();
-        $listDetailFieldNotLanguage = Config_detail_field::whereIn('config_field_id', $listField)->whereIn('type', [3, 5, 6, 7])->where('language_id', getLanguageId())->get();
-
+        $listField = Page_config_field::join('config_field', 'config_field.id', '=', 'page_config_field.config_field_id')->where('page_config_field.page_id', $getPage->id)->get(['config_field.id','config_field.title']);
+        foreach($listField as $field){
+            $detailFieldLanguage = Config_detail_field::where('config_field_id', $field['id'])->whereIn('type', [1, 2, 4])->where('language_id', getLanguageId())->get();
+            $listDetailFieldLanguage[$field['title']]= $detailFieldLanguage;
+            $detailFieldNotLanguage = Config_detail_field::where('config_field_id', $field['id'])->whereIn('type', [3, 5, 6, 7])->where('language_id', getLanguageId())->get();
+            $listDetailFieldNotLanguage[$field['title']]= $detailFieldNotLanguage;
+            
+        }
+    
+        
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
             'activeUL' => $_GET['post_type'],
@@ -78,22 +85,22 @@ class PostController extends BaseController
     }
     public function edit($id)
     {
-        $pageModel = new Page();
         $listDetailFieldLanguage = [];
         $listDetailFieldNotLanguage = [];
 
         $getPage = $this->getPage();
-
-        $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
-        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', getLanguageId())->get();
         $postDetail = Post::with('post_meta')->find($id);
         if (!$postDetail) {
             return $this->error("Empty", "Page not exists");
         }
+        $listField = Page_config_field::where('page_id', $getPage->id)->pluck('config_field_id')->toArray();
+        $listDetailField = Config_detail_field::whereIn('config_field_id', $listField)->where('language_id', getLanguageId())->get();
+       
         $getAllCategory = $this->getAllCategory();
         $getCategoryByPost = Post_category::where('post_id', $id)->pluck('category_id')->toArray();
 
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory, $getCategoryByPost);
+
         foreach ($listDetailField as $key => $detailField) {
             $listDetailField[$key]['value'] = "";
             foreach ($postDetail->post_meta as $keyPostMeta => $postMeta) {

@@ -98,43 +98,86 @@
                                             <div class="text-bold pt-2">Loading...</div>
                                             </div> --}}
                                         <?php 
-                                                foreach($listDetailFieldLanguage as $listDetailField ){
-                                                    $value = (isset($listDetailField[$language['slug']]))?$listDetailField[$language['slug']]:"";
-                                                    if($listDetailField['type'] ==1){
-                                                        ?>
-                                        {{-- text --}}
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
-                                            <input type=" text" class="form-control"
-                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]"
-                                                placeholder="Enter {{ $listDetailField['title'] }}"
-                                                value="{{ $value }}">
-                                        </div>
-                                        <?php
-                                                                            }
-                                                                            if($listDetailField['type'] == 2){
-                                                                                ?>
-                                        {{-- textarea --}}
+                                       
+                                        
+                                                foreach($listDetailFieldLanguage as $titleConfig => $listDetailFields ){
+                                                    ?>
+                                        <div class="card card-default json-html">
+                                            <div class="card-header">
+                                                <h3 style="color: red" class="card-title font-weight-bold ">
+                                                    {{ $titleConfig }}
+                                                </h3>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body" style="display: block;">
+                                                <div style="">
+                                                    <?php 
+                                                                    foreach($listDetailFields as $listDetailField )   {
+                                                                        $value = (isset($listDetailField[$language['slug']]))?$listDetailField[$language['slug']]:"";
+                                                                        if($listDetailField['type'] ==1){
+                                                                            ?>
+                                                                        {{-- text --}}
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                                                            <input type=" text" class="form-control"
+                                                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]"
+                                                                                placeholder="Enter {{ $listDetailField['title'] }}"
+                                                                                value="{{ $value }}">
+                                                                        </div>
+                                                                        <?php
+                                                                                                            }
+                                                                                                            if($listDetailField['type'] == 2){
+                                                                                                                ?>
+                                                                        {{-- textarea --}}
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
-                                            <textarea class="summernote"
-                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">
-                                                                     {{ $value }}           </textarea>
-                                        </div>
-                                        <?php
-                                                                }
-                                                                if($listDetailField['type'] == 4){
-                                                                                ?>
-                                        {{-- textarea --}}
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                                                            <textarea class="summernote"
+                                                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">
+                                                                                                    {{ $value }}           </textarea>
+                                                                        </div>
+                                                                        <?php
+                                                                                                }
+                                                                                                if($listDetailField['type'] == 4){
+                                                                                                                ?>
+                                                                        {{-- textarea --}}
 
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
-                                            <textarea class="form-control" rows="5"
-                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">{{ $value }}</textarea>
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
+                                                                            <textarea class="form-control" rows="5"
+                                                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">{{ $value }}</textarea>
+                                                                        </div>
+                                                                        <?php
+                                                                        }
+                                                                    } 
+                                                                ?>
+
+
+
+
+                                                </div>
+
+                                                <!-- /.row -->
+                                            </div>
                                         </div>
+
+
+
+
+
+
+
                                         <?php
-                                                                }
+                                                    
+                                                                            
                                                 }    
                                                 
                                             ?>
@@ -167,8 +210,9 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Slug</label>
                                 @if ($getPage['status'] == 3)
-                                <input type="text" class="form-control" style="pointer-events:none;background:#e9ecef;" name="slug" placeholder="Enter slug"
-                                    value="{{ $getPage['slug']}}">
+                                    <input type="text" class="form-control"
+                                        style="pointer-events:none;background:#e9ecef;" name="slug"
+                                        placeholder="Enter slug" value="{{ $getPage['slug'] }}">
                                 @else
                                     <input type="text" class="form-control" name="slug" placeholder="Enter slug"
                                         value="{{ isset($postDetail) ? $postDetail['slug'] : '' }}">
@@ -192,8 +236,27 @@
                 @endif
 
                 <?php 
-                        foreach($listDetailFieldNotLanguage as $value){
-                            $meta_value = (isset($value['value']))?$value['value']:"";
+                        foreach($listDetailFieldNotLanguage as $titleConfig =>  $listDetailFieldNotlang){
+                            
+                            ?>
+<div class="card card-default json-html">
+    <div class="card-header">
+        <h3 style="color: red"  class="card-title font-weight-bold">{{ $titleConfig }}
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+         
+
+        </div>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body" style="display: block;">
+        <div >
+               <?php
+                foreach($listDetailFieldNotlang as $value){
+                    $meta_value = (isset($value['value']))?$value['value']:"";
                             
                             if($value['type'] == 3){
                                         ?>
@@ -322,6 +385,24 @@
                 </div>
                 <?php
                                     }
+                }
+                
+                
+                ?>
+        </div>
+       
+        <!-- /.row -->
+    </div>
+</div>
+                            <?php
+
+
+
+
+
+
+                            
+                            
                         }    
                         
                         
