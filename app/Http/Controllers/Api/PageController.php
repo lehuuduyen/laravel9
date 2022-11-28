@@ -398,8 +398,8 @@ class PageController extends BaseController
 
 
                 //get page service
-                $data['list']['service'] = Page::formatJsonApi('service', ['slug'], ['title', 'sub_title']);
-                $data['list']['recruit'] = Page::formatJsonApi('recruit', ['slug'], ['title', 'sub_title']);
+                $data['page']['before'] = Page::formatJsonApi('service', ['slug','banner_sp','banner_pc'], ['title', 'sub_title']);
+                $data['page']['after'] = Page::formatJsonApi('recruit', ['slug','banner_sp','banner_pc'], ['title', 'sub_title']);
                 
             }
 
