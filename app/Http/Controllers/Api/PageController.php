@@ -48,7 +48,7 @@ class PageController extends BaseController
             //about
             $data['about'] = Page::formatJsonApi('company', ['slug', 'img_pc', 'img_sp'], ['title', 'excerpt', 'sub_title']);
             //services
-            $data['services'] = Page::formatJsonApi('service', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'img_vector']);
+            $data['services'] = Page::formatJsonApi('service', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt', 'thumbnail']);
             //strengths
             $data['strengths'] = Page::formatJsonApi('strengths', ['slug'], ['title', 'excerpt', 'sub_title'], ['title', 'excerpt',  'img']);
             // works
@@ -155,7 +155,7 @@ class PageController extends BaseController
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
                 $data['excerpt'] = $page['page_transiation']['excerpt'];
-                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'thumbnail','excerpt','category'],true);
+                $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title','excerpt','description','category','img_sp','img_pc', 'thumbnail'],true);
                 $data['list'] = $list;
             } else {
                 $categorie = Category::where('slug', $slug)->first();

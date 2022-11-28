@@ -21,9 +21,10 @@ class PageConfigFiledSeeder extends Seeder
         $page = [[
             'id' => 1,
             'page_id' => 3, //service
-            'config_field_id' => 1,
+            'config_field_id' => 5,
 
-        ],[
+        ],
+        [
             'id' => 2,
             'page_id' => 5, //work
             'config_field_id' => 4,

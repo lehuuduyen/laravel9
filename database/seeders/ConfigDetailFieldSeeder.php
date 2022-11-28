@@ -23,16 +23,35 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 1,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Title",
                 'key' => "title",
                 'type' => 1,
             ],
             [
+                'id' => 9,
+                'config_field_id' => 1,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Sub Title",
+                'key' => "sub_title",
+                'type' => 1,
+            ],
+            [
+                'id' => 10,
+                'config_field_id' => 1,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Sub Title",
+                'key' => "sub_title",
+                'type' => 1,
+            ],
+
+            [
                 'id' => 2,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Excerpt",
                 'key' => "excerpt",
@@ -41,7 +60,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 3,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Image PC",
                 'key' => "img_pc",
@@ -50,7 +69,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 4,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Image SP",
                 'key' => "img_sp",
@@ -59,7 +78,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 5,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Title jp",
                 'key' => "title",
@@ -68,7 +87,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 6,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Excerpt jp",
                 'key' => "excerpt",
@@ -77,7 +96,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 7,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Image PC Jp",
                 'key' => "img_pc",
@@ -87,37 +106,19 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 8,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Image SP Jp",
                 'key' => "img_sp",
                 'type' => 3,
             ],
-            [
-                'id' => 9,
-                'config_field_id' => 1,
-                'tags'=>"",
-                'language_id' => 1,
-                'title' => "Sub Title",
-                'key' => "sub_title",
-                'type' => 1,
-            ],
-            [
-                'id' => 10,
-                'config_field_id' => 1,
-                'tags'=>"",
-                'language_id' => 2,
-                'title' => "Sub Title",
-                'key' => "sub_title",
-                'type' => 1,
-            ],
-            
+       
 
 
             [
                 'id' => 17,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Logo",
                 'key' => "logo",
@@ -126,7 +127,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 18,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Logo",
                 'key' => "logo",
@@ -135,7 +136,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 19,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Name",
                 'key' => "name",
@@ -144,7 +145,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 20,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Name",
                 'key' => "name",
@@ -153,7 +154,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 21,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Address",
                 'key' => "address",
@@ -162,7 +163,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 22,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Address",
                 'key' => "address",
@@ -171,7 +172,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 23,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Hotline",
                 'key' => "hotline",
@@ -180,7 +181,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 24,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Hotline",
                 'key' => "hotline",
@@ -189,7 +190,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 25,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Location",
                 'key' => "location",
@@ -198,7 +199,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 26,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Location",
                 'key' => "location",
@@ -207,7 +208,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 29,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Facebook",
                 'key' => "facebook",
@@ -216,7 +217,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 30,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Facebook",
                 'key' => "facebook",
@@ -225,7 +226,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 31,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Twitter",
                 'key' => "twitter",
@@ -234,7 +235,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 32,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Twitter",
                 'key' => "twitter",
@@ -243,7 +244,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 33,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Instagram",
                 'key' => "instagram",
@@ -252,7 +253,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 34,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Instagram",
                 'key' => "instagram",
@@ -261,7 +262,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 35,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Linkedin",
                 'key' => "linkedin",
@@ -270,7 +271,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 36,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Linkedin",
                 'key' => "linkedin",
@@ -279,7 +280,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 37,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Working Time",
                 'key' => "working_time",
@@ -288,7 +289,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 38,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Working Time",
                 'key' => "working_time",
@@ -297,19 +298,19 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 39,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
-                'title' => "Vector Image",
-                'key' => "img_vector",
+                'title' => "Thumbnail",
+                'key' => "thumbnail",
                 'type' => 3,
             ],
             [
                 'id' => 40,
                 'config_field_id' => 1,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
-                'title' => "Vector Image jp",
-                'key' => "img_vector",
+                'title' => "Thumbnail",
+                'key' => "thumbnail",
                 'type' => 3,
             ],
 
@@ -321,7 +322,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 41,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Title",
                 'key' => "title",
@@ -331,7 +332,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 42,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Excerpt",
                 'key' => "excerpt",
@@ -341,7 +342,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 43,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Image PC",
                 'key' => "img_pc",
@@ -351,7 +352,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 44,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Image SP",
                 'key' => "img_sp",
@@ -361,7 +362,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 45,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Title jp",
                 'key' => "title",
@@ -371,7 +372,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 46,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Excerpt jp",
                 'key' => "excerpt",
@@ -381,7 +382,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 47,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Image PC Jp",
                 'key' => "img_pc",
@@ -391,7 +392,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 48,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Image SP Jp",
                 'key' => "img_sp",
@@ -401,7 +402,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 49,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Sub Title",
                 'key' => "sub_title",
@@ -411,18 +412,18 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 50,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Sub Title",
                 'key' => "sub_title",
                 'type' => 1,
             ],
 
-           
+
             [
                 'id' => 57,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Icon",
                 'key' => "img",
@@ -432,7 +433,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 58,
                 'config_field_id' => 3,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Icon jp",
                 'key' => "img",
@@ -443,7 +444,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 59,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Title",
                 'key' => "title",
@@ -453,7 +454,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 60,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Title",
                 'key' => "title",
@@ -462,7 +463,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 61,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Sub title",
                 'key' => "sub_title",
@@ -472,7 +473,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 62,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Sub title",
                 'key' => "sub_title",
@@ -481,7 +482,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 63,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Image sp",
                 'key' => "img_sp",
@@ -491,7 +492,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 64,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Image sp",
                 'key' => "img_sp",
@@ -500,7 +501,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 65,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Image pc",
                 'key' => "img_pc",
@@ -510,7 +511,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 66,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Image pc",
                 'key' => "img_pc",
@@ -520,7 +521,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 67,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Excerpt",
                 'key' => "excerpt",
@@ -530,7 +531,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 68,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Excerpt",
                 'key' => "excerpt",
@@ -539,7 +540,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 71,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Thumbnail",
                 'key' => "thumbnail",
@@ -549,7 +550,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 72,
                 'config_field_id' => 4,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Thumbnail",
                 'key' => "thumbnail",
@@ -561,7 +562,7 @@ class ConfigDetailFieldSeeder extends Seeder
                 'language_id' => 1,
                 'title' => "Technologies",
                 'key' => "technologies",
-                'tags'=> "After Effects,InDesign,Photoshop,HTML5,CSS3,JavaScript,Wordpress C#,JavaScript,SQL,PHP,Java,Zend Framework,AWS,nginx,Apache,Azure,oracle,spring など",
+                'tags' => "After Effects,InDesign,Photoshop,HTML5,CSS3,JavaScript,Wordpress C#,JavaScript,SQL,PHP,Java,Zend Framework,AWS,nginx,Apache,Azure,oracle,spring など",
                 'type' => 5,
             ],
 
@@ -571,13 +572,13 @@ class ConfigDetailFieldSeeder extends Seeder
                 'language_id' => 2,
                 'title' => "Technologies",
                 'key' => "technologies",
-                'tags'=> "After Effects,InDesign,Photoshop,HTML5,CSS3,JavaScript,Wordpress C#,JavaScript,SQL,PHP,Java,Zend Framework,AWS,nginx,Apache,Azure,oracle,spring など",
+                'tags' => "After Effects,InDesign,Photoshop,HTML5,CSS3,JavaScript,Wordpress C#,JavaScript,SQL,PHP,Java,Zend Framework,AWS,nginx,Apache,Azure,oracle,spring など",
                 'type' => 5,
             ],
             [
                 'id' => 75,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Description",
                 'key' => "description",
@@ -586,7 +587,7 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 76,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Description",
                 'key' => "description",
@@ -594,7 +595,7 @@ class ConfigDetailFieldSeeder extends Seeder
             ], [
                 'id' => 77,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 1,
                 'title' => "Keywords",
                 'key' => "keywords",
@@ -603,13 +604,144 @@ class ConfigDetailFieldSeeder extends Seeder
             [
                 'id' => 78,
                 'config_field_id' => 2,
-                'tags'=>"",
+                'tags' => "",
                 'language_id' => 2,
                 'title' => "Keywords",
                 'key' => "keywords",
                 'type' => 1,
             ],
-        
+
+
+
+
+
+            [
+                'id' => 79,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Title",
+                'key' => "title",
+                'type' => 1,
+            ],
+            [
+                'id' => 87,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Sub Title",
+                'key' => "sub_title",
+                'type' => 1,
+            ],
+            [
+                'id' => 88,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Sub Title",
+                'key' => "sub_title",
+                'type' => 1,
+            ],
+            [
+                'id' => 80,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Excerpt",
+                'key' => "excerpt",
+                'type' => 2,
+            ],
+            [
+                'id' => 81,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Image PC",
+                'key' => "img_pc",
+                'type' => 3,
+            ],
+            [
+                'id' => 82,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Image SP",
+                'key' => "img_sp",
+                'type' => 3,
+            ],
+            [
+                'id' => 83,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Title jp",
+                'key' => "title",
+                'type' => 1,
+            ],
+            [
+                'id' => 84,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Excerpt jp",
+                'key' => "excerpt",
+                'type' => 2,
+            ],
+            [
+                'id' => 85,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Image PC Jp",
+                'key' => "img_pc",
+                'type' => 3,
+            ],
+            [
+                'id' => 86,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Image SP Jp",
+                'key' => "img_sp",
+                'type' => 3,
+            ],
+          
+            [
+                'id' => 89,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Thumbnail",
+                'key' => "thumbnail",
+                'type' => 3,
+            ],
+            [
+                'id' => 90,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Thumbnail",
+                'key' => "thumbnail",
+                'type' => 3,
+            ],
+            [
+                'id' => 91,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Description",
+                'key' => "description",
+                'type' => 2,
+            ],
+            [
+                'id' => 92,
+                'config_field_id' => 5,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Description JP",
+                'key' => "description",
+                'type' => 2,
+            ],
 
         ];
         Config_detail_field::insert($Config_detail_field);
