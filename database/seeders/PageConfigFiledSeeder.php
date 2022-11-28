@@ -55,7 +55,7 @@ class PageConfigFiledSeeder extends Seeder
         [
             'id' => 7,
             'page_id' => 2, //company
-            'config_field_id' => 1,
+            'config_field_id' => 6,
 
         ]
         

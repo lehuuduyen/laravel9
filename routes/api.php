@@ -31,6 +31,7 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('/item_detail', 'App\Http\Controllers\Api\PageController@itemDetailPost');
     Route::get('/get_page', 'App\Http\Controllers\Api\PageController@getPageBySlug');
     Route::get('/recruit', 'App\Http\Controllers\Api\PageController@getRecruit');
+    Route::get('/company', 'App\Http\Controllers\Api\PageController@getCompany');
     Route::get('/recruit_detail', 'App\Http\Controllers\Api\PageController@getRecruitDetail');
 });
 

@@ -20,6 +20,7 @@ class PageController extends BaseController
 {
 
     public $_slugRecruit = "recruit";
+    public $_slugCompany = "company";
 
     /**
      * Display a listing of the resource.
@@ -259,6 +260,7 @@ class PageController extends BaseController
         }
         return $this->returnJson($data, 'Data found');
     }
+    
     public function getRecruit()
     {
 
@@ -315,6 +317,89 @@ class PageController extends BaseController
                     $temp->list = Category::getPostByCategory($category['id'], ['title', 'sub_title', 'excerpt', 'img_sp', 'img_pc']);
                 }
                 $data['list']['job'] = $temp;
+                
+            }
+
+            // //type page not recruit and page not category
+
+
+        } catch (\Exception $e) {
+            return $this->returnJson($data, $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+        return $this->returnJson($data, 'Data found');
+    }
+    public function getCompany()
+    {
+
+        $data = [];
+        try {
+
+            //type recruit
+            $page = Page::where('slug',  $this->_slugCompany)->where('is_category', Category::CATEGORY_ACTIVE())->first();
+            if ($page) {
+                $data['title'] = $page['page_transiation']['title'];
+                $data['slug'] = $page['slug'];
+                $data['sub_title'] = $page['page_transiation']['sub_title'];
+                $data['excerpt'] = $page['page_transiation']['excerpt'];
+
+                $category = Category::with('category_transiation_by_language')->where('page_id', $page['id'])->where('slug', 'introduce')->first();
+                $temp = new stdClass;
+                if($category){
+                    $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
+                    $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
+                    $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
+                    $temp->list = Category::getPostByCategory($category['id'], ['title', 'sub_title', 'excerpt', 'img_sp', 'img_pc']);
+                }
+                $data['list']['introduce'] = $temp;
+
+                
+                $category = Category::with('category_transiation_by_language')->where('page_id', $page['id'])->where('slug', 'vision')->first();
+                $temp = new stdClass;
+                if($category){
+                    $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
+                    $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
+                    $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
+                    $temp->list = [];
+                }
+                $data['list']['vision'] = $temp;
+
+                
+                $category = Category::with('category_transiation_by_language')->where('page_id', $page['id'])->where('slug', 'mission')->first();
+                $temp = new stdClass;
+                if($category){
+                    $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
+                    $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
+                    $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
+                    $temp->list = Category::getPostByCategory($category['id'], ['title', 'sub_title', 'excerpt', 'img_sp', 'img_pc']);
+                }
+                $data['list']['mission'] = $temp;
+
+                
+                $category = Category::with('category_transiation_by_language')->where('page_id', $page['id'])->where('slug', 'map')->first();
+                $temp = new stdClass;
+                if($category){
+                    $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
+                    $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
+                    $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
+                    $temp->list = [];
+                }
+                $data['list']['map'] = $temp;
+                
+                
+                $category = Category::with('category_transiation_by_language')->where('page_id', $page['id'])->where('slug', 'profile')->first();
+                $temp = new stdClass;
+                if($category){
+                    $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
+                    $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
+                    $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
+                    $temp->list = Category::getPostByCategory($category['id'], ['title', 'sub_title', 'excerpt','summary', 'company_name', 'establishment', 'location', 'representative','business_description']);
+                }
+                $data['list']['profile'] = $temp;
+
+
+                //get page service
+                $data['list']['service'] = Page::formatJsonApi('service', ['slug'], ['title', 'sub_title']);
+                $data['list']['recruit'] = Page::formatJsonApi('recruit', ['slug'], ['title', 'sub_title']);
                 
             }
 

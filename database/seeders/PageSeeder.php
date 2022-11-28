@@ -29,7 +29,7 @@ class PageSeeder extends Seeder
         [
             'id' => 2,
             'slug' => "company",
-            'status' => 2,
+            'status' => 1,
             'is_category'=>1
 
 
