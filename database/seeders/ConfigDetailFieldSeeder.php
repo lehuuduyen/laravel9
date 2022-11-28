@@ -945,7 +945,25 @@ class ConfigDetailFieldSeeder extends Seeder
                 'key' => "business_description",
                 'type' => 2,
             ],
-
+            [
+                'id' => 115,
+                'config_field_id' => 6,
+                'tags' => "",
+                'language_id' => 1,
+                'title' => "Headline",
+                'key' => "headline",
+                'type' => 2,
+            ],
+            [
+                'id' => 116,
+                'config_field_id' => 6,
+                'tags' => "",
+                'language_id' => 2,
+                'title' => "Headline",
+                'key' => "headline",
+                'type' => 2,
+            ],
+            
             
 
         ];
