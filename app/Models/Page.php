@@ -96,7 +96,9 @@ class Page extends Model
                 if(count($listKeyPage) == 0 && count($listKeyPageTransiation) == 0){
                     $temp[] = $list;
                 }else{
-                    $temp['list'][] =$list;
+                    if(count($listKeyPostMeta)>0 ){
+                        $temp['list'][] =$list;
+                    }
                 }
             }
 
