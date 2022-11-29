@@ -359,7 +359,8 @@ class PageController extends BaseController
                     $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
                     $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
                     $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
-                    $temp->list = [];
+                    $temp->img_pc = (isset($category['img_pc'])) ? env('APP_URL', 'http://localhost:8080') . \Storage::disk(config('juzaweb.filemanager.disk'))->url($category['img_pc']) : "";
+                    $temp->img_sp = (isset($category['img_sp'])) ? env('APP_URL', 'http://localhost:8080') . \Storage::disk(config('juzaweb.filemanager.disk'))->url($category['img_sp']) : "";
                 }
                 $data['list']['vision'] = $temp;
 
@@ -381,7 +382,6 @@ class PageController extends BaseController
                     $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
                     $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
                     $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
-                    $temp->list = [];
                 }
                 $data['list']['map'] = $temp;
                 
