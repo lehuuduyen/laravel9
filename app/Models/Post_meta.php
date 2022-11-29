@@ -62,4 +62,34 @@ class Post_meta extends Model
 
         return $metaValue;
     }
+    public static function get_post_meta_title($postId, $metaKey = NULL)
+    {
+        $languageId = getLanguageId();
+        
+        $metaValue = [];
+            
+            $postMeta = Post_meta::join('config_detail_field', 'config_detail_field.id', '=', 'post_meta.config_detail_field_id')->where('post_meta.post_id', $postId)->where('post_meta.language_id', $languageId);
+            if ($metaKey == NULL) {
+                $postMeta = $postMeta->select('config_detail_field.type', 'post_meta.meta_value', 'post_meta.meta_key')->get();
+                foreach($postMeta as $value){
+                    $metaValue = [];
+                    $metaValue['title'] = $value['config_detail_field']['title'];
+                    $metaValue['value'] =($value['type'] == Config_detail_field::typeImg() && $value['meta_value'] != "") ? env('APP_URL', 'http://localhost:8080') . \Storage::disk(config('juzaweb.filemanager.disk'))->url($value['meta_value']) : $value['meta_value'];
+                    
+                }                
+            }else{
+                $metaValue = [];
+                $postMeta = $postMeta->where('post_meta.meta_key', $metaKey);
+                $postMeta = $postMeta->select('config_detail_field.type','config_detail_field.title', 'post_meta.meta_value')->first();
+                if ($postMeta) {
+                    $metaValue['title'] = $postMeta['title'];
+                    $metaValue['value'] = ($postMeta['type'] == Config_detail_field::typeImg() && $postMeta['meta_value'] != "") ? env('APP_URL', 'http://localhost:8080') . \Storage::disk(config('juzaweb.filemanager.disk'))->url($postMeta['meta_value']) : $postMeta['meta_value'];
+                }
+            }
+            
+           
+        
+
+        return $metaValue;
+    }
 }
