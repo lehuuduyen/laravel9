@@ -119,7 +119,8 @@ class PostController extends BaseController
                 $listDetailFieldNotLanguage[] = $listDetailField[$key];
             }
         }
-
+       
+        
 
         return $this->renderView('layouts/posts/new', [
             'postActive' => "create",
@@ -267,7 +268,8 @@ class PostController extends BaseController
         DB::beginTransaction();
         try {
             $data = $request->all();
-
+            
+            
             if ($data['slug'] == null) {
                 $this->_SLUG = $data['slug'] = $data['post_type'];
             }
@@ -351,8 +353,12 @@ class PostController extends BaseController
             }
 
             if (isset($data['languages'])) {
+               
+                
                 foreach ($data['languages'] as $configDetailId =>  $language) {
+                   
                     foreach ($language as $languge_id => $value) {
+                        
                         $postMeta = Post_meta::create(
                             [
                                 'post_id' => $id,
@@ -362,6 +368,7 @@ class PostController extends BaseController
                                 'meta_value' => $value[key($value)],
                             ]
                         );
+                       
                     }
                 }
             }

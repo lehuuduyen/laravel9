@@ -297,8 +297,7 @@
                                      
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Excerpt</label>
-                                            <textarea class="summernote" name="languages[{{ $key }}][excerpt]">
-                                                                     {{ $excerpt }}           </textarea>
+                                            <textarea class="summernote" name="languages[{{ $key }}][excerpt]">{{ $excerpt }}</textarea>
                                         </div>
                                         <input type="hidden" name="languages[{{ $key }}][languge_id]"
                                             value="{{ $language->id }}" />

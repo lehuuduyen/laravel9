@@ -113,18 +113,19 @@
                                         <?php
                                                                             }
                                                                             if($listDetailField['type'] == 2){
+     
                                                                                 ?>
                                         {{-- textarea --}}
 
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">{{ $listDetailField['title'] }}</label>
                                             <textarea class="summernote"
-                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">
-                                                                     {{ $value }}           </textarea>
+                                                name="languages[{{ $listDetailField['id'] }}][{{ $language['id'] }}][{{ $listDetailField['key'] }}]">{{ $value }}</textarea>
                                         </div>
                                         <?php
                                                                 }
                                                                 if($listDetailField['type'] == 4){
+                                                                    
                                                                                 ?>
                                         {{-- textarea --}}
 
@@ -167,8 +168,9 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Slug</label>
                                 @if ($getPage['status'] == 3)
-                                <input type="text" class="form-control" style="pointer-events:none;background:#e9ecef;" name="slug" placeholder="Enter slug"
-                                    value="{{ $getPage['slug']}}">
+                                    <input type="text" class="form-control"
+                                        style="pointer-events:none;background:#e9ecef;" name="slug"
+                                        placeholder="Enter slug" value="{{ $getPage['slug'] }}">
                                 @else
                                     <input type="text" class="form-control" name="slug" placeholder="Enter slug"
                                         value="{{ isset($postDetail) ? $postDetail['slug'] : '' }}">
@@ -346,6 +348,9 @@
 
         function onSubmit(_this) {
             let action = $('input[name="action"]').val();
+            $('.summernote').each(function(v) {
+                        $(this).val($(this).val());
+                    });
             Swal.fire({
                 title: `Do You Want To ${action}?`,
                 showCancelButton: true,
@@ -353,6 +358,7 @@
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
+               
                     BtnLoading(_this)
 
                     $("#form").submit()

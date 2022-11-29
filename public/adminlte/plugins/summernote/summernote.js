@@ -2016,7 +2016,7 @@ function isCustomStyleTag(node) {
   blank: blankHTML,
 
   /** @property {String} emptyPara */
-  emptyPara: "<p>".concat(blankHTML, "</p>"),
+  emptyPara: "",
   makePredByNodeName: makePredByNodeName,
   isEditable: isEditable,
   isControlSizing: isControlSizing,

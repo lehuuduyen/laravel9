@@ -438,7 +438,7 @@
     <!-- Tempusdominus Bootstrap 4 -->
     <script src="{{ asset('/adminlte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Summernote -->
-    <script src="{{ asset('/adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('/adminlte/plugins/summernote/summernote.js') }}"></script>
     <!-- overlayScrollbars -->
     <script src="{{ asset('/adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
