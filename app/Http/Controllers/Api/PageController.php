@@ -392,7 +392,7 @@ class PageController extends BaseController
                     $temp->title = (isset($category['category_transiation_by_language']['title'])) ? $category['category_transiation_by_language']['title'] : "";
                     $temp->sub_title = (isset($category['category_transiation_by_language']['sub_title'])) ? $category['category_transiation_by_language']['sub_title'] : "";
                     $temp->excerpt = (isset($category['category_transiation_by_language']['excerpt'])) ? $category['category_transiation_by_language']['excerpt'] : "";
-                    $temp->list = Category::getPostByCategory($category['id'], ['title', 'sub_title', 'excerpt','summary', 'company_name', 'establishment', 'location', 'representative','business_description']);
+                    $temp->list = Category::getPostByCategory($category['id'], ['title', 'sub_title', 'excerpt', 'company_name', 'establishment', 'location', 'representative','business_description']);
                 }
                 $data['list']['profile'] = $temp;
 
