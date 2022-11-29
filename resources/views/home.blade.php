@@ -199,7 +199,7 @@
 
                 <li class="nav-item">
                     <a href="{!! route('user.change-language', ['en']) !!}">English</a>
-                    <a href="{!! route('user.change-language', ['jp']) !!}">Japan</a>
+                    <a href="{!! route('user.change-language', ['ja']) !!}">Japan</a>
                 </li>
             </ul>
         </nav>
