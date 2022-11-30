@@ -9,6 +9,6 @@ class Page_transiation extends Model
 {
     use HasFactory;
     protected $table = 'page_transiations';
-    protected $fillable = ['page_id','language_id','title','sub_title','excerpt'];
+    protected $fillable = ['page_id','language_id','title','sub_title','excerpt','description'];
 
 }

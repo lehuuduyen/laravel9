@@ -156,6 +156,7 @@ class PageController extends BaseController
                 $data['slug'] = $page['slug'];
                 $data['sub_title'] = $page['page_transiation']['sub_title'];
                 $data['excerpt'] = $page['page_transiation']['excerpt'];
+                $data['description'] = $page['page_transiation']['description'];
                 $list = Page::formatJsonApi($slug, [], [], ['title', 'sub_title', 'excerpt', 'description', 'category', 'img_sp', 'img_pc', 'thumbnail'], true);
                 $data['list'] = $list;
             } else {

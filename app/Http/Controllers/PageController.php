@@ -86,6 +86,7 @@ class PageController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
+                    "description" => $language['description'],
                 ]);
             }
             if (isset($data['select_list_field'])) {
@@ -152,6 +153,7 @@ class PageController extends BaseController
                     "title" => $language['title'],
                     "sub_title" => $language['sub_title'],
                     "excerpt" => $language['excerpt'],
+                    "description" => $language['description'],
 
                 ]);
             }
