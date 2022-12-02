@@ -322,6 +322,14 @@
                         <?php
                             }
                         ?>
+                        <li class="nav-item ">
+                            <a href="/contact" class="nav-link {{ $active == 'contact' ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Contact
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#"
                                 class="nav-link {{ $active == 'option' || $active == 'page' || $active == 'config' ? 'active' : '' }}">

@@ -33,5 +33,6 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('/recruit', 'App\Http\Controllers\Api\PageController@getRecruit');
     Route::get('/company', 'App\Http\Controllers\Api\PageController@getCompany');
     Route::get('/recruit_detail', 'App\Http\Controllers\Api\PageController@getRecruitDetail');
+    Route::post('/contact', 'App\Http\Controllers\Api\ContactController@create');
 });
 
