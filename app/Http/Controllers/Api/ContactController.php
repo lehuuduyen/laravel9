@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class ContactController extends BaseController
 {
@@ -22,8 +23,31 @@ class ContactController extends BaseController
     */
     public function create(Request $request)
     {   
-        $contact = Contact::create($request->all())  ;                         
-        return  $this->returnJson($contact, 'Add Success');
+        $data = $request->all();
+        $code = true;
+        $message = "Add Success";
+        $contact = new stdClass;
+        
+        
+        if(!isset($data['type']) && empty($data['type'])){
+            $code = false;
+            $message = "Param type not null";
+        }
+        if(!isset($data['name']) && empty($data['name'])){
+            $code = false;
+            $message = "Param name not null";
+
+        }
+        if(!isset($data['email']) && empty($data['email'])){
+            $code = false;
+            $message = "Param email not null";
+        }
+        if($code){
+            $data['type'] = implode(",",$data['type']);
+            $contact = Contact::create($data)  ;     
+        }
+                            
+        return  $this->returnJson($contact, $message,$code);
         
     }
 

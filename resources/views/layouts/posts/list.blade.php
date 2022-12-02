@@ -29,13 +29,19 @@
                         <!-- /.card-header -->
                         <div class="card-body table-responsive">
                             <table id="example1" class=" table table-striped  " style="text-align: center;">
+                                <col style="width: 20%;" />
+                                <col style="width: 20%;" />
+                                <col style="width: 20%;" />
+                                <col style="width: 20%;" />
+                                <col style="width: 20%;" />
+
                                 <thead>
                                     <tr>
-                                        <th>Slug</th>
-                                        <th>Category</th>
-                                        <th>Updated at</th>
-                                        <th>Viewer</th>
-                                        <th>Action</th>
+                                        <th >Title</th>
+                                        <th >Slug</th>
+                                        <th >Category</th>
+                                        <th >Updated at</th>
+                                        <th >Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,10 +49,10 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
+                                        <th>Title</th>
                                         <th>Slug</th>
                                         <th>Category</th>
                                         <th>Updated at</th>
-                                        <th>Viewer</th>
                                         <th>Action</th>
 
                                     </tr>
@@ -92,7 +98,32 @@
                     "url": "/api/post?page_id="+categoryId,
                     "type": "GET"
                 },
-                "columns": [{
+                "columnDefs": [
+                    {
+                        "width": "20px",
+                        "targets": 0
+                    },
+                    {
+                        "width": "20px",
+                        "targets": 1
+                    },
+                    {
+                        "width": "20px",
+                        "targets": 2
+                    },
+                    {
+                        "width": "20px",
+                        "targets": 3
+                    },
+                    {
+                        "width": "20px",
+                        "targets": 4
+                    }
+                ],
+                "columns": [
+                    {
+                        "data": "title"
+                    },{
                         "data": "slug"
                     },
                     {
@@ -101,10 +132,7 @@
                     {
                         "data": "update_at"
                     },
-                    {
-                        "data": "id"
-                    }
-                    ,
+                  
                     {
                         "data": "id"
                     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Language;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -21,8 +22,11 @@ class PostController extends BaseController
         
         if(isset($_GET['page_id'])){
             $allPost =  DB::table('post')
-            ->select('post.*')
+            ->join('post_meta', 'post_meta.post_id', '=', "post.id")
+            ->select('post.*','post_meta.meta_value as title')
             ->where('post.page_id', $_GET['page_id'])
+            ->where('post_meta.meta_key', "title")
+            ->where('post_meta.language_id', Language::ENGLISH_ID())
             ->get();
         }
         
