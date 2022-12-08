@@ -25,7 +25,8 @@ class ItemsController extends FileManagerController
             ->where('type', '=', $file_type)
             ->orderBy('id', 'DESC')
             ->paginate($perPage);
-
+        $total = Media_files::where('folder_id', '=', $working_dir)
+        ->where('type', '=', $file_type)->get()->count();
         $storage = Storage::disk(config('juzaweb.filemanager.disk'));
         $items = [];
         foreach ($folders as $folder) {
@@ -58,7 +59,7 @@ class ItemsController extends FileManagerController
             'items' => $items,
             'paginator' => [
                 'current_page' => $currentPage,
-                'total' => count($items),
+                'total' => $total,
                 'per_page' => $perPage,
             ],
             'display' => 'grid',
