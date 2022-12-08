@@ -1,12 +1,12 @@
 @extends('home')
 
 @section('title', $getPage['title'])
-@section('content-title', 'List '.$getPage['title'])
+@section('content-title', 'List ' . $getPage['title'])
 @section('css')
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-  
+
 @endsection
 
 @section('content')
@@ -23,9 +23,10 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New {{ $getPage['title'] }}</a>
+                            <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New
+                                {{ $getPage['title'] }}</a>
                         </div>
-                        
+
                         <!-- /.card-header -->
                         <div class="card-body table-responsive">
                             <table id="example1" class=" table table-striped  " style="text-align: center;">
@@ -37,15 +38,15 @@
 
                                 <thead>
                                     <tr>
-                                        <th >Title</th>
-                                        <th >Slug</th>
-                                        <th >Category</th>
-                                        <th >Updated at</th>
-                                        <th >Action</th>
+                                        <th>Title</th>
+                                        <th>Slug</th>
+                                        <th>Category</th>
+                                        <th>Updated at</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -95,11 +96,10 @@
 
                 "processing": true,
                 "ajax": {
-                    "url": "/api/post?page_id="+categoryId,
+                    "url": "/api/post?page_id=" + categoryId,
                     "type": "GET"
                 },
-                "columnDefs": [
-                    {
+                "columnDefs": [{
                         "width": "20px",
                         "targets": 0
                     },
@@ -120,10 +120,9 @@
                         "targets": 4
                     }
                 ],
-                "columns": [
-                    {
+                "columns": [{
                         "data": "title"
-                    },{
+                    }, {
                         "data": "slug"
                     },
                     {
@@ -132,32 +131,25 @@
                     {
                         "data": "update_at"
                     },
-                  
-                    {
-                        "data": "id"
-                    }
-                ],
-                "aoColumnDefs": [
-                    {
-                        "mRender": function(data, type, row) {
 
+                    {
+                        "data": "id",
+                        "render": function(data, type, row, meta) {
                             html = `
                         <a href="/post/${row.id}/edit?post_type=${postType}">
                             <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
                         </a>
                         `
-                                html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
+                            html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
                                     class="fa fa-trash" aria-hidden="true"></i>
                             </button>`
 
 
                             return html;
-                        },
-                        "aTargets": [-1]
-                    },
-
-                ],
+                        }
+                    }
+                ]
 
             });
 
