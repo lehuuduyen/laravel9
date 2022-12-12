@@ -17,9 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         Model::unguard();
-        $this->call(LanguageSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(ConfigFieldSeeder::class);
+        $this->call(LanguageSeeder::class);
+
         $this->call(ConfigDetailFieldSeeder::class);
         $this->call(PageSeeder::class);
         $this->call(PageTransiationsSeeder::class);
