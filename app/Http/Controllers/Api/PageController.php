@@ -110,7 +110,7 @@ class PageController extends BaseController
 
             $data['hamburger_foot'] = $hamburger_foot;
             //company info
-            $companyInfo = Page::formatJsonApi('information', [], [], ['id', 'logo', 'name', 'address', 'hotline', 'location', 'working_time', 'facebook', 'twitter', 'instagram', 'linkedin']);
+            $companyInfo = Page::formatJsonApi('information', [], [], ['id', 'logo','description','keywords', 'name', 'address', 'hotline', 'location', 'working_time', 'facebook', 'twitter', 'instagram', 'linkedin']);
 
 
             $temp = new stdClass;
@@ -169,7 +169,12 @@ class PageController extends BaseController
                     $data['list'] = Category::getPostByCategory($categorie['id'], ['title', 'sub_title', 'thumbnail', 'excerpt', 'category']);
                 }
             }
-
+            if($slug == "service"){
+                $data['page']['before'] = Page::formatJsonApi('company', ['slug', 'banner_sp', 'banner_pc'], ['title', 'sub_title']);
+                $data['page']['after'] = Page::formatJsonApi('works', ['slug', 'banner_sp', 'banner_pc'], ['title', 'sub_title']);
+            }
+            //get page service
+           
             // //type page not recruit and page not category
 
 
