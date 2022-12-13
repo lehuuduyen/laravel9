@@ -20,7 +20,7 @@ class CreateContactsTable extends Migration
             $table->string('company')->nullable();
             $table->longText('detail')->nullable();
             $table->tinyInteger('status')->default(1);
-            $table->string('type');
+            $table->longText('type');
             $table->timestamps();
         });
     }
