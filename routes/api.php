@@ -25,6 +25,7 @@ Route::group(['middleware' => 'api'], function() {
     Route::apiResource('list_category', 'App\Http\Controllers\Api\CategoryController');
     Route::apiResource('page', 'App\Http\Controllers\Api\PageController');
     Route::apiResource('post', 'App\Http\Controllers\Api\PostController');
+    Route::apiResource('contact', 'App\Http\Controllers\Api\ContactController');
     Route::get('/top', 'App\Http\Controllers\Api\PageController@topPage');
     Route::get('/info', 'App\Http\Controllers\Api\PageController@info');
     Route::get('/category', 'App\Http\Controllers\Api\PageController@getCategoryBySlug');
@@ -33,6 +34,5 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('/recruit', 'App\Http\Controllers\Api\PageController@getRecruit');
     Route::get('/company', 'App\Http\Controllers\Api\PageController@getCompany');
     Route::get('/recruit_detail', 'App\Http\Controllers\Api\PageController@getRecruitDetail');
-    Route::post('/contact', 'App\Http\Controllers\Api\ContactController@create');
 });
 

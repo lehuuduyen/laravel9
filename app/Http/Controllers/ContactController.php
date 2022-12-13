@@ -38,7 +38,7 @@ class ContactController extends BaseController
      */
     public function index()
     {
-        return $this->renderView('layouts/page/list', ['active' => 'page']);
+        return $this->renderView('layouts/contact/list', ['active' => 'contact']);
     }
     public function create()
     {

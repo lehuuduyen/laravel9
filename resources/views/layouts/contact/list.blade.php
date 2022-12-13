@@ -17,12 +17,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <input type="hidden" name="pageSlug" id="pageSlug" value="{{ $pageSlug }}">
 
                     <div class="card">
-                        <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/category/create?post_type={{ $pageSlug }}"> Create New Category</a>
-                        </div>
+
 
                         <!-- /.card-header -->
                         <div class="card-body table-responsive">
@@ -30,22 +27,26 @@
                             <table id="example1" class=" table table-striped  " style="text-align: center;">
                                 <thead>
                                     <tr>
-                                        <th>Category</th>
-                                        <th>Slug</th>
-                                        <th>Updated at</th>
-                                        <th>Action</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Company</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Detail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
+
 
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Category</th>
-                                        <th>Slug</th>
-                                        <th>Updated at</th>
-                                        <th>Action</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Company</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Detail</th>
 
                                     </tr>
                                 </tfoot>
@@ -62,6 +63,27 @@
         <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+
+    <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Details of your inquiry</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <pre id="detail"></pre>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
 @endsection
 
 @section('javascript')
@@ -79,86 +101,95 @@
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('/adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
     <script>
-        $(function() {
+        $(document).ready(function() {
+
             let pageSlug = $("#pageSlug").val()
             var table = $('#example1').DataTable({
                 "responsive": true,
 
                 "processing": true,
                 "ajax": {
-                    "url": "/api/list_category?post_type="+pageSlug,
+                    "url": "/api/contact",
                     "type": "GET"
                 },
                 "columns": [{
                         "data": "name"
                     },
                     {
-                        "data": "slug"
+                        "data": "email"
                     },
                     {
-                        "data": "update_at"
+                        "data": "company"
                     },
                     {
-                        "data": "id"
+                        "data": "type"
+                    },
+                    {
+                        "data": "status"
+                    },
+                    {
+                        "data": "detail"
                     }
                 ],
                 "aoColumnDefs": [
-                    
-                   
+
                     {
                         "mRender": function(data, type, row) {
-
                             html = `
-                        <a href="/category/${row.id}/edit?post_type=${pageSlug}">
-                            <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
+                            <button class="btn btn-primary" onclick="showDetail(this)" data-detail="${row.detail}" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
-                        </a>
                         `
-                            // if (row.list_post.length == 0) {
-                            //     html += `<button class="btn btn-danger" onclick="deleteRow(${row.id})"><i
-                            //         class="fa fa-trash" aria-hidden="true"></i>
-                            // </button>`
-                            // }
-
-
                             return html;
                         },
                         "aTargets": [-1]
+                    },
+                    {
+                        "mRender": function(data, type, row) {
+                            let selected1 = "";
+                            let selected2 = "";
+                            if (row.status == 2) {
+                                selected2 = "selected";
+                            } else {
+                                selected1 = "selected";
+                            }
+                            html = `
+                            <select class="form-control changeStatus" data-id ="${row.id}">
+                                <option value="1" ${selected1}>No process</option>
+                                <option value="2" ${selected2}>Processed</option>
+                            </select>
+                        `
+
+                            return html;
+                        },
+                        "aTargets": [-2]
                     },
 
                 ],
 
             });
+            $(document).on('change', '.changeStatus', function() {
+             
+                $.ajax({
+                    type: 'put',
+                    url: `/api/contact/`+$(this).data('id')+`?status=`+$(this).val(),
 
-            function deleteRow(id) {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            type: 'delete',
-                            url: `/category/${id}`,
-
-                            success: function(msg) {
-                                table.ajax.reload();
-                                Swal.fire(
-                                    'Deleted!',
-                                    msg.message,
-                                    'success'
-                                )
-                            }
-                        });
-
+                    success: function(msg) {
+                        Swal.fire(
+                            'Deleted!',
+                            msg.message,
+                            'success'
+                        )
                     }
-                })
-            }
+                });
 
-        });
+                // Does some stuff and logs the event to the console
+            });
+            
+           
+        })
+        function showDetail(_this){
+               $("#detail").html($(_this).data('detail'))
+               
+            }
     </script>
 @endsection
