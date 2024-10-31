@@ -11,6 +11,12 @@ class Category extends Model
     use HasFactory;
     protected $table = 'category';
     protected $fillable = ['duration', 'price', 'name', 'slug', 'img_sp', 'img_pc', 'status', 'page_id', 'parent_id'];
+    
+    public function getImageUrlAttribute()
+    {
+        // Return the 'img_pc' value or construct a full URL based on your storage setup
+        return $this->attributes['img_pc'] ? url(  str_replace('public','storage',$this->attributes['img_pc'])) : null;
+    }
     public static function CATEGORY_ACTIVE()
     {
         return 1;
@@ -60,4 +66,5 @@ class Category extends Model
             ->get();
         return $data;
     }
+    
 }

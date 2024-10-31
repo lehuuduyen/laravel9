@@ -1,0 +1,228 @@
+/*---------- footer page css start ------------*/
+
+.footer-wrapper {
+    background-color: $body-color;
+    padding: 100px 0 0 0;
+
+    .footer-main {
+        padding-bottom: 30px;
+
+        .footer-pera {
+            p {
+                color: $title-color-white;
+                padding: 30px 0;
+            }
+        }
+
+        .footer-icon {
+            ul {
+                display: flex;
+
+                li {
+                    margin: 0 10px;
+
+                    &:first-child {
+                        margin-left: 0px;
+                    }
+
+                    &:last-child {
+                        margin-right: 0px;
+                    }
+
+                    a {
+                        width: 40px;
+                        height: 40px;
+                        text-align: center;
+                        font-size: $font-size-18;
+                        line-height: 40px;
+                        display: block;
+                        border-radius: 50%;
+                        position: relative;
+                        overflow: hidden;
+                        border: 1px solid #4e4e4e;
+                        z-index: 1;
+                        color: $title-color-white;
+
+                        i {
+                            padding-right: 0px;
+                            position: relative;
+                            color: $title-color-white;
+                            -webkit-transition: .5s;
+                            transition: .5s;
+                            z-index: 3;
+                        }
+
+                        &::before {
+                            content: "";
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: $title-color;
+                            transition: all 0.5s;
+                            -webkit-transition: all 0.5s;
+                            -o-transition: all 0.5s;
+                            -ms-transition: all 0.5s;
+                            -moz-transition: all 0.5s;
+                            z-index: 2;
+                        }
+
+                        &:hover {
+                            background-color: $title-color;
+                            border-color: $title-color-white;
+
+                            i {
+                                color: $title-color-white;
+                                -webkit-transform: rotateY(360deg);
+                                transform: rotateY(360deg);
+                            }
+
+                            &::before {
+                                top: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .footer-link-wrapper {
+            h5 {
+                text-transform: $text-uppercse;
+                color: $title-color-white;
+            }
+
+            ul {
+                padding: 50px 0 0 0;
+
+                li {
+                    margin-bottom: 15px;
+                    -webkit-transition: $transition;
+                    -o-transition: $transition;
+                    -ms-transition: $transition;
+                    -moz-transition: $transition;
+                    transition: $transition;
+
+                    a {
+                        color: $title-color-white;
+
+                        span {
+                            margin-right: 15px;
+                        }
+                    }
+
+                    &:hover {
+                        a {
+                            color: $title-color;
+                        }
+                    }
+                }
+            }
+        }
+
+        .footer-insta {
+            h5 {
+                text-transform: $text-uppercse;
+                color: $title-color-white;
+            }
+
+            ul {
+                padding: 50px 0 0 0;
+                -webkit-column-count: 3;
+                column-count: 3;
+                -webkit-column-gap: 10px;
+                column-gap: 12px;
+
+                li {
+                    width: 100%;
+                    margin-bottom: 10px;
+
+                    a {
+                        display: block;
+                        position: relative;
+                    }
+
+                    span {
+                        position: absolute;
+                        height: 100%;
+                        width: 100%;
+                        left: 0;
+                        top: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: $title-color-white;
+                        background: #91143ad0;
+                        transition: all 0.5s;
+                        transform: scale(0);
+                    }
+
+                    img {
+                        width: 100%;
+                    }
+
+                    &:hover {
+                        span {
+                            transform: scale(1);
+                        }
+                    }
+                }
+            }
+        }
+
+        .footer-contact {
+            h5 {
+                text-transform: $text-uppercse;
+                color: $title-color-white;
+            }
+
+            ul {
+                padding: 50px 0 0 0;
+
+                li {
+                    display: flex;
+                    margin-bottom: 20px;
+
+                    .address-icon {
+                        margin-right: 20px;
+
+                        i {
+                            color: $title-color-white;
+                        }
+                    }
+
+                    .address-content {
+                        a {
+                            color: $title-color-white;
+
+                            span {
+                                display: block;
+                                text-transform: $text-uppercse;
+                                margin-bottom: 4px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .bottom-footer {
+        border-top: 1px solid $gray-color;
+
+        p {
+            color: $title-color-white;
+            text-align: center;
+            padding: 20px 0;
+
+            a {
+                color: $index-three ;
+
+                &:hover {
+                    color: $title-color-white ;
+                }
+            }
+        }
+    }
+}

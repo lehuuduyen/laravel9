@@ -22,11 +22,6 @@ class LanguageSeeder extends Seeder
             'id' => 1,
             'name' => "English",
             'slug' => "en",
-        ],
-        [
-            'id' => 2,
-            'name' => "Japan",
-            'slug' => "ja",
         ]];
         Language::insert($language);
         // \App\Models\Language::factory()->count(30)->create();

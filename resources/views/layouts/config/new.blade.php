@@ -31,11 +31,11 @@
                 <input type="hidden" id="allLanguage" value="{{ json_encode($allLanguage) }}">
                 @if (isset($configFieldDetail))
                     <div class="" style="text-align: right;margin: 10px 0px ">
-                        <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
+                        <a class="btn btn-success" href="/admin/config/create"> Create New Config filed </a>
                     </div>
-                    <form action="/config/{{ $configFieldDetail->id }}" id="form" method="put">
+                    <form action="/admin/config/{{ $configFieldDetail->id }}" id="form" method="put">
                     @else
-                        <form action="/config" id="form" method="post">
+                        <form action="/admin/config" id="form" method="post">
                 @endif
                 @csrf
                 {{-- <!-- {{ csrf_field() }} --> --}}
@@ -325,7 +325,7 @@
                             if ($("#form").attr('method') == 'put') {
                                 alertSuccess(msg.message)
                             } else if ($("#form").attr('method') == 'post') {
-                                alertSuccess(msg.message, '/config')
+                                alertSuccess(msg.message, 'config')
                             }
                         },
                         error: function(msg) {

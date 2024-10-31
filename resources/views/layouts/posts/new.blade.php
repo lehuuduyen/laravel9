@@ -25,16 +25,16 @@
             <input type="hidden" name="action" value="Update">
 
             <div class="" style="text-align: right;margin: 10px 0px ">
-                <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New Config filed
+                <a class="btn btn-success" href="/admin/post/create?post_type={{ $getPage['slug'] }}"> Create New Config filed
                 </a>
             </div>
-            <form action="/post/{{ $postDetail->id }}?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data"
+            <form action="/admin/post/{{ $postDetail->id }}?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data"
                 id="form" method="post">
                 {{ method_field('PUT') }}
             @else
                 <input type="hidden" name="action" value="Create">
 
-                <form action="/post?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data" id="form"
+                <form action="/admin/post?post_type={{ $getPage['slug'] }}" enctype="multipart/form-data" id="form"
                     method="post">
         @endif
 

@@ -1,0 +1,159 @@
+// --------- service page css start --------//
+.price-wrapper {
+    padding: 100px 0;
+
+    .price-head {
+        text-align: center;
+        padding-bottom: 50px;
+
+        h3 {
+            line-height: 60px;
+        }
+    }
+
+    .price-box-wrapper {
+        .price-box-head {
+            background-color: $bg-pink;
+            text-align: center;
+            padding: 40px 15px;
+
+            h3 {
+                text-transform: $text-uppercse;
+                font-size: $h5-font-size;
+                max-width: 150px;
+                margin: 0 auto;
+            }
+
+            p {
+                text-transform: $text-uppercse;
+                padding-top: 20px;
+
+                span {
+                    color: $title-color;
+                    font-size: $h3-font-size;
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        .price-menu {
+            background-color: #fff1ef;
+            padding: 45px 0;
+
+            ul {
+                max-width: 165px;
+                margin: 0 auto;
+
+                li {
+                    margin-bottom: 15px;
+
+                    &:last-child {
+                        margin-bottom: 0px;
+                    }
+
+                    i {
+                        color: $bg-pink;
+                        margin-right: 5px;
+                    }
+                }
+            }
+        }
+
+        .book-btn {
+            text-align: center;
+
+            a {
+                color: $title-color-white;
+                padding: 13px 0;
+                background-color: $title-color;
+                display: block;
+            }
+        }
+    }
+}
+
+.test-about {
+    padding: 185px 0 100px 0;
+}
+
+/*---- gallery ----*/
+
+.main-gallery {
+    padding: 50px 0;
+
+    .row {
+        row-gap: 30px;
+
+        ul {
+            column-count: 5;
+            column-gap: 15px;
+            width: 100%;
+        }
+    }
+}
+
+.portfolio_img_wrapper {
+    text-align: center;
+
+    .portfolio_img {
+        position: relative;
+        margin-bottom: 30px;
+        // max-height: 275px;
+        overflow: hidden;
+
+        .img-responsive {
+            width: 100%;
+        }
+
+        .portfolio_img_overlay {
+            background: #911439 none repeat scroll 0 0;
+            height: calc(100% - 40px);
+            left: 20px;
+            opacity: 0;
+            position: absolute;
+            text-align: center;
+            top: 20px;
+            transform: translateX(-15px) translateY(-15px);
+            transition: all 0.3s ease 0s;
+            visibility: hidden;
+            width: calc(100% - 40px);
+            transition: .2s ease;
+            -webkit-transition: all 0.5s;
+            -o-transition: all 0.5s;
+            -ms-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+            transition: all 0.5s;
+
+            .portfolio_img_text {
+                opacity: 0;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: all 0.3s ease 0s;
+                visibility: hidden;
+                width: 100%;
+            }
+        }
+    }
+
+    &:hover {
+        .portfolio_img_overlay {
+            transform: translateX(0) translateY(0);
+            visibility: visible;
+            opacity: 0.8;
+
+            .portfolio_img_text {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+
+    }
+}
+
+// gallery pagintion css start //
+
+.gallery-pagination {
+    margin-top: 20px;
+}

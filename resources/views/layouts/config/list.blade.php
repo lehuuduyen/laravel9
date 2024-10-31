@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/config/create"> Create New Config filed </a>
+                            <a class="btn btn-success" href="/admin/config/create"> Create New Config filed </a>
                         </div>
 
                         <!-- /.card-header -->
@@ -130,7 +130,7 @@
                     "mRender": function(data, type, row) {
                         
                         html = `
-                        <a href="/config/${row.id}/edit">
+                        <a href="/admin/config/${row.id}/edit">
                             <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
                         </a>
@@ -164,7 +164,7 @@
                 if (result.isConfirmed) {
                     $.ajax({
                         type: 'delete',
-                        url: `/config/${id}`,
+                        url: `/admin/config/${id}`,
 
                         success: function(msg) {
                             table.ajax.reload();

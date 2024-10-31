@@ -23,7 +23,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/post/create?post_type={{ $getPage['slug'] }}"> Create New
+                            <a class="btn btn-success" href="/admin/post/create?post_type={{ $getPage['slug'] }}"> Create New
                                 {{ $getPage['title'] }}</a>
                         </div>
 
@@ -136,7 +136,7 @@
                         "data": "id",
                         "render": function(data, type, row, meta) {
                             html = `
-                        <a href="/post/${row.id}/edit?post_type=${postType}">
+                        <a href="/admin/post/${row.id}/edit?post_type=${postType}">
                             <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
                         </a>
@@ -166,7 +166,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: 'delete',
-                            url: `/post/${id}`,
+                            url: `/admin/post/${id}`,
 
                             success: function(msg) {
                                 table.ajax.reload();

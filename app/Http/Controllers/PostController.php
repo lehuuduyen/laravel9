@@ -56,7 +56,7 @@ class PostController extends BaseController
         $listPost = Post::where('page_id', $getPage['id'])->first();
 
         if ($listPost && $getPage['status'] == Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST()) {
-            return redirect("/post/" . $listPost['id'] . "/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
+            return redirect("/admin/post/" . $listPost['id'] . "/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
         }
         $getAllCategory = $this->getAllCategory();
         $htmlRecursiveCategory = $this->htmlRecursiveCategory($getAllCategory);
@@ -260,7 +260,7 @@ class PostController extends BaseController
 
             return Redirect::back()->withInput($request->input())->with('error', $e->getMessage());
         }
-        return redirect("/post/$postId/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
+        return redirect("/admin/post/$postId/edit?post_type=" . $getPage['slug'])->with('success', 'Thêm thành công');
     }
     public function update(Request  $request, $id)
     {

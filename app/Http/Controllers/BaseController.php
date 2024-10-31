@@ -22,6 +22,8 @@ class BaseController extends Controller
     public $_POST_TYPE_RECRUIT = "recruit";
     public $_POST_TYPE_COMPANY = "company";
     public $_POST_TYPE_TOP = "top";
+    public $data;
+
     public function htmlRecursiveCategory($getAllCategory=[],$getCategoryByPost = [])
     {
         $html =  "";
@@ -100,7 +102,7 @@ class BaseController extends Controller
         $listSlugCategory = [];
         $page = Page::with('page_transiation')->whereIn('status', [Page::_STATUS_ACTIVE_MENU(),Page::_STATUS_ACTIVE_MENU_ONLY_ONE_POST()])->get();
 
-
+        
         $param['page'] = $page;
         foreach ($param['page'] as $key => $val) {
 

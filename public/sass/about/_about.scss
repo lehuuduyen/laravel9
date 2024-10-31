@@ -1,0 +1,275 @@
+        //  ------------- about page css start -------------//
+
+        .inner-page-wrapper {
+            background-image: url('../images/bg-inner.png');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+
+            .inner-head {
+                padding: 140px 0;
+                text-align: center;
+
+                h1 {
+                    color: $title-color-white;
+                    margin-bottom: 5px;
+                }
+
+                ol {
+                    li {
+                        color: $title-color-white;
+
+                        a {
+                            color: $title-color-white;
+                        }
+
+                        &::before {
+                            color: $title-color-white;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        .about-page {
+            padding: 100px 0;
+
+            .about-content {
+                p {
+                    color: $gray-color;
+                }
+
+                .about-pera {
+                    padding: 20px 0 0 0;
+                }
+
+                .about-btn-page {
+                    .main-btn-red {
+                        em {
+                            top: 140%;
+                        }
+                    }
+                }
+            }
+
+            .about-img {
+                position: relative;
+
+                &::before {
+                    content: "";
+                    width: 0;
+                    height: 1px;
+                    position: absolute;
+                    -webkit-transition: all 0.2s linear;
+                    transition: all 0.2s linear;
+                    background: #ffffff;
+                    right: 0;
+                    left: 0;
+                    top: 20px;
+                    z-index: 111;
+                    margin: 0 auto;
+                }
+
+                &::after {
+                    content: "";
+                    width: 0;
+                    height: 1px;
+                    position: absolute;
+                    -webkit-transition: all 0.2s linear;
+                    transition: all 0.2s linear;
+                    background: #ffffff;
+                    left: 12px;
+                    bottom: 21px;
+                }
+
+                span {
+                    position: relative;
+                    display: block;
+                    width: 100%;
+
+                    &::before {
+                        content: "";
+                        width: 1px;
+                        height: 0;
+                        position: absolute;
+                        -webkit-transition: all 0.2s linear;
+                        transition: all 0.2s linear;
+                        background: #ffffff;
+                        left: 12px;
+                        top: 20px;
+                        z-index: 111;
+                    }
+
+                    &::after {
+                        content: "";
+                        width: 1px;
+                        height: 0;
+                        position: absolute;
+                        -webkit-transition: all 0.2s linear;
+                        transition: all 0.2s linear;
+                        background: #ffffff;
+                        right: 12px;
+                        right: 12px;
+                        top: 0;
+                        z-index: 111;
+                        bottom: 0;
+                        margin: auto;
+                    }
+                }
+
+                &:hover {
+                    &::before {
+                        width: 96%;
+                        -webkit-transition-delay: 0s;
+                        transition-delay: 0s;
+                    }
+
+                    &::after {
+                        width: 96%;
+                        -webkit-transition-delay: 0s;
+                        transition-delay: 0s;
+                    }
+
+                    span {
+                        &::before {
+                            height: 92%;
+                            -webkit-transition-delay: 0s;
+                            transition-delay: 0s;
+                        }
+
+                        &::after {
+                            height: 92%;
+                            -webkit-transition-delay: 0s;
+                            transition-delay: 0s;
+                        }
+                    }
+                }
+            }
+
+            .about-btn-page {
+                margin-top: 30px;
+            }
+        }
+
+        .ordinary-about-wrapper {
+            background-color: #fff1ef;
+            max-height: 690px;
+
+            .ordinary-head {
+                text-align: center;
+                padding: 65px 0 0;
+
+                h3 {
+                    max-width: 920px;
+                    margin: 0 auto;
+                    display: block;
+                    padding: 25px 0 0;
+                }
+            }
+
+            .ordinary-vdo {
+                .ordinary-img {
+                    background-image: url('../images/about-vdo.png');
+                    background-size: cover;
+                    position: relative;
+                    padding: 255px 0;
+                    text-align: center;
+                    margin-top: 50px;
+                    height: 600px;
+
+                    a {
+                        -webkit-transition: $transition;
+                        -o-transition: $transition;
+                        -ms-transition: $transition;
+                        -moz-transition: $transition;
+                        transition: $transition;
+                        position: relative;
+
+                        i {
+                            background-color: $title-color;
+                            color: $title-color-white;
+                            padding: 20px;
+                            border-radius: 50%;
+                            z-index: 13;
+                            position: relative;
+                        }
+
+                        .wrapper {
+                            display: inline-block;
+                            position: absolute;
+
+                            .waves {
+                                position: absolute;
+                                width: 150px;
+                                height: 150px;
+                                background: rgba(214, 214, 214, 0.3);
+                                opacity: 0;
+                                border-radius: 100%;
+                                right: -50px;
+                                bottom: -48px;
+                                -webkit-animation: waves 3s ease-in-out infinite;
+                                animation: waves 3s ease-in-out infinite;
+                            }
+
+                            .wave-1 {
+                                -webkit-animation-delay: 0s;
+                                animation-delay: 0s;
+                            }
+
+                            .wave-2 {
+                                -webkit-animation-delay: 1s;
+                                animation-delay: 1s;
+                            }
+
+                            .wave-3 {
+                                -webkit-animation-delay: 2s;
+                                animation-delay: 2s;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .modal {
+                .modal-dialog {
+                    .modal-body {
+                        iframe {
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+
+        .team-about {
+            padding-top: 250px;
+        }
+
+        @keyframes waves {
+            0% {
+                -webkit-transform: scale(0.2, 0.2);
+                transform: scale(0.2, 0.2);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.9;
+            }
+
+            100% {
+                -webkit-transform: scale(0.9, 0.9);
+                transform: scale(0.9, 0.9);
+                opacity: 0;
+            }
+        }
+
+        //   modal css start  //
+
+        .modal-dialog-wrapper {
+            max-width: 700px;
+
+            .modal-content-wrapper {
+                height: 450px;
+            }
+        }

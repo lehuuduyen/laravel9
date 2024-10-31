@@ -19,12 +19,12 @@
             <div class="" style="text-align: right;margin: 10px 0px ">
                 <a class="btn btn-success" href="/page/create"> Create New Page </a>
             </div>
-            <form action="/page/{{ $getPage->id }}" enctype="multipart/form-data" id="form" method="put">
+            <form action="/admin/page/{{ $getPage->id }}" enctype="multipart/form-data" id="form" method="put">
                 {{-- {{ method_field('PUT') }} --}}
             @else
                 <input type="hidden" name="action" value="Create">
 
-                <form action="/page" enctype="multipart/form-data" id="form" method="post">
+                <form action="/admin/page" enctype="multipart/form-data" id="form" method="post">
         @endif
 
         @csrf
@@ -361,7 +361,7 @@
                         success: function(msg) {
                             BtnReset(_this)
                             if ($("#form").attr('method') == 'put') {
-                                alertSuccess(msg.message, location.href)
+                                alertSuccess(msg.message, '')
                             } else if ($("#form").attr('method') == 'post') {
                                 alertSuccess(msg.message, '/page')
                             }

@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/page/create"> Create New Page</a>
+                            <a class="btn btn-success" href="/admin/page/create"> Create New Page</a>
                         </div>
 
                         <!-- /.card-header -->
@@ -109,7 +109,7 @@
                         "mRender": function(data, type, row) {
 
                             html = `
-                        <a href="/page/${row.id}/edit">
+                        <a href="/admin/page/${row.id}/edit">
                             <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
                         </a>
@@ -140,7 +140,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: 'delete',
-                            url: `/page/${id}`,
+                            url: `/admin/page/${id}`,
 
                             success: function(msg) {
                                 table.ajax.reload();

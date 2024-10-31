@@ -17,21 +17,21 @@ use App\Http\Controllers\FileManagerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Auth::routes();
 
 
-Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
-Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
 
 
 
 
-Route::group(['middleware' => 'web'], function () {
+
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
+    Route::get('/home', [App\Http\Controllers\DashboardController::class, 'index'])->name('home');
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
     Route::resources([
         'page'  => App\Http\Controllers\PageController::class,
         'category'  => App\Http\Controllers\CategoryController::class,
@@ -42,7 +42,6 @@ Route::group(['middleware' => 'web'], function () {
     ]);
     Route::get('change-language/{language}', 'App\Http\Controllers\HomeController@changeLanguage')
         ->name('user.change-language');
-    
 });
 
 

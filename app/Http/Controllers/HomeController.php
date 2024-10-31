@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends BaseController
@@ -13,7 +14,7 @@ class HomeController extends BaseController
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->data['active'] = 'dashboard';
     }
 
     /**
@@ -23,7 +24,11 @@ class HomeController extends BaseController
      */
     public function index()
     {
-        return view('home', ['active' => 'dashboard']);
+        $Category = Category::get();
+       
+        $this->data['categories'] = $Category;
+        
+        return view('fontend.index', $this->data);
     }
     public function changeLanguage($language)
     {

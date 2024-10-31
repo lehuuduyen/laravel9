@@ -16,15 +16,15 @@
         @if (isset($getCategory))
             <input type="hidden" name="action" value="Update">
             <div class="" style="text-align: right;margin: 10px 0px ">
-                <a class="btn btn-success" href="/category/create?post_type={{ $pageSlug }}"> Create New Category </a>
+                <a class="btn btn-success" href="/admin/category/create?post_type={{ $pageSlug }}"> Create New Category </a>
             </div>
-            <form action="/category/{{ $getCategory->id }}?post_type={{ $pageSlug }}" enctype="multipart/form-data"
+            <form action="/admin/category/{{ $getCategory->id }}?post_type={{ $pageSlug }}" enctype="multipart/form-data"
                 id="form" method="post">
                 {{ method_field('PUT') }}
             @else
                 <input type="hidden" name="action" value="Create">
 
-                <form action="/category?post_type={{ $pageSlug }}" enctype="multipart/form-data" id="form"
+                <form action="/admin/category?post_type={{ $pageSlug }}" enctype="multipart/form-data" id="form"
                     method="post">
         @endif
 

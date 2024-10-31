@@ -19,18 +19,6 @@ class OptionSeeder extends Seeder
      */
     public function run()
     {
-        $options = [
-            [
-                'id' => 1,
-                'option_name' => "hamburger_top",
-                'option_value' => "hamburger_top",
-            ],
-            [
-                'id' => 2,
-                'option_name' => "hamburger_foot",
-                'option_value' => "hamburger_foot",
-            ],
-        ];
-        Option::insert($options);
+       
     }
 }

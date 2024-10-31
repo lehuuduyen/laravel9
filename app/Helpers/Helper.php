@@ -51,7 +51,7 @@ if (!function_exists('getLanguageId')) {
         $_ENGLISH = 1;
         $_JAPAN = 2;
         //default language
-        $languageId = $_JAPAN;
+        $languageId = $_ENGLISH;
        
         if (!isset($_GET['language'])) {
             $slug = \Session::get('website_language');

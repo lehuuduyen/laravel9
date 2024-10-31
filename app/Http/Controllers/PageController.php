@@ -127,7 +127,7 @@ class PageController extends BaseController
                 $pageField = Page::with('page_config_field')->where('id', $id)->first();
                 foreach ($pageField['page_config_field'] as $value) {
                     if (!in_array($value['config_field_id'], $selectListField)) {
-                        throw new Exception("Filed is used in post ");
+                        // throw new Exception("Filed is used in post "); //chưa hiểu
                     }
                 }
             }

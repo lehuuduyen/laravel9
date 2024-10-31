@@ -246,7 +246,7 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item ">
-                            <a href="/dashboard" class="nav-link {{ $active == 'dashboard' ? 'active' : '' }}">
+                            <a href="/admin/dashboard" class="nav-link {{ $active == 'dashboard' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
@@ -273,7 +273,7 @@
                                 @if ($value->status == 3)
 
                                     <li class="nav-item ">
-                                        <a href="/post/create?post_type={{ $value->slug }}"
+                                        <a href="/admin/post/create?post_type={{ $value->slug }}"
                                             class="nav-link {{ $active == $value->slug && $postActive == 'create' ? 'active' : '' }}">
                                             <i class="nav-icon fas fa-copy"></i>
                                             <p>
@@ -283,7 +283,7 @@
                                     </li>
                                 @else
                                     <li class="nav-item ">
-                                        <a href="/post?post_type={{ $value->slug }}"
+                                        <a href="/admin/post?post_type={{ $value->slug }}"
                                             class="nav-link {{ $active == $value->slug && $postActive == 'index' ? 'active' : '' }}">
                                             <i class="nav-icon fas fa-copy"></i>
                                             <p>
@@ -292,7 +292,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a href="/post/create?post_type={{ $value->slug }}"
+                                        <a href="/admin/post/create?post_type={{ $value->slug }}"
                                             class="nav-link {{ $active == $value->slug && $postActive == 'create' ? 'active' : '' }}">
                                             <i class="nav-icon fas fa-copy"></i>
                                             <p>
@@ -302,7 +302,7 @@
                                     </li>
                                     @if ($value->is_category == 1)
                                         <li class="nav-item ">
-                                            <a href="/category?post_type={{ $value->slug }}"
+                                            <a href="/admin/category?post_type={{ $value->slug }}"
                                                 class="nav-link {{ $active == 'category' . $value->slug ? 'active' : '' }}">
                                                 <i class="nav-icon fas fa-copy"></i>
                                                 <p>
@@ -323,7 +323,7 @@
                             }
                         ?>
                         <li class="nav-item ">
-                            <a href="/contact" class="nav-link {{ $active == 'contact' ? 'active' : '' }}">
+                            <a href="/admin/contact" class="nav-link {{ $active == 'contact' ? 'active' : '' }}">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Contact
@@ -341,13 +341,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/config" class="nav-link {{ $active == 'config' ? 'active' : '' }}">
+                                    <a href="/admin/config" class="nav-link {{ $active == 'config' ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Config field</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/page" class="nav-link {{ $active == 'page' ? 'active' : '' }}">
+                                    <a href="/admin/page" class="nav-link {{ $active == 'page' ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Page</p>
                                     </a>
@@ -506,7 +506,7 @@
                 timerProgressBar: true
             })
             if (redirect) {
-                location.href = redirect
+                location.href = '/admin/'+redirect
             }
         }
         $.ajaxSetup({

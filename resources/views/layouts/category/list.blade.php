@@ -21,7 +21,7 @@
 
                     <div class="card">
                         <div class="pull-right" style="text-align: right;margin: 10px 20px 0px;">
-                            <a class="btn btn-success" href="/category/create?post_type={{ $pageSlug }}"> Create New Category</a>
+                            <a class="btn btn-success" href="/admin/category/create?post_type={{ $pageSlug }}"> Create New Category</a>
                         </div>
 
                         <!-- /.card-header -->
@@ -109,7 +109,7 @@
                         "mRender": function(data, type, row) {
 
                             html = `
-                        <a href="/category/${row.id}/edit?post_type=${pageSlug}">
+                        <a href="/admin/category/${row.id}/edit?post_type=${pageSlug}">
                             <button class="btn btn-primary"><i class="fa fa-eye" aria-hidden="true"></i>
                             </button>
                         </a>
@@ -143,7 +143,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: 'delete',
-                            url: `/category/${id}`,
+                            url: `/admin/category/${id}`,
 
                             success: function(msg) {
                                 table.ajax.reload();
