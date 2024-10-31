@@ -18,6 +18,9 @@ use App\Http\Controllers\FileManagerController;
 */
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/format-link', [App\Http\Controllers\HomeController::class, 'ChangeLink'])->name('home');
+Route::post('/format-link', [App\Http\Controllers\HomeController::class, 'submitChangeLink'])->name('home');
+Route::get('/phimhay/{title}/{code}', [App\Http\Controllers\HomeController::class, 'redirectLink'])->name('home');
 
 
 Auth::routes();
